@@ -12,6 +12,30 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white`}>{children}</body>
+      <header style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+          {/* Your header content */}
+          <iframe
+          src="https://www.youtube.com/embed/JDgLpCv_f20?autoplay=1"
+          title="YouTube video player"
+          width="100%" // Set width to 100%
+          height="100%" // Set height to 100%
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        ></iframe>
+
+        
+        </header>
+        <div id="overlay-content" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s", ":hover": { backgroundColor: "blue" } }}>Welcome to My Website</button>
+          <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Interest in tour?</button>
+          <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Schedule Appointment</button>
+        </div>
+
+        
+      
     </html>
   );
 }
+
+
