@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,29 +11,40 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white`}>{children}</body>
+      <body className={inter.className + " bg-white"}>
+        {children}
+      </body>
+
+      {/* Header: Contains video background and the text overlay */}
       <header style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
-          {/* Your header content */}
-          <iframe
+        <iframe
           src="https://www.youtube.com/embed/JDgLpCv_f20?autoplay=1"
           title="YouTube video player"
-          width="100%" // Set width to 100%
-          height="100%" // Set height to 100%
+          width="100%" 
+          height="100%" 
           frameBorder="0"
           allow="autoplay; fullscreen"
           allowFullScreen
         ></iframe>
 
-        
-        </header>
-        <div id="overlay-content" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s", ":hover": { backgroundColor: "blue" } }}>Welcome to My Website</button>
-          <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Interest in tour?</button>
-          <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Schedule Appointment</button>
+        {/* Text Overlay */}
+        <div className="overlay-content">
+          <h1>Transform your Dreams Into a Luxurious Address!</h1>
+          <h2>Lourdes Mendoza</h2>
+          <h3>The 0007 Real Estate Agent</h3>
+          <p>Powered by BIG BLOCK REALTY NORTH</p>
         </div>
+      </header>
 
-        
-      
+      {/* New Section: Contains buttons */}
+      <section id="overlay-content" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s", ":hover": { backgroundColor: "blue" } }}>Welcome to My Website</button>
+        <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Interest in tour?</button>
+        <button style={{ margin: "10px", padding: "20px 40px", fontSize: "20px", background: "gray", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", transition: "background-color 0.3s" }}>Schedule Appointment</button>
+      </section>
+
+      {/* External CSS File */}
+      <link rel="stylesheet" href="styles.css" /> 
     </html>
   );
 }
