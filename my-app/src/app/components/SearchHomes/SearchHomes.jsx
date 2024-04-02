@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './SearchHomes.module.css'; 
-
+import './SearchHomes.css'
 //function for a search bar to search for homes
 const SearchHomes = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,15 +15,15 @@ const SearchHomes = () => {
   };
 
   return (
-    <div className= {styles.searchHomes}>
+    <div className= "search-homes">
     <form onSubmit={handleSubmit}>
       <input
-        type="text"
+        type="text" 
         value={searchQuery}
         onChange={handleChange}
         placeholder="Search for a home"
       />
-      <button type="submit">Search</button>
+      <button type="submit" className= "search-homes button">Search</button>
     </form>
     </div>
   );
