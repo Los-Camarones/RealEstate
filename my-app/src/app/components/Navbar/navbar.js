@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function NavBar() {
   return (
     <div className="flex items-center bg-gray-500">
@@ -12,7 +13,7 @@ function NavBar() {
       </button>
 
       <button className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded">
-        About Me 
+       About Me
       </button>
 
       <button className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded">
