@@ -1,10 +1,12 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import Image from 'next/image';
-import NavBar from './navbar';
-import HomePageContent from './HomePageContent';
+import NavBar from './components/Navbar/navbar';
+import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
+import SearchHomes from './components/SearchHomes/SearchHomes';
 
-function Page() {
+function Page(){ // Assuming data is passed as a prop (modify if needed)
   return (
     <div> {/* Main container */}
       <div className="flex justify-between p-4 bg-gray-500 text-white">
@@ -33,6 +35,11 @@ function Page() {
           <h3>The 0007 Real Estate Agent</h3>
           <p>Powered by BIG BLOCK REALTY NORTH</p>
           </div>
+      </div>
+
+      <div>
+        {/*Search component*/}
+        <SearchHomes/>
       </div>
 
       {/* About Lourdes Section */}

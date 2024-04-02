@@ -1,0 +1,27 @@
+.search-homes{
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: Center vertically as well */
+  width: 100%; /* Adjust width as needed */
+  margin: 0 auto; /* Center horizontally */
+}
+
+.search-homes form {
+  display: flex; /* Inherit flexbox properties */
+}
+
+.search-homes input {
+  flex: 1; /* Allow input to grow and fill available space */
+  padding: 10px;
+  border: 1px solid #292988;
+  border-radius: 4px;
+}
+
+.search-homes button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: #7e2424;
+  cursor: pointer;
+}
