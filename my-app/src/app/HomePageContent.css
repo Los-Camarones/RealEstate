@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* HomePageContent.css */
+
+.homepage-content {
+  background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+  color: #fff; /* White text color for readability */
+  padding: 20px; /* Add padding */
+}
+
+.about-me {
+  color: #fff; /* Ensure the header is also white */
+  max-width: 1200px; /* Or any max width or width you prefer */
+  margin: 0 auto; /* This will center content */
+  padding: 40px 20px; /* Add some padding */
+  text-align: center; /* Center align all the text in the .about-me section */
+}
+
+.about-me h1 {
+  color: #fff; /* Ensure the header is also white */
+  text-align: center; /* Center the header text specifically if needed */
+}
