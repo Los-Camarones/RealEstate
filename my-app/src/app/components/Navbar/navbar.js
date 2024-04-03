@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 
 function NavBar() {
@@ -12,9 +13,11 @@ function NavBar() {
         Listings
       </button>
 
+      <Link href = "/about">
       <button className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded">
        About Me
       </button>
+      </Link>
 
       <button className="ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded">
         Sellers
