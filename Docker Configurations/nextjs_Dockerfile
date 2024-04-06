@@ -1,0 +1,22 @@
+# Use an official Node.js runtime as a parent image with a version that satisfies Next.js requirements
+FROM node:18-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock) files from the my-app directory
+# Since the Dockerfile is inside the "Docker Configurations" directory, this needs to go one level up
+COPY ../my-app/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of application's code from the my-app directory
+# Go one level up to reach the my-app directory
+COPY ../my-app/ ./
+
+# Build Next.js application
+RUN npm run build
+
+# Command to run app
+CMD ["npm", "start"]

@@ -1,0 +1,7 @@
+docker-workflow:latest
+pipeline-model-definition:latest
+github:latest
+git:latest
+blueocean:latest
+nodejs:latest
+postbuildscript:latest

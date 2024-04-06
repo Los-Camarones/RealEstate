@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: jenkins_Dockerfile
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+    privileged: true
+
+volumes:
+  jenkins_home:
