@@ -4,25 +4,25 @@ function Check-Service {
     param (
         [string]$name,
         [int]$port,
-        [string]$host = "localhost",
+        [string]$serviceHost = "localhost",
         [string]$path = ""
     )
     for ($i = 0; $i -lt 10; $i++) {
         $tcpClient = New-Object System.Net.Sockets.TcpClient
         try {
-            $tcpClient.Connect($host, $port)
+            $tcpClient.Connect($serviceHost, $port)
             if ($tcpClient.Connected) {
-                Write-Host "$name service is accessible at http://$host`:$port$path"
+                Write-Host "$name service is accessible at http://$serviceHost`:$port$path"
                 return $true
             }
         } catch {
-            Write-Host "Waiting for $name to be accessible at http://$host`:$port$path..."
+            Write-Host "Waiting for $name to be accessible at http://$serviceHost`:$port$path..."
             Start-Sleep -Seconds 5
         } finally {
             $tcpClient.Close()
         }
     }
-    Write-Host "$name service failed to start. It is not accessible at http://$host`:$port$path"
+    Write-Host "$name service failed to start. It is not accessible at http://$serviceHost`:$port$path"
     return $false
 }
 
@@ -30,7 +30,7 @@ function Check-Service {
 Set-Location -Path "../Docker Configurations"
 
 # Attempt to retrieve the host machine's IP address
-$HOST_IP = (Get-NetIPAddress -AddressFamily IPv4).IPAddress | Select-Object -First 1
+$serviceHostIP = (Get-NetIPAddress -AddressFamily IPv4).IPAddress | Select-Object -First 1
 
 # Assuming Jenkins is running on the default HTTP port 8080 with a context path of /jenkins
 $JENKINS_PORT = 8080
@@ -44,7 +44,7 @@ Write-Host "Starting Jenkins..."
 docker-compose -f jenkins_docker-compose.yml build --no-cache
 docker-compose -f jenkins_docker-compose.yml up -d
 # Check Jenkins service
-$jenkins_status = Check-Service -name "Jenkins" -port $JENKINS_PORT -host $HOST_IP -path $JENKINS_CONTEXT_PATH
+$jenkins_status = Check-Service -name "Jenkins" -port $JENKINS_PORT -serviceHost $serviceHostIP -path $JENKINS_CONTEXT_PATH
 
 # Space between services
 Write-Host " "
@@ -53,7 +53,7 @@ Write-Host " "
 Write-Host "Starting Next.js..."
 docker-compose -f nextjs_docker-compose.yml up -d --build
 # Check Next.js service
-$nextjs_status = Check-Service -name "Next.js" -port $NEXTJS_PORT -host $HOST_IP -path ""
+$nextjs_status = Check-Service -name "Next.js" -port $NEXTJS_PORT -serviceHost $serviceHostIP -path ""
 
 # Navigate back to the original Scripts directory
 Set-Location -Path "../Scripts"
