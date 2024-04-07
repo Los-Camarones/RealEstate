@@ -8,4 +8,5 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+    # Change this to 'production' when you're ready to deploy
+      - NODE_ENV=development
