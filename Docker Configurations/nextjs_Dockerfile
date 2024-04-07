@@ -5,18 +5,25 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json (or yarn.lock) files from the my-app directory
-# Since the Dockerfile is inside the "Docker Configurations" directory, this needs to go one level up
 COPY ../my-app/package*.json ./
+
+# Ensure the configuration files are copied over
+COPY ../my-app/postcss.config.js ./
+COPY ../my-app/tailwind.config.js ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of application's code from the my-app directory
-# Go one level up to reach the my-app directory
-COPY ../my-app/ ./
+# Copy the rest of the application's code from the my-app directory
+COPY ../my-app/ .
 
+
+# If you're preparing for production, uncomment these lines:
 # Build Next.js application
-RUN npm run build
-
+# RUN npm run build
 # Command to run app
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+
+# For development, use the following commands instead
+
+CMD ["npm", "run", "dev"]
