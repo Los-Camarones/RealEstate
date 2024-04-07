@@ -5,6 +5,7 @@ import NavBar from './components/Navbar/navbar';
 import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
+import ServiceList from './components/ServiceList/ServiceList';
 
 function Page(){ // Assuming data is passed as a prop (modify if needed)
   return (
@@ -42,11 +43,24 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
         <SearchHomes/>
       </div>
 
-      {/* About Lourdes Section */}
-      <HomePageContent />
+      <div>
+        {/*about lourdes section*/}
+        <HomePageContent/>
+      </div>
+
+
+      {/*Service List*/}
+      <div>
+        
+        <ServiceList/>
+      </div>
+
 
       {/* Rest of the page content */}
-    </div>
+      <div></div>
+
+      </div>
+    
   );
 }
 
