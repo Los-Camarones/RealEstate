@@ -1,0 +1,179 @@
+.div {
+    height: 373px;
+    position: relative;
+    width: 980px;
+}
+
+.div .button-udw-qe {
+    all: unset;
+    background-color: var(--style-24);
+    box-shadow: var(--style-5);
+    box-sizing: border-box;
+    height: 30px;
+    left: 40px;
+    overflow: hidden;
+    position: absolute;
+    top: 296px;
+    width: 79px;
+}
+
+.div .span {
+    height: 31px;
+    position: relative;
+    width: 75px;
+}
+
+.div .text-wrapper {
+    color: var(--style-8);
+    font-family: var(--style-27-font-family);
+    font-size: var(--style-27-font-size);
+    font-style: var(--style-27-font-style);
+    font-weight: var(--style-27-font-weight);
+    height: 31px;
+    left: 0;
+    letter-spacing: var(--style-27-letter-spacing);
+    line-height: var(--style-27-line-height);
+    position: absolute;
+    top: -1px;
+    white-space: nowrap;
+}
+
+.div .div-comp {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 57px;
+    left: 40px;
+    padding: 0px 0px 8357.47px;
+    position: absolute;
+    top: 208px;
+    width: 900px;
+}
+
+.div .text-wrapper-2 {
+    color: var(--style-8);
+    font-family: var(--style-29-font-family);
+    font-size: var(--style-29-font-size);
+    font-style: var(--style-29-font-style);
+    font-weight: var(--style-29-font-weight);
+    letter-spacing: var(--style-29-letter-spacing);
+    line-height: var(--style-29-line-height);
+    margin-bottom: -8318.47px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.div .textarea-textarea {
+    background-color: var(--style-11);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-color: var(--style-6);
+    height: 25px;
+    margin-bottom: -8357.47px;
+    position: relative;
+    width: 900px;
+}
+
+.div .div-comp-jxbqbwrh {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 50px;
+    left: 520px;
+    padding: 0px 0px 8253.78px;
+    position: absolute;
+    top: 123px;
+    width: 420px;
+}
+
+.div .text-wrapper-3 {
+    color: var(--style-8);
+    font-family: var(--style-29-font-family);
+    font-size: var(--style-29-font-size);
+    font-style: var(--style-29-font-style);
+    font-weight: var(--style-29-font-weight);
+    letter-spacing: var(--style-29-letter-spacing);
+    line-height: var(--style-29-line-height);
+    margin-bottom: -8221.78px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.div .input-input-comp {
+    background-color: var(--style-1);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-color: var(--style-6);
+    height: 33.19px;
+    margin-bottom: -8260.97px;
+    position: relative;
+    width: 420px;
+}
+
+.div .div-comp-jxbqbwp {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 50px;
+    left: 520px;
+    padding: 0px 0px 8168.78px;
+    position: absolute;
+    top: 38px;
+    width: 420px;
+}
+
+.div .text-wrapper-4 {
+    color: var(--style-8);
+    font-family: var(--style-29-font-family);
+    font-size: var(--style-29-font-size);
+    font-style: var(--style-29-font-style);
+    font-weight: var(--style-29-font-weight);
+    letter-spacing: var(--style-29-letter-spacing);
+    line-height: var(--style-29-line-height);
+    margin-bottom: -8136.78px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.div .input-input-comp-2 {
+    background-color: var(--style-1);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-color: var(--style-6);
+    height: 33.19px;
+    margin-bottom: -8175.97px;
+    position: relative;
+    width: 420px;
+}
+
+.div .div-comp-jxbqbwqe {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 50px;
+    left: 40px;
+    padding: 0px 0px 8253.78px;
+    position: absolute;
+    top: 123px;
+    width: 420px;
+}
+
+.div .div-comp-jxbqbwng {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 50px;
+    left: 40px;
+    padding: 0px 0px 8168.78px;
+    position: absolute;
+    top: 38px;
+    width: 420px;
+}
