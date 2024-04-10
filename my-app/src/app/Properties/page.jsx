@@ -1,8 +1,7 @@
 
-import React from 'react';
 
 
-function Properties () {
+const Properties = () => {
     return (
       <div>
         <h1>View More Properties</h1>

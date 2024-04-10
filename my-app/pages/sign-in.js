@@ -1,10 +1,8 @@
 import React from "react";
-//import "./style.css";
+import "./style.css";
 
-function  Signin() {
+export const Div = () => {
     return (
-
-
         <div className="div">
             <button className="button-udw-qe">
                 <div className="span">
@@ -33,7 +31,5 @@ function  Signin() {
             </div>
         </div>
     );
-}
-
-export default Signin;
+};
 
