@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const AboutMe = () => {
+const Buyers = () => {
     return (
       <div>
         <h1>Show houses that are trending on market.</h1>
@@ -12,4 +12,4 @@ const AboutMe = () => {
     );
   }
   
-  export default AboutMe;
+  export default Buyers;

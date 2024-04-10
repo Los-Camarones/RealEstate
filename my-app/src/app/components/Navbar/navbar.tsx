@@ -8,43 +8,56 @@ const buttonStyle = "ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-
 function NavBar() {
   return (
     <div className="flex items-center bg-gray-500">
-      <button className={buttonStyle}>
+    <Link href="http://localhost:3000/">
+        <button className={buttonStyle}>
         Home
       </button>
+    </Link>
 
+      <Link href="/Listings/page">
       <button className={buttonStyle}>
         Listings
       </button>
+      </Link>
 
-      <Link href="/about">
+      <Link href="/Aboutme/page">
         <button className={buttonStyle}>
           About Me
         </button>
       </Link>
-
+    <Link href="/Sellers/page">
       <button className={buttonStyle}>
         Sellers
       </button>
+    </Link>
 
-      <button className={buttonStyle}>
-        Buyers
-      </button>
+      <Link href="/Buyers/page">
+        <button className={buttonStyle}>
+          Buyers
+        </button>
+      </Link>
 
+      <Link href="/Communities/page">
       <button className={buttonStyle}>
         Communities
       </button>
+      </Link>
 
+      <Link href="/Properties/page">      
       <button className={buttonStyle}>
         Properties
       </button>
+      </Link>
 
+      <Link href="/WhatMyHomeWorth/page">
       <button className={buttonStyle}>
         What's My Home Worth?
       </button>
+      </Link>
 
-      <Link href="/sign-in">
+      <Link href="/Sign-in/page">
         <button className={buttonStyle}>
-          Sign Up
+          Sign-in
         </button>
       </Link>
     </div>
