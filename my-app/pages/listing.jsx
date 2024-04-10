@@ -1,6 +1,6 @@
+import React from 'react';
 
-
-const Listing= () => {
+function Listing(){
     return (
       <div>
         <h1>Home Listing</h1>

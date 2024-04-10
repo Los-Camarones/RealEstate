@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // This should be set to your base directory.
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"] // Assuming your 'src' directory is in the root.
     }
   }
 }

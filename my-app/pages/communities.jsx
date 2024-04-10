@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-const Communities  = () => {
+function Communities(){
   return (
     <div>
       <h1>Communities </h1>
