@@ -13,7 +13,7 @@
 .search-homes input {
   flex: 1; /* Allow input to grow and fill available space */
   padding: 10px;
-  border: 1px solid #000000;
+  border: 1px solid #9f3a3a00;
   border-radius: 4px;
 }
 

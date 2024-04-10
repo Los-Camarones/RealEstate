@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import NavBar from './components/Navbar/navbar';
+import Footer from './components/Footer/footer';
 import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
@@ -15,10 +16,10 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
           <button>
             <Image src="/logo_.png" alt="logo" width={150} height={150} />
           </button>
-        </div>
+        </div>  
         <NavBar />
       </div>
-
+     
       {/* Background photo */}
       <div style={{
         backgroundImage: "url('/MyBR.jpg')", // background image
@@ -42,7 +43,7 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
         {/*Search component*/}
         <SearchHomes/>
       </div>
-
+      
       <div>
         {/*about lourdes section*/}
         <HomePageContent/>
@@ -57,11 +58,18 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
 
 
       {/* Rest of the page content */}
-      <div></div>
+      <div>
 
       </div>
-    
-  );
+
+
+   {/* Footer */}
+   <Footer/>
+        
+      
+      </div>
+   );
+  
 }
 
 export default Page;
