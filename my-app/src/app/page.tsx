@@ -37,12 +37,14 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
           <h3>The 0007 Real Estate Agent</h3>
           <p>Powered by BIG BLOCK REALTY NORTH</p>
           </div>
-      </div>
 
-      <div>
+        <div>
         {/*Search component*/}
         <SearchHomes/>
+        </div>
       </div>
+
+
       
       <div>
         {/*about lourdes section*/}

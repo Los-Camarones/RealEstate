@@ -6,22 +6,17 @@
   margin: 0 auto; /* Center horizontally */
 }
 
-.search-homes form {
-  display: flex; /* Inherit flexbox properties */
-}
 
 .search-homes input {
   flex: 1; /* Allow input to grow and fill available space */
   padding: 10px;
-  border: 1px solid #9f3a3a00;
+  border: 1px solid #000000;
   border-radius: 4px;
+  border-radius: 8px;
 }
 
-.search-homes button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #4d4c4c;
-  color: #000000;
-  cursor: pointer;
+.search-homes .search-icon {
+  margin-left: 10px; /* Adds margin to the left of the icon */
+  color: #999; /* Sets the icon color */
+  font-size: 18px; /* Sets the icon size */
 }
