@@ -3,7 +3,7 @@ import './ServiceList.css';
 
 const images = [
    { src: 'picture1.jpg', caption: 'How much is your home worth?'},
-    { src:'picture2.jpg', caption: 'Lets find your dream '},
+    { src:'picture2.jpg', caption: 'Lets find your dream home'},
     { src: 'picture3.jpg', caption: 'Need a loan?'},
     { src: 'picture4.jpg', caption: 'For Sale'}
 ];
