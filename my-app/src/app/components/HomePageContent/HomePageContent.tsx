@@ -1,11 +1,13 @@
 import React from 'react';
+import './HomePageContent.css';
 
-function About() {
-    return (
-        <div>
-        <h1>About Me</h1>
+const HomePageContent = () => {
+  return (
+    <div className="homepage-content">
+      <section className="about-me">
+         <h1>About Lourdes Mendoza</h1>
         <p>
-        I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
+         I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
         and friends, friends of my friends, and other personal referrals to buy and sell real estate in the greater Sacramento area, as 
         well as in Sutter, Yolo and Yuba Counties. I lived in Marysville until I graduated from Lindhurst H.S. After H.S., I was off to
         CSU Sacramento where I obtained a B.S. in Communication Studies. Coming from an agricultural, migrant background, my parents did 
@@ -19,11 +21,11 @@ function About() {
         ever changing Real Estate market. I would of never expect to be given your business because of our relationship, or how we
         may know each other. However, if you ever have a residential real estate need, I would be extremely honored if you would 
         give me an opportunity to work hard for you to earn your business. Thank you so much for taking the time read a little 
-        about me. It is appreciated.
+        about me. It is appreciated. 
         </p>
-        </div>
-    );
-    }
+      </section>
+    </div>
+  );
+};
 
-export default About;
-
+export default HomePageContent;
