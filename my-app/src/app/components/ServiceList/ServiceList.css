@@ -17,4 +17,9 @@
 
 .caption{
     margin-top: 5px;
+    border: 1px;
+    border-radius: 4px;
+    background-color:grey;
+    font-family: serif;
+    color:ghostwhite;
 }
