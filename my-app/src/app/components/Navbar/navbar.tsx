@@ -11,17 +11,24 @@ function NavBar() {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   }
-
   
+    {/*Return a 'menu' icon for the navabar that collapses all our buttons. This is only for mobile users*/}
     return (
-    <div className="flex items-center bg-gray-500">
+    <div className="bg-gray-500 z-50">
+      <div className="flex justify-between items-center px-4 py-2 md:px-6">
+        <div className="md:hidden">
+          <button className={buttonStyle} onClick={toggleDropdown}>Menu</button>
+        </div>
+      </div>
 
 
-      <Link href="/"> 
-      <button className={buttonStyle}>
-        Home
-      </button>
-      </Link>
+    {/*If a user is a mobiler user, it will automatically dispaly a hamburger menu. If on pc it will keep hidden */}
+    <div className={`md:flex md:justify-end ${isDropdownOpen ? 'block' : 'hidden'} md:bg-gray-500 md:px-4 md:py-2`}>
+        <Link href="/"> 
+          <button className={buttonStyle}>
+          Home
+          </button>
+        </Link>
 
 
 
@@ -38,33 +45,28 @@ function NavBar() {
           About Me
         </button>
       </Link>
-
-    
-
+      
       <Link href="/Sellers">
-      <button className={buttonStyle}>
-        Sellers
-      </button>
+        <button className={buttonStyle}>
+          Sellers
+        </button>
       </Link>
 
 
 
-
+      
       <Link href="/Buyers">
-      <button className={buttonStyle}>
-        Buyers
-      </button>
+        <button className={buttonStyle}>
+          Buyers
+        </button>
       </Link>
-
-
 
 
       <Link href="/Communities">
-      <button className={buttonStyle}>
-        Communities
-      </button>
+        <button className={buttonStyle}>
+          Communities
+        </button>
       </Link>
-
 
 
 
@@ -76,7 +78,6 @@ function NavBar() {
 
 
 
-
       <Link  href="/WhatMyHomeWorth">
       <button className={buttonStyle}>
         What's My Home Worth?
@@ -84,35 +85,26 @@ function NavBar() {
       </Link>
 
 
-
-
       {/*<Link href="/Sign-in"*/}
-
       {/*create dropdown menu*/}
-
       <div className= "dropdown button" >
         <button className={buttonStyle} onClick={toggleDropdown}>
           Login 
         </button>
-
         {/*dropdown menu*/}
-
         {isDropdownOpen && (
           <div className="absolute right-0 mt-2 bg-gray-200 rounded-md shadow-lg" >
             <Link href="/Sign-in" className="block px-4 py-2 text-gray-800 hover:bg-gray-300">Sign In<a/>
             </Link>
-
             <Link href="/Sign-up" className="block px-4 py-2 text-gray-800 hover:bg-gray-300">Create account<a/>
             </Link>
             </div>
-
             
         )}
       </div>
 
-
     </div>
+  </div>
   );
 }
-
 export default NavBar;
