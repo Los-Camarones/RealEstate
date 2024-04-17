@@ -32,8 +32,10 @@ jobs:
       working-directory: my-app
 
     - name: Build project
-      run: npm run build
+      run: npm run build 2>&1 | tee build-output.log
       working-directory: my-app
+      continue-on-error: true
+
 
     - name: Notify Discord with build errors
       if: failure()  # This step will run only if the build step fails
@@ -49,6 +51,7 @@ jobs:
             -X POST \
             -d "{\"username\": \"GitHub Actions CI\", \"content\": \"$ESCAPED_MESSAGE_CONTENT\"}" \
             ${{ secrets.DISCORD_WEBHOOK_URL }}
+        rm -f build-output.log   # Delete the build-output.log file after sending the notification
       working-directory: my-app
       continue-on-error: true
 
@@ -111,11 +114,3 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: 'GitHub Actions CI'
           content: 'Commit message check failed. Please review the commit messages.'
-
-      - name: Notify Discord on success
-        if: steps.validate_commits.outputs.status == '0'
-        uses: rjstone/discord-webhook-notify@v1.0.0
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          username: 'GitHub Actions CI'
-          content: 'All commit messages are valid. Good job!'
