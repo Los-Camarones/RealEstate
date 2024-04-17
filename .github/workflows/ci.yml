@@ -35,6 +35,12 @@ jobs:
       run: npm run build
       working-directory: my-app
 
+    # New step to print the content of the npm debug log
+    - name: Print npm debug log
+      if: failure()  # This step will run only if the previous step fails
+      run: cat /home/runner/.npm/_logs/*-debug.log
+      working-directory: my-app
+
     - name: Send notification to Discord
       uses: rjstone/discord-webhook-notify@v1.0.0
       if: always()  # This ensures the notification is sent whether the previous steps failed or succeeded
