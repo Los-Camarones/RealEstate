@@ -25,15 +25,15 @@ jobs:
     # Navigate to the directory where package.json is located before running npm commands
     - name: Install dependencies
       run: npm install
-      working-directory: RealEstate/my-app 
+      working-directory: my-app 
 
     - name: Run tests
       run: npm test
-      working-directory: RealEstate/my-app
+      working-directory: my-app
 
     - name: Build project
       run: npm run build
-      working-directory: RealEstate/my-app
+      working-directory: my-app
 
     - name: Send notification to Discord
       uses: rjstone/discord-webhook-notify@v1.0.0
