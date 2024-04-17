@@ -38,15 +38,20 @@ jobs:
     - name: Notify Discord with build errors
       if: failure()  # This step will run only if the build step fails
       run: |
-        ERROR_MESSAGE=$(grep -m 1 "Error:" build-output.log || echo "No specific errors found.")
-        FILE_PATH=$(grep -m 1 "Error:" build-output.log | cut -d ' ' -f 1 || echo "Unknown file")
-        SHORT_DESCRIPTION=$(grep -m 1 "Error:" build-output.log | cut -d ':' -f 2- || echo "Build failed with an error.")
+        ERROR_LINES=$(grep -m 1 "Error:" build-output.log || echo "No specific errors found.")
+        FILE_PATH=$(echo "$ERROR_LINES" | grep -oP '(\./[^\s]+)')
+        SHORT_DESCRIPTION=$(echo "$ERROR_LINES" | grep -oP '(Error:.+)')
+        [[ -z "$FILE_PATH" ]] && FILE_PATH="Unknown file"
+        [[ -z "$SHORT_DESCRIPTION" ]] && SHORT_DESCRIPTION="Build failed with an error."
+        MESSAGE_CONTENT="Build failed with an error in ${FILE_PATH}: ${SHORT_DESCRIPTION}. See more details in the Actions logs."
+        ESCAPED_MESSAGE_CONTENT=$(echo "$MESSAGE_CONTENT" | sed 's/"/\\"/g')
         curl -H "Content-Type: application/json" \
-             -X POST \
-             -d '{"username": "GitHub Actions CI", "content": "Build failed with an error in `'"$FILE_PATH"'`: `'"$SHORT_DESCRIPTION"'. See more details in the Actions logs."}' \
-             ${{ secrets.DISCORD_WEBHOOK_URL }}
+            -X POST \
+            -d "{\"username\": \"GitHub Actions CI\", \"content\": \"$ESCAPED_MESSAGE_CONTENT\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
       working-directory: my-app
-      continue-on-error: true  # Continue even if this step fails
+      continue-on-error: true
+
 
 
     # New step to print the content of the npm debug log
