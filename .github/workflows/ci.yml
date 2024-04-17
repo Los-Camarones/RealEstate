@@ -40,9 +40,10 @@ jobs:
     - name: Notify Discord with build errors
       if: failure()  # This step will run only if the build step fails
       run: |
-        ERROR_LINES=$(grep -m 1 "Error:" build-output.log || echo "No specific errors found.")
-        FILE_PATH=$(echo "$ERROR_LINES" | grep -oP '(\./[^\s]+)')
-        SHORT_DESCRIPTION=$(echo "$ERROR_LINES" | grep -oP '(Error:.+)')
+        ERROR_MESSAGE=$(grep "Error:" build-output.log || echo "No specific errors found.")
+        # Use awk to print the first and the rest of the line after "Error:"
+        FILE_PATH=$(echo "$ERROR_MESSAGE" | awk -F"Error:" '{print $1}' | xargs)
+        SHORT_DESCRIPTION=$(echo "$ERROR_MESSAGE" | awk -F"Error:" '{print $2}' | xargs)
         [[ -z "$FILE_PATH" ]] && FILE_PATH="Unknown file"
         [[ -z "$SHORT_DESCRIPTION" ]] && SHORT_DESCRIPTION="Build failed with an error."
         MESSAGE_CONTENT="Build failed with an error in ${FILE_PATH}: ${SHORT_DESCRIPTION}. See more details in the Actions logs."
@@ -51,9 +52,8 @@ jobs:
             -X POST \
             -d "{\"username\": \"GitHub Actions CI\", \"content\": \"$ESCAPED_MESSAGE_CONTENT\"}" \
             ${{ secrets.DISCORD_WEBHOOK_URL }}
-        rm -f build-output.log   # Delete the build-output.log file after sending the notification
+        rm -f build-output.log
       working-directory: my-app
-      continue-on-error: true
 
 
 
