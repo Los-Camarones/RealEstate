@@ -11,6 +11,7 @@ import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
 import exp from 'constants';
+import Footer from './components/Footer/footer';
 
 const background_adjust = "h-80 w-full object-cover mb-4";
 
@@ -42,7 +43,7 @@ function Page(){
 
         <Carousel autoPlay interval={2000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={false}>
           <div className= {background_adjust}>
-            <img src="/MyBR.jpg" alt="Image 4" />
+            <img src="/san-joaquin-county-ca-homes-for-sale-630-410.jpg" alt="Image 4" />
           </div>
           <div className = {background_adjust}>
             <img src="/picture2.jpg" alt="Image 1" />
@@ -52,6 +53,7 @@ function Page(){
           </div>
           <div className = {background_adjust}>
             <img src="/picture4.jpg" alt="Image 3" />
+    
           </div>
         </Carousel>
 
@@ -75,7 +77,7 @@ function Page(){
         </div>
 
 
-        {/* Rest of the page content */}
+        <Footer/>
 
       
       </div>
