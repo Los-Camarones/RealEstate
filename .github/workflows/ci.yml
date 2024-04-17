@@ -34,7 +34,7 @@ jobs:
     - name: Build project
       run: npm run build 2>&1 | tee build-output.log
       working-directory: my-app
-      continue-on-error: true
+      
 
 
     - name: Notify Discord with build errors
