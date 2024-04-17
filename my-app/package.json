@@ -18,11 +18,9 @@
     "tailwind": "^4.0.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
+
     "@types/node": "^20.12.7",
-=======
     "@types/node": "20.12.7",
->>>>>>> 810e12078041200c051106875799dfe33e906165
     "@types/react": "18.2.77",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",

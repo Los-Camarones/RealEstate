@@ -6,12 +6,11 @@ import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
 import ServiceList from './components/ServiceList/ServiceList';
-<<<<<<< HEAD
-import PhotoCarousel from './components/PhotoCarousel/PhotoCarousel';
-=======
+
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
+import exp from 'constants';
 
 const background_adjust = "h-80 w-full object-cover mb-4";
 
@@ -26,7 +25,7 @@ function Page(){
     return () => clearInterval(interval); // Clear the interval when the component unmounts
   }, []);
   
->>>>>>> 810e12078041200c051106875799dfe33e906165
+
 
   return (
     <>
@@ -61,12 +60,7 @@ function Page(){
           <SearchHomes/>
         </div>
 
-        <div>
-          {/*about lourdes section*/}
-          <HomePageContent/>
-        </div>
 
-<<<<<<< HEAD
       
       <div>
       <div>
@@ -74,32 +68,19 @@ function Page(){
         <HomePageContent/>
       </div>
       </div>
-=======
+
         {/*Service List*/}
         <div>
           <ServiceList/>
         </div>
->>>>>>> 810e12078041200c051106875799dfe33e906165
+
 
         {/* Rest of the page content */}
-        <div></div>
 
-        <PhotoCarousel/>
-      </div>
-<<<<<<< HEAD
-
-
-   {/* Footer */}
-   <Footer/>
-        
       
-  </div>
-   );
-  
-=======
+      </div>
     </>
   );
->>>>>>> 810e12078041200c051106875799dfe33e906165
 }
 
 export default Page;
