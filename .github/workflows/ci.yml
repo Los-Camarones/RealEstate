@@ -35,7 +35,7 @@ jobs:
       uses: rjstone/discord-webhook-notify@v1.0.0
       if: always()  # This ensures the notification is sent whether the previous steps failed or succeeded
       with:
-        webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
         username: 'GitHub Actions CI'
         content: >
           **CI Update**:
@@ -75,7 +75,7 @@ jobs:
         if: steps.validate_commits.outputs.status == '1'
         uses: rjstone/discord-webhook-notify@v1.0.0
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: 'GitHub Actions CI'
           content: 'Commit message check failed. Please review the commit messages.'
 
@@ -83,6 +83,6 @@ jobs:
         if: steps.validate_commits.outputs.status == '0'
         uses: rjstone/discord-webhook-notify@v1.0.0
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: 'GitHub Actions CI'
           content: 'All commit messages are valid. Good job!'
