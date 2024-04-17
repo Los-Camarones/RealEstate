@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 //This style is the style of the buttons on the navbar
@@ -6,7 +6,14 @@ import Link from 'next/link';
 const buttonStyle = "ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded";
 
 function NavBar() {
-  return (
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  }
+
+  
+    return (
     <div className="flex items-center bg-gray-500">
 
 
@@ -79,12 +86,29 @@ function NavBar() {
 
 
 
-      <Link href="/Sign-in">
-        <button className={buttonStyle}>
-          Login
-        </button>
-      </Link>
+      {/*<Link href="/Sign-in"*/}
 
+      {/*create dropdown menu*/}
+
+      <div className= "dropdown button" >
+        <button className={buttonStyle} onClick={toggleDropdown}>
+          Login 
+        </button>
+
+        {/*dropdown menu*/}
+
+        {isDropdownOpen && (
+          <div className="absolute right-0 mt-2 bg-gray-200 rounded-md shadow-lg" >
+            <Link href="/Sign-in" className="block px-4 py-2 text-gray-800 hover:bg-gray-300">Sign In<a/>
+            </Link>
+
+            <Link href="/Sign-up" className="block px-4 py-2 text-gray-800 hover:bg-gray-300">Create account<a/>
+            </Link>
+            </div>
+
+            
+        )}
+      </div>
 
 
     </div>
