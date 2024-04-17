@@ -7,6 +7,7 @@ import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
 import ServiceList from './components/ServiceList/ServiceList';
+import PhotoCarousel from './components/PhotoCarousel/PhotoCarousel';
 
 function Page(){ // Assuming data is passed as a prop (modify if needed)
   return (
@@ -47,8 +48,10 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
 
       
       <div>
+      <div>
         {/*about lourdes section*/}
         <HomePageContent/>
+      </div>
       </div>
 
 
@@ -62,6 +65,7 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
       {/* Rest of the page content */}
       <div>
 
+        <PhotoCarousel/>
       </div>
 
 
@@ -69,7 +73,7 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
    <Footer/>
         
       
-      </div>
+  </div>
    );
   
 }

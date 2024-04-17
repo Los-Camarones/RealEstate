@@ -1,6 +1,22 @@
 import {Link} from 'react-router-dom'
+import supabase from '../config/supabaseClient'
+const HomesCard = ({home, onDelete}) => {
 
-const HomesCard = ({home}) => {
+    const handleDelete = async () => {
+        const {data, error} = await supabase
+        .from('Homes')
+        .delete()
+        .eq('id', home.id)
+        
+        if(error) {
+            console.log(error)
+        }
+
+        if(data) {
+            console.log(data);
+            onDelete(home.id)
+        }
+    }
     return (
        <div className="Homes-card">
             <h3>{home.ListingNumber}</h3>
@@ -20,6 +36,7 @@ const HomesCard = ({home}) => {
                 <Link to ={'/' + home.id}>
                     <i className="material-icons">edit</i>
                 </Link>
+                <i className="material-icons" onClick = {handleDelete}>delete</i>
             </div>
        </div>
     )

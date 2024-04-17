@@ -1,9 +1,9 @@
 import {BrowserRouter, Routes, Route, Link } from "react-router-dom"
 
 //pages
-import Databases from "my-app/pages/Databases"
-import Create from "my-app/pages/Create"
-import Update from "my-app/pages/Update"
+import Databases from "./pages/Databases"
+import Create from "./Pages/CreateHomes"
+import Update from "./Pages/Update"
 
 function App() {
     return (
