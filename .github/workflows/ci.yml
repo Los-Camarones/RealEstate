@@ -35,11 +35,29 @@ jobs:
       run: npm run build
       working-directory: my-app
 
+    - name: Notify Discord with build errors
+      if: failure()  # This step will run only if the build step fails
+      run: |
+        ERROR_MESSAGE=$(grep -m 1 "Error:" build-output.log || echo "No specific errors found.")
+        FILE_PATH=$(grep -m 1 "Error:" build-output.log | cut -d ' ' -f 1 || echo "Unknown file")
+        SHORT_DESCRIPTION=$(grep -m 1 "Error:" build-output.log | cut -d ':' -f 2- || echo "Build failed with an error.")
+        curl -H "Content-Type: application/json" \
+             -X POST \
+             -d '{"username": "GitHub Actions CI", "content": "Build failed with an error in `'"$FILE_PATH"'`: `'"$SHORT_DESCRIPTION"'. See more details in the Actions logs."}' \
+             ${{ secrets.DISCORD_WEBHOOK_URL }}
+      working-directory: my-app
+      continue-on-error: true  # Continue even if this step fails
+
+
     # New step to print the content of the npm debug log
     - name: Print npm debug log
       if: failure()  # This step will run only if the previous step fails
-      run: cat /home/runner/.npm/_logs/*-debug.log
+      run: |
+        ls -l /home/runner/.npm/_logs/ || echo "No npm log files found."
+        latest_log=$(ls -t /home/runner/.npm/_logs/ | head -n1)
+        cat "/home/runner/.npm/_logs/$latest_log" || echo "Unable to print npm log."
       working-directory: my-app
+      continue-on-error: true
 
     - name: Send notification to Discord
       uses: rjstone/discord-webhook-notify@v1.0.0
@@ -60,7 +78,6 @@ jobs:
   # Checks to see if commit message follows the format of including teh story number
   check-commit-message:
     runs-on: ubuntu-latest
-    needs: build-and-test  # This ensures that commit message validation waits for the build and test job to complete
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -69,17 +86,18 @@ jobs:
         id: validate_commits
         run: |
           echo "Checking commit messages..."
-          pattern='^#[A-Z][A-Z]-[0-9][0-9]+$'  # Adjust pattern to match your project's commit message format
+          pattern='^DP-[0-9]+ .+$'  # Adjusted pattern to match the new commit message format
           error_flag=0
           for commit_message in $(git log --format=%s ${{ github.event.before }}..${{ github.event.after }}); do
               echo "Commit message: $commit_message"
               if ! [[ "$commit_message" =~ $pattern ]]; then
                   echo "::error ::Invalid commit message: \"$commit_message\""
-                  echo "Commit messages must match the pattern '#[A-Z][A-Z]-[0-9][0-9]+', e.g., #AA-101."
+                  echo "Commit messages must match the pattern 'DP-<number> <text>', e.g., DP-123 Any text here."
                   error_flag=1
               fi
           done
           echo "::set-output name=status::${error_flag}"
+
 
       - name: Notify Discord on failure
         if: steps.validate_commits.outputs.status == '1'
