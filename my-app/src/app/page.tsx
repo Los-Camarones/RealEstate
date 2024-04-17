@@ -1,51 +1,72 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import NavBar from './components/Navbar/navbar';
-import Footer from './components/Footer/footer';
 import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
 import ServiceList from './components/ServiceList/ServiceList';
+<<<<<<< HEAD
 import PhotoCarousel from './components/PhotoCarousel/PhotoCarousel';
+=======
+import {Carousel} from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import SocialMediaLinks from './components/SocialMedia/socialmedia';
 
-function Page(){ // Assuming data is passed as a prop (modify if needed)
+const background_adjust = "h-80 w-full object-cover mb-4";
+
+function Page(){ 
+
+  const [selectedItem, setSelectedItem] = useState(0);
+  useEffect(() => { // Auto play the carousel
+    const interval = setInterval(() => {
+      setSelectedItem((prevSelectedItem) => (prevSelectedItem + 1) % 3); // Replace 3 with the number of images
+    }, 3000); // Change the number to adjust the speed of the carousel
+
+    return () => clearInterval(interval); // Clear the interval when the component unmounts
+  }, []);
+  
+>>>>>>> 810e12078041200c051106875799dfe33e906165
+
   return (
-    <div> {/* Main container */}
-      <div className="flex justify-between p-4 bg-gray-500 text-white">
-        <div className="flex items-center">
-          <button>
-            <Image src="/logo_.png" alt="logo" width={150} height={150} />
-          </button>
-        </div>  
-        <NavBar />
-      </div>
-     
-      {/* Background photo */}
-      <div style={{
-        backgroundImage: "url('/MyBR.jpg')", // background image
-        backgroundSize: 'cover', // Cover the entire area of the div
-        backgroundPosition: 'center', // Center the background image
-        height: '100vh', // Make it take the full height of the viewport
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {/* Text Overlay */}
-        <div className="overlay-content" style={{ textAlign: 'center', color: '#fff' }}> {/* Adjust the color based on your background */}
-          <h1>Transform your Dreams Into a Luxurious Address!</h1>
-          <h2>Lourdes Mendoza</h2>
-          <h3>The 0007 Real Estate Agent</h3>
-          <p>Powered by BIG BLOCK REALTY NORTH</p>
+    <>
+      <SocialMediaLinks/>
+      <div> {/* Main container */}
+        <div className="flex justify-between p-4 bg-gray-500 text-white">
+          <div className="flex items-center">
+            <button>
+              <Image src="/logo_.png" alt="logo" width={150} height={150} />
+            </button>
           </div>
+          <NavBar />
+        </div>
+
+        <Carousel autoPlay interval={2000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={false}>
+          <div className= {background_adjust}>
+            <img src="/MyBR.jpg" alt="Image 4" />
+          </div>
+          <div className = {background_adjust}>
+            <img src="/picture2.jpg" alt="Image 1" />
+          </div>
+          <div className = {background_adjust}>
+            <img src="/picture3.jpg" alt="Image 2" />
+          </div>
+          <div className = {background_adjust}>
+            <img src="/picture4.jpg" alt="Image 3" />
+          </div>
+        </Carousel>
 
         <div>
-        {/*Search component*/}
-        <SearchHomes/>
+          {/*Search component*/}
+          <SearchHomes/>
         </div>
-      </div>
 
+        <div>
+          {/*about lourdes section*/}
+          <HomePageContent/>
+        </div>
 
+<<<<<<< HEAD
       
       <div>
       <div>
@@ -53,20 +74,19 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
         <HomePageContent/>
       </div>
       </div>
+=======
+        {/*Service List*/}
+        <div>
+          <ServiceList/>
+        </div>
+>>>>>>> 810e12078041200c051106875799dfe33e906165
 
-
-      {/*Service List*/}
-      <div>
-        
-        <ServiceList/>
-      </div>
-
-
-      {/* Rest of the page content */}
-      <div>
+        {/* Rest of the page content */}
+        <div></div>
 
         <PhotoCarousel/>
       </div>
+<<<<<<< HEAD
 
 
    {/* Footer */}
@@ -76,8 +96,10 @@ function Page(){ // Assuming data is passed as a prop (modify if needed)
   </div>
    );
   
+=======
+    </>
+  );
+>>>>>>> 810e12078041200c051106875799dfe33e906165
 }
 
 export default Page;
-
-
