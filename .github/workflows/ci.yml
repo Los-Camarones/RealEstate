@@ -37,8 +37,8 @@ jobs:
 
     # Push Results to Discord
     - name: Send notification to Discord
-      uses: rjstone/discord-webhook-notify@v1.0.0
       if: always()  # This ensures the notification is sent whether the previous steps failed or succeeded
+      uses: rjstone/discord-webhook-notify@v1.0.0
       with:
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
         username: 'GitHub Actions CI'
@@ -50,7 +50,9 @@ jobs:
           - **Branch**: ${{ github.ref_name }}
           - **Commit**: ${{ github.sha }}
           - **Actor**: ${{ github.actor }}
+          - **Commit Author**: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.commit ? github.event.pull_request.head.commit.author.name : 'N/A' }}
           - **Event Name**: ${{ github.event_name }}
+
 
   # Checks to see if commit message follows the format of including the story number
   check-commit-message:
@@ -58,29 +60,30 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        
+
       - name: Validate commit messages
-        id: validate_commits
-        run: |  
+        run: |
           echo "Checking commit messages..."
           pattern='^DP-[0-9]+ .+$'
+          git fetch --prune --unshallow
+          commit_messages=$(git log --no-merges --format="%s" origin/main..HEAD)
+          echo "$commit_messages"
           error_flag=0
-
-          # This will ensure that spaces in commit messages are handled properly    
-          IFS=$'\n' 
-          for commit_message in $(git log --pretty=format:"%s" ${{ github.event.before }}..${{ github.event.after }}); do
-              echo "Commit message: $commit_message"
-              if ! [[ "$commit_message" =~ $pattern ]]; then
-                  echo "::error ::Invalid commit message: \"$commit_message\""
-                  echo "Commit messages must match the pattern 'DP-<number> <text>', e.g., DP-123 Any text here."
-                  error_flag=1
-                  break # Exit the loop on the first error
-              fi
-          done
-          echo "error_flag=${error_flag}" >> $GITHUB_ENV
+          while IFS= read -r commit_message; do
+            if ! [[ $commit_message =~ $pattern ]]; then
+              echo "Invalid commit message: \"$commit_message\""
+              echo "Commit messages must match the pattern 'DP-<number> <text>', e.g., DP-123 Any text here."
+              error_flag=1
+              break
+            fi
+          done <<< "$commit_messages"
+          if [ $error_flag -ne 0 ]; then
+            echo "::error ::Some commit messages do not follow the required format."
+            exit 1
+          fi
 
       - name: Notify Discord on failure
-        if: ${{ env.error_flag == '1' }}
+        if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v1.0.0
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
