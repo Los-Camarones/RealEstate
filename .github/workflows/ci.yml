@@ -35,34 +35,22 @@ jobs:
       run: npm run build 
       working-directory: my-app
 
-    # Discord notification Section
-    - name: Prepare Discord message
-      if: always()
-      run: |
-        commit_author="N/A"
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
-          commit_author="${{ github.event.pull_request.head.commit.author.name }}"
-        fi
-        echo "CI Update:" >> discord_message.txt
-        echo "- Repository: ${{ github.repository }}" >> discord_message.txt
-        echo "- Run: [View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> discord_message.txt
-        echo "- Status: ${{ job.status }}" >> discord_message.txt
-        echo "- Branch: ${{ github.ref_name }}" >> discord_message.txt
-        echo "- Commit: ${{ github.sha }}" >> discord_message.txt
-        echo "- Actor: ${{ github.actor }}" >> discord_message.txt
-        echo "- Commit Author: $commit_author" >> discord_message.txt
-        echo "- Event Name: ${{ github.event_name }}" >> discord_message.txt
-      env:
-        DISCORD_MESSAGE: $(< discord_message.txt)
-
+    # Push Results to Discord
     - name: Send notification to Discord
-      if: always()
       uses: rjstone/discord-webhook-notify@v1.0.0
+      if: always()  # This ensures the notification is sent whether the previous steps failed or succeeded
       with:
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
         username: 'GitHub Actions CI'
-        text: ${{ env.DISCORD_MESSAGE }}
-
+        text: >
+          **CI Update**:
+          - **Repository**: ${{ github.repository }}
+          - **Run**: [View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          - **Status**: ${{ job.status }}
+          - **Branch**: ${{ github.ref_name }}
+          - **Commit**: ${{ github.sha }}
+          - **Actor**: ${{ github.actor }}
+          - **Event Name**: ${{ github.event_name }}
 
   # Checks to see if commit message follows the format of including the story number
   check-commit-message:
