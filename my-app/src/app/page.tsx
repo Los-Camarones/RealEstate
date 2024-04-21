@@ -10,9 +10,7 @@ import ServiceList from './components/ServiceList/ServiceList';
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
-import exp from 'constants';
-import PhotoCarousel from './components/PhotoCarousel/PhotoCarousel';
-import footer from './components/Footer/footer'
+import PhotoGallery from './components/PhotoGallery/PhotoGallery';
 
 const background_adjust = "h-80 w-full object-cover mb-4";
 
