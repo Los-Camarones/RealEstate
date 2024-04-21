@@ -19,15 +19,15 @@ const RealtorCard = ({realtor}) => {
     }
     return (
        <div className="Realtor-card">
-       <h3>{home.FirstName}</h3>
-        <p>{home.LastName}</p>
-        <p>{home.EmailAddress}</p>
-        <p>{home.PhoneNumber}</p>
-        <p>{home.Agency}</p>
-        <p>{home.Address}</p>
-        <p>{home.City}</p>
-        <p>{home.State}</p>
-        <p>{home.ZipCode}</p>
+       <h3>{realtor.FirstName}</h3>
+        <p>{realtor.LastName}</p>
+        <p>{realtor.EmailAddress}</p>
+        <p>{realtor.PhoneNumber}</p>
+        <p>{realtor.Agency}</p>
+        <p>{realtor.Address}</p>
+        <p>{realtor.City}</p>
+        <p>{realtor.State}</p>
+        <p>{realtor.ZipCode}</p>
         <div className="buttons">
                 <Link to ={'/' + realtor.id}>
                     <i className="material-icons">edit</i>

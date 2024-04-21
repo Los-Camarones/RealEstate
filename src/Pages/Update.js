@@ -31,7 +31,7 @@ const Update = () => {
         const {data, error} = await supabase
             .from('Homes')
             .update({size, address, status, price, yearBuilt, numberRooms, numberBathrooms,
-            anemities, city, state, zipcode})
+            anemities, city, state, zipCode})
             .eq('id', id)
             .select()
 
@@ -62,7 +62,6 @@ const Update = () => {
             if(data) {
                 setSize(data.size)
                 setAddress(data.address)
-                setType(data.Type)
                 setStatus(data.Status)
                 setPrice(data.price)
                 setYearBuilt(data.YearBuilt)

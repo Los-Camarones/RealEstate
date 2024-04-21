@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {useNavigate} from 'react-router-dom'
-import supabase from "./config/supabaseClient"
+import supabase from "../config/supabaseClient"
 
-const CreateUser = () => {
+const CreateRealtor = () => {
     const navigate = useNavigate
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
