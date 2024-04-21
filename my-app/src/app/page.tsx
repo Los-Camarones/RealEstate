@@ -106,6 +106,7 @@ function Page(){
           <center>
             <strong>
               <h1>Explore by County</h1>
+              <PhotoGallery/>
             </strong>
           </center>
           
