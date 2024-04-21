@@ -11,8 +11,7 @@ import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
 import exp from 'constants';
-import PhotoCarousel from './components/PhotoCarousel/PhotoCarousel';
-import footer from './components/Footer/footer'
+
 
 const background_adjust = "h-80 w-full object-cover mb-4";
 
@@ -44,7 +43,9 @@ function Page(){
 
         <Carousel autoPlay interval={3000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
           <div className= {background_adjust}>
+
             <img src="/MyBR.jpg" alt="Image 1" />
+
           </div>
           <div className = {background_adjust}>
             <img src="/picture2.jpg" alt="Image 2" />
@@ -53,6 +54,7 @@ function Page(){
             <img src="/picture3.jpg" alt="Image 3" />
           </div>
           <div className = {background_adjust}>
+
             <img src="/picture4.jpg" alt="Image 4" />
           </div>
           <div className = {background_adjust}>
@@ -78,6 +80,10 @@ function Page(){
           </div>
           <div className = {background_adjust}>
             <img src="/f8-1813109-1838002-12.jpg" alt="Image 12" />
+
+            <img src="/picture4.jpg" alt="Image 3" />
+    
+
           </div>
         </Carousel>
 
@@ -100,6 +106,10 @@ function Page(){
           <ServiceList/>
         </div>
 
+
+
+
+        <Footer/>
 
 
         {/* Rest of the page content */}
