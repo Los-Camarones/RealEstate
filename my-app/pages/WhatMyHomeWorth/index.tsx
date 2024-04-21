@@ -1,8 +1,9 @@
 import React from 'react';
-
+import NavBar from '../../src/app/components/Navbar/navbar';
 function WhatMyHomeWorth() {
     return (
         <div>
+            <NavBar />
             <h1>What's My Home Worth</h1>
             <p>
                 List for nearby houses in the same region of the location.

@@ -1,6 +1,9 @@
+import NavBar from "../../src/app/components/Navbar/navbar";
+
 const Homeworth = () => {
     return (
         <div>
+            <NavBar />
            <h1>
             user will be able to input home address and get an estimate value.
            </h1>

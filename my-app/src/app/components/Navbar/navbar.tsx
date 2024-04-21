@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import './navbar.css';
 
 //This style is the style of the buttons on the navbar
 //TODO: We need a better way to manage all styles so they are easily reusable in other pages without having to retype them
 const buttonStyle = "ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded";
+
 
 function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

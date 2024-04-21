@@ -1,10 +1,14 @@
 
 import React from 'react';
+import NavBar from '../../src/app/components/Navbar/navbar';
+
 
 
 function About() {
     return (
+        
         <div>
+            <NavBar />
         <h1>About Me</h1>
         <p>
         I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
@@ -24,6 +28,7 @@ function About() {
         about me. It is appreciated.
         </p>
         </div>
+        
     );
     }
 
