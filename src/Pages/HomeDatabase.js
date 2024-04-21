@@ -28,6 +28,8 @@ const Databases = () => {
             
             const {data, error} = await supabase
                 .from('Homes')
+                .from('Realtor')
+                .from('User Information')
                 .select() //get all data
 
                 if(error) {
