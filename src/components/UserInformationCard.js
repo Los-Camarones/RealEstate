@@ -4,7 +4,7 @@ import supabase from '../config/supabaseClient'
 const UserInformationCard = ({user}) => {
     const handleDelete = async () => {
         const {data, error} = await supabase
-        .from('Realtor')
+        .from('User Information')
         .delete()
         .eq('id', realtor.id)
         

@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route, Link } from "react-router-dom"
 
 //pages
-import Databases from "./pages/Databases"
+import Databases from "./Pages/Databases"
 import Create from "./Pages/CreateHomes"
 import Update from "./Pages/Update"
 
@@ -21,3 +21,5 @@ function App() {
         </BrowserRouter>
     );
 }
+
+export default App;
