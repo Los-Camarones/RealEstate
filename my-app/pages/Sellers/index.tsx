@@ -20,9 +20,9 @@ const Sellers = () => {
                 </div>
                 <NavBar/>
             </div>
-        <div>
+            <div>
             < StaticImageTechJAF/>
-        </div>
+            </div>
 
 
 
