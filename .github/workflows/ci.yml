@@ -26,6 +26,11 @@ jobs:
     - name: Install dependencies
       run: npm install
       working-directory: my-app 
+    
+    # Linting 
+    - name: Lint code
+      run: npm run lint
+      working-directory: my-app 
 
     - name: Run tests         # Currently No tests yet 
       run: npm test
