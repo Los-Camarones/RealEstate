@@ -4,7 +4,7 @@ import './navbar.css';
 
 //This style is the style of the buttons on the navbar
 //TODO: We need a better way to manage all styles so they are easily reusable in other pages without having to retype them
-const buttonStyle = "ml-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded";
+const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
 
 
 function NavBar() {
@@ -16,7 +16,7 @@ function NavBar() {
   
     {/*Return a 'menu' icon for the navabar that collapses all our buttons. This is only for mobile users*/}
     return (
-    <div className="bg-gray-500 z-50">
+    <div className="bg-transparent z-50">
       <div className="flex justify-between items-center px-4 py-2 md:px-6">
         <div className="md:hidden">
           <button className={buttonStyle} onClick={toggleDropdown}>Menu</button>
@@ -25,7 +25,7 @@ function NavBar() {
 
 
     {/*If a user is a mobiler user, it will automatically dispaly a hamburger menu. If on pc it will keep hidden */}
-    <div className={`md:flex md:justify-end ${isDropdownOpen ? 'block' : 'hidden'} md:bg-gray-500 md:px-4 md:py-2`}>
+    <div className={`md:flex md:justify-end ${isDropdownOpen ? 'block' : 'hidden'} bg-transparent md:px-4 md:py-2`}>
         <Link href="/"> 
           <button className={buttonStyle}>
           Home

@@ -11,6 +11,7 @@ import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
 import exp from 'constants';
+import Footer from './components/Footer/footer';
 
 
 const background_adjust = "h-80 w-full object-cover mb-4";
@@ -32,14 +33,16 @@ function Page(){
     <>
       <SocialMediaLinks/>
       <div> {/* Main container */}
-        <div className="flex justify-between p-4 bg-gray-500 text-white">
-          <div className="flex items-center">
-            <button>
-              <Image src="/logo_.png" alt="logo" width={150} height={150} />
-            </button>
-          </div>
-          <NavBar />
-        </div>
+      <div className="navbar flex justify-between p-4 bg-transparent text-white">
+  <div className="flex items-center">
+    <button>
+      <Image src="/logo_.png" alt="logo" width={150} height={150} />
+    </button>
+  </div>
+  <NavBar />
+</div>
+        
+        
 
         <Carousel autoPlay interval={3000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
           <div className= {background_adjust}>
@@ -50,9 +53,7 @@ function Page(){
           <div className = {background_adjust}>
             <img src="/picture2.jpg" alt="Image 2" />
           </div>
-          <div className = {background_adjust}>
-            <img src="/picture3.jpg" alt="Image 3" />
-          </div>
+        
           <div className = {background_adjust}>
 
             <img src="/picture4.jpg" alt="Image 4" />
@@ -86,6 +87,7 @@ function Page(){
 
           </div>
         </Carousel>
+      
 
         <div>
           {/*Search component*/}
@@ -107,10 +109,7 @@ function Page(){
         </div>
 
 
-
-
-        <Footer/>
-
+      
 
         {/* Rest of the page content */}
         <div>
