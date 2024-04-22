@@ -35,6 +35,18 @@ jobs:
       run: npm run build 
       working-directory: my-app
 
+    # Needed to handle PR Error in getting proper message properties
+    - name: Get author name
+      run: |
+        if [ "${{ github.event_name }}" = "push" ]; then
+          echo "AUTHOR_NAME=$(jq --raw-output '.pusher.name' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+        elif [ "${{ github.event_name }}" = "pull_request" ]; then
+          echo "AUTHOR_NAME=$(jq --raw-output '.pull_request.user.login' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+        fi
+      env:
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+
+
     # Push Results to Discord
     - name: Send notification to Discord
       uses: rjstone/discord-webhook-notify@v1.0.0
@@ -49,5 +61,5 @@ jobs:
           - **Status**: ${{ job.status }}
           - **Branch**: ${{ github.ref_name }}
           - **Commit**: ${{ github.sha }}
-          - **Actor**: ${{ github.actor }}
+          - **Actor**: $${{ env.AUTHOR_NAME }}
           - **Event Name**: ${{ github.event_name }}
