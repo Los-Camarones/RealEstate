@@ -110,14 +110,7 @@ function Page(){
         </div>
 
 
-<<<<<<< HEAD
-
-
-       
-
-=======
       
->>>>>>> e5ce05741d669fb21bec304bb9cbe8ae3f0f3f9e
 
         {/* Rest of the page content */}
         <div>
