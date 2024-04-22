@@ -1,0 +1,24 @@
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+.photo {
+  width: calc(33.33% - 10px); /* 33.33% width with margin */
+  margin-bottom: 20px; /* Add some bottom margin between rows */
+  transition: transform 0.2s ease; /* Define transition effect for transform property */
+}
+
+.photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.photo:hover {
+  transform: scale(1.05); /* Scale up the image by 5% on hover */
+}
+
+
+  

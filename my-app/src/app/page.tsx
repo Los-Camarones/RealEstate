@@ -6,12 +6,13 @@ import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
 import SearchHomes from './components/SearchHomes/SearchHomes';
 import ServiceList from './components/ServiceList/ServiceList';
-
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from './components/SocialMedia/socialmedia';
 import exp from 'constants';
-import Footer from './components/Footer/footer';
+
+import PhotoGallery from './components/PhotoGallery/PhotoGallery';
+
 
 
 const background_adjust = "h-80 w-full object-cover mb-4";
@@ -117,13 +118,14 @@ function Page(){
           <center>
             <strong>
               <h1>Explore by County</h1>
+              <PhotoGallery/>
             </strong>
           </center>
           
         </div>
       
         
-          <footer/>
+    
         <div style={{ textAlign: 'center' }}>
         <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate.</p>
         <p style={{ color: 'green' ,padding: '10px' }}>Powered by Los Camarones. </p>
