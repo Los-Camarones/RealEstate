@@ -8,9 +8,11 @@ import StaticImageTechJAF from "../../src/app/components/Static Image Tech JAF/S
 function About() {
     return (
 
-        <>
-            <div>
-                <NavBar/>
+<div>
+            
+            
+        <NavBar /> 
+        <div style={{ paddingTop: '6rem' }}> {/* Inline style for testing purposes */}
             </div>
             <div>
                 <StaticImageTechJAF/>
@@ -102,7 +104,8 @@ function About() {
                 </div>
             </div>
 
-        </>
+        
+</div>
 
         
     );
