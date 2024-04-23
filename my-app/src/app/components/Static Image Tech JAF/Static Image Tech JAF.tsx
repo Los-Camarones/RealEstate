@@ -6,7 +6,7 @@ const StaticImageTechJAF = ()  => {
     return (
 
         <div className="image_tech_frame">
-            <div className="IntroMainpage w-max h-max relative flex-col justify-items-center items center inline-flex">
+            <div className="IntroMainpage w-max h-max absolute flex-col justify-items-center item inline-flex">
                 <div
                     className="LourdesMendoza text-white text-6xl font-bold font-['Inter'] leading-10 tracking-widest">Selling
                 </div>

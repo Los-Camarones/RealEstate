@@ -34,10 +34,12 @@ body {
   text-align: center;
   
 }
-.image_tech {
-  display:block;
-  object-position: 50.54176978568796% 66.41925150402375%
-}
+  .About{
+    position: relative;
+    width: 100%;
+    display: block;
+  }
+
 .image_tech_frame{
   display:block;
   background-image: url("../../public/322 Tomato Alley Front Room Sofa View.jpg");
