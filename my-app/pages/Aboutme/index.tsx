@@ -5,8 +5,6 @@ import StaticImageTechJAF from "../../src/app/components/Static Image Tech JAF/S
 
 
 
-
-
 function About() {
     return (
 
@@ -106,6 +104,7 @@ function About() {
 
         </>
 
+        
     );
 }
 

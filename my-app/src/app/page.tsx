@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import NavBar from './components/Navbar/navbar';
 import HomePageContent from './components/HomePageContent/HomePageContent';
 import "./globals.css";
@@ -12,6 +11,7 @@ import SocialMediaLinks from './components/SocialMedia/socialmedia';
 import exp from 'constants';
 
 import PhotoGallery from './components/PhotoGallery/PhotoGallery';
+import ScheduleaTourBotton from './components/SchTourbotton/scheduleatourbotton';
 
 
 
@@ -34,16 +34,9 @@ function Page(){
     <>
       <SocialMediaLinks/>
       <div> {/* Main container */}
-      <div className="navbar flex justify-between p-4 bg-transparent text-white">
-  <div className="flex items-center">
-    <button>
-      <Image src="/logo_.png" alt="logo" width={150} height={150} />
-    </button>
-  </div>
-  <NavBar />
-</div>
-        
-        
+        {/* Navbar */}
+      <NavBar />
+        {/* Carousel */}
 
         <Carousel autoPlay interval={3000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
           <div className= {background_adjust}>
@@ -109,7 +102,10 @@ function Page(){
           <ServiceList/>
         </div>
 
-
+        {/*Schedule a tour button*/}
+        <div>
+          <ScheduleaTourBotton/>
+        </div>
       
 
         {/* Rest of the page content */}

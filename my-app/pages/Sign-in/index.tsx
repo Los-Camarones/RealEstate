@@ -31,8 +31,7 @@ import React from "react";
 // pages/login.tsx in your Next.js project
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
-//import "./style.css";
-//import "./globals.css";
+import "../../src/app/globals.css";
 
 const LoginPage: React.FC = () => {
             
@@ -54,7 +53,7 @@ const LoginPage: React.FC = () => {
         <>
         
         <NavBar />
-    
+      <div style={{ paddingTop: '6rem' }}> {/* Inline style for testing purposes */}
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="max-w-lg w-full space-y-8">
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -135,6 +134,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
     </div>
+  </div>
     </>
   );
 };

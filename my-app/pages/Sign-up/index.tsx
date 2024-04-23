@@ -28,8 +28,9 @@
  * This component is just the front-end part and requires backend integration for full
  * functionality.
  */
-import NavBar from "../../src/app/components/Navbar/navbar";
 
+import NavBar from "../../src/app/components/Navbar/navbar";
+import "../../src/app/globals.css";
 import React, { useState } from 'react';
 // Local state to store form field values
 const SignUp: React.FC = () => {
@@ -48,6 +49,7 @@ const SignUp: React.FC = () => {
             <>
         
         <NavBar />
+          <div style={{ paddingTop: '6rem' }}> {/* Inline style for testing purposes */}
     <div className="sign-up-container">
       <form onSubmit={handleSubmit}>
         <h2>Create Your Account now</h2>
@@ -105,6 +107,7 @@ const SignUp: React.FC = () => {
         </ul>
       </div>
     </div>
+  </div>
     </>
   );
 };
