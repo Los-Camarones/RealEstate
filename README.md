@@ -38,7 +38,7 @@ Los Camarones is comprised of the following developers:
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
 - Eric Delgado
-- Mohamed Ahmed
+- [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and checkout my [Prortfolio](https://mohamedahmedcs.github.io/)
 - Elizabeth Hernandez
 
 ## Overview
