@@ -35,7 +35,7 @@ Los Camarones is comprised of the following developers:
 - Julian Flores
 - [Julian Pulido](https://github.com/julianpulido272) connect with me on LinkedIn [here](https://www.linkedin.com/in/julianpulido707/)!
 - Wendy Le
-- [xuanxuan Miao] (https://github.com/xuanxuan002) 
+- [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
 - Eric Delgado
 - Mohamed Ahmed
