@@ -39,10 +39,10 @@ Los Camarones is comprised of the following developers:
 - Kumar Priyanshu Raj
 - Eric Delgado
 - [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and checkout my [Prortfolio](https://mohamedahmedcs.github.io/)
-- Elizabeth Hernandez
+- [Elizabeth Hernandez](https://github.com/elizabethhernandez5)
 
 ## Overview
-Project Domus is a personalized real estate website for Lourdes Mendoza, an independent realtor who is currently affiliated with Big Block Realty North. The purpose of this website is to allow potential home buyers to search and virtually view properties, schedule appointments with Lourdes, and conduct market research.
+Project Domus is a personalized real estate website for Lourdes Mendoza, an independent realtor who is currently affiliated with Big Block Realty North. The purpose of this website is to allow potential home buyers to search and virtually view properties, schedule appointments with Lourdes, and conduct market research. These features enhance efficiency, reduce environmental impact, and improve overall satisfaction, benefiting the community.
 
 ## How To Use
 
@@ -82,11 +82,16 @@ $ npm start
 ### Database
 
 #### Entity Relationship Diagram
-TODO: ADD image
+
+#TODO: add image
+
+
+
+
 
 #### Relational Mapping Diagram
-TODO: ADD image
 
+![ERD Web-page-0](https://github.com/Los-Camarones/RealEstate/assets/149759914/88afa6e7-cdd6-44c5-843f-a923d8571392)
 
 ### Prototype
 
