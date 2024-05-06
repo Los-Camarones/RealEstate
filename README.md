@@ -37,7 +37,7 @@ Los Camarones is comprised of the following developers:
 - Wendy Le
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
-- Eric Delgado
+- [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](www.linkedin.com/in/eric-delgado-madrigal)!
 - [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and checkout my [Prortfolio](https://mohamedahmedcs.github.io/)
 - [Elizabeth Hernandez](https://github.com/elizabethhernandez5)
 
@@ -67,15 +67,33 @@ $ npm start
 
 
 ## Testing
+# Set up Jest for unit testing:
+1. Install Jest using npm:
+    npm install --save-dev jest
+2. Create a configuration file for Jest (jest.config.js)
+3. Write unit tests for each component or module in separate test files (e.g., component.test.js).
 
-```
-#TODO: ERIC
-```
+# Set up Selenium for UI testing:
+1. Install Selenium WebDriver for JavaScript:
+    npm install --save-dev selenium-webdriver
+2. Set up browsers for testing (e.g., ChromeDriver, GeckoDriver).
+3. Write test scripts to automate UI interactions and validate UI flows.
+4. Integrate Selenium tests to run as part of your continuous integration pipeline.
+
 
 ## Deployment
-```bash
-#TODO: ERIC
-```
+# Set up AWS deployment with Terraform and Kubernetes:
+1. Set up Terraform:
+    - Install Terraform if not already installed.
+    - Create Terraform configuration files to define the required infrastructure on AWS.
+    - Use the 'terraform init' and 'terraform apply' commands to provision the AWS resources.
+
+2. Set up Kubernetes:
+    - Ensure kubectl is installed and configured to interact with your AWS Kubernetes cluster.
+    - Define Kubernetes deployment and service configurations in YAML files.
+    - Use kubectl commands to manage resources, e.g., 'kubectl apply -f deployment.yaml' to deploy applications.
+
+3. Integrate deployment process into CI/CD pipeline:
 
 ## Documentation
 
