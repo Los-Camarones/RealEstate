@@ -34,7 +34,7 @@
 Los Camarones is comprised of the following developers:
 - Julian Flores
 - [Julian Pulido](https://github.com/julianpulido272) connect with me on LinkedIn [here](https://www.linkedin.com/in/julianpulido707/)!
-- Wendy Le
+- [Wendy Le](https://github.com/LushRamen)
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
 - [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](https://www.linkedin.com/in/eric-delgado-madrigal)!
@@ -98,6 +98,7 @@ $ npm start
 ## Documentation
 
 ### Database
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/d42bb53a-a5d1-4013-bc8f-b5dac3f479f4)
 
 #### Entity Relationship Diagram
 
