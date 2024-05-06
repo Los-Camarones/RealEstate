@@ -37,7 +37,7 @@ Los Camarones is comprised of the following developers:
 - Wendy Le
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
-- [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](www.linkedin.com/in/eric-delgado-madrigal)!
+- [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](https://www.linkedin.com/in/eric-delgado-madrigal)!
 - [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and checkout my [Prortfolio](https://mohamedahmedcs.github.io/)
 - [Elizabeth Hernandez](https://github.com/elizabethhernandez5)
 
