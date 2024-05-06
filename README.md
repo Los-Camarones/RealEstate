@@ -98,8 +98,62 @@ $ npm start
 #### Julian Flores: Add flowchart, add wix, whatevs looks good
 
 
-## Jira Milestones
-TODO: Add timeline sections for each sprint. add expected date to be completed.
+## Timeline
+## Sprint 3 (3/25/24 - 4/7/24)
+* Front end: Homepage Creation 
+	+ Landing page, navigation bar created
+* Back end: Supabase Database, CI/CD created
+	
+
+## Sprint 4 (4/8/24 - 4/28/24)
+* Front end: Linked Buttons, Search Bar, User Creation
+	+ Buttons linking to other pages. Search bar handles user input.
+* Back end: Scripts for CI/CD Automation, AWS Set UP
+	+ GitHub Actions continuously integrates code within the codebase. Bash script checks the commit message.
+
+## Sprint 5 (8/26/24 - 9/8/24)
+* Front end: About Me and Buyers Page Created
+	+ Engaging and friendly landing page for potential home buyers.
+* Back end: CRUD actions for user account creation 
+	+ Database updates in real-time to CRUD operations by user account creation
+
+## Sprint 6 (9/9/24 - 9/23/24)
+* Front end: Realtor Reviews, Admin Priveledges Created
+	+ Section for users to leave reviews to the realtor. Additional privileges to admin users for extra functionality.
+* Back end: Docker 
+	+ Docker is fully functional and containerizes our application, allowing us to package and run applications.
+
+## Sprint 7 (9/24/24 - 10/7/24)
+* Front end: Properties Listings: Listings
+	+ Incorporate listings to our properties page.
+* Back end: MetroList API
+	+ Implement MetroList API to pull property listings that the realtor owns.
+ 	+ Script to copy listings to our cloud database 
+
+## Sprint 8 (10/8/24 - 10/21/24)
+* Front end: Properties Listings: Virtual Home Viewing
+	+ Incorporate virtual home viewing for each listing
+* Back end: AWS Hosting, MetroList API (continued)
+	+ Website is now hosted on a public domain
+ 	+ Each property is pinned on a Google Map, with information pulled from MetroList API.
+     
+
+## Sprint 9 (10/22/24 - 11/4/2024)
+* Front end: Scheduling Appointments
+	+ Scheduling capability so users can schedule phone appointments with realtor
+* Back end: Calendar API, Database and Realtor Updates.
+	+ Incorporate Calendar API to demonstrate realtors' availability
+ 	+ Database updates with scheduled appointments.
+  	+ Notifies Realtor of Scheduling Appointments
+
+## Sprint 9 (11/4/24 - 11/17/2024)
+* Front end: AI Chat Bot
+	+ Incorporate circular plug-in that assists users with website capability.
+* Back end: Open AI API, Email/Text Notifications
+	+ Incorporate Open AI API for user input and response
+ 	+ Email or text notifications to users from appointment creation.
+
+
 
 
 ## Credits
