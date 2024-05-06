@@ -34,7 +34,7 @@
 Los Camarones is comprised of the following developers:
 - Julian Flores
 - [Julian Pulido](https://github.com/julianpulido272) connect with me on LinkedIn [here](https://www.linkedin.com/in/julianpulido707/)!
-- [Wendy Le](https://github.com/LushRamen)
+- [Wendy Le](https://github.com/LushRamen) connect with me on LinkedIn [here] (https://www.linkedin.com/in/wendy-le-36b989277/)
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
 - Kumar Priyanshu Raj
 - [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](https://www.linkedin.com/in/eric-delgado-madrigal)!
@@ -113,8 +113,11 @@ $ npm start
 ![ERD Web-page-0](https://github.com/Los-Camarones/RealEstate/assets/149759914/88afa6e7-cdd6-44c5-843f-a923d8571392)
 
 ### Prototype
-
-#### Julian Flores: Add flowchart, add wix, whatevs looks good
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/d8e03071-b0fb-46f2-9fcf-755db39023a4)
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/c260bdf3-2817-4a64-aa4d-2f68e15dcf18)
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/0db2f6d2-a258-41f3-966f-41e80bf1bfb4)
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/506ec153-2392-4940-a9f9-121c5b972869)
+![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/d3f41826-9628-4537-b3a3-5c4d5ba3a778)
 
 
 ## Timeline
