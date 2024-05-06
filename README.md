@@ -32,7 +32,7 @@
 
 ## Developers
 Los Camarones is comprised of the following developers:
-- Julian Flores
+- [Julian Flores](https://github.com/ShadeManEXE). Contact and connect with me on [LinkedIn](https://www.linkedin.com/in/jflores99/)
 - [Julian Pulido](https://github.com/julianpulido272) connect with me on LinkedIn [here](https://www.linkedin.com/in/julianpulido707/)!
 - [Wendy Le](https://github.com/LushRamen) connect with me on LinkedIn [here] (https://www.linkedin.com/in/wendy-le-36b989277/)
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
