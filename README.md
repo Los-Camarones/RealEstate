@@ -28,9 +28,9 @@
   <a href="#license">License</a>
 </p>
 
-<div style="text-align:center;">
-    <img src="domusGIF.gif" alt="Your GIF" />
-</div>
+<p align="center">
+  <img src="domusGIF.gif" alt="Your GIF" />
+</p>
 
 
 
@@ -103,13 +103,6 @@ $ npm start
 
 ### Database
 ![image](https://github.com/Los-Camarones/RealEstate/assets/157565367/d42bb53a-a5d1-4013-bc8f-b5dac3f479f4)
-
-#### Entity Relationship Diagram
-
-#TODO: add image
-
-
-
 
 
 #### Relational Mapping Diagram
