@@ -28,17 +28,21 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
+<div style="text-align:center;">
+    <img src="domusGIF.gif" alt="Your GIF" />
+</div>
+
+
 
 ## Developers
 Los Camarones is comprised of the following developers:
 - [Julian Flores](https://github.com/ShadeManEXE). Contact and connect with me on [LinkedIn](https://www.linkedin.com/in/jflores99/)
 - [Julian Pulido](https://github.com/julianpulido272) connect with me on LinkedIn [here](https://www.linkedin.com/in/julianpulido707/)!
-- [Wendy Le](https://github.com/LushRamen) connect with me on LinkedIn [here] (https://www.linkedin.com/in/wendy-le-36b989277/)
+- [Wendy Le](https://github.com/LushRamen) connect with me on LinkedIn [here](https://www.linkedin.com/in/wendy-le-36b989277/)
 - [Xuanxuan Miao](https://github.com/xuanxuan002) 
-- Kumar Priyanshu Raj(https://www.linkedin.com/in/kumar-priyanshu-raj-96a9251b6/)
+- [Kumar Priyanshu Raj](https://www.linkedin.com/in/kumar-priyanshu-raj-96a9251b6/)
 - [Eric Delgado](https://github.com/ERC-320-61) connect with me on LinkedIn [here](https://www.linkedin.com/in/eric-delgado-madrigal)!
-- [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and checkout my [Prortfolio](https://mohamedahmedcs.github.io/)
+- [Mohamed Ahmed](https://github.com/MohamedAhmedCS) connect with me on [LinkedIn](https://www.linkedin.com/in/mohamed-ahmed2/) and check out my [Prortfolio](https://mohamedahmedcs.github.io/)
 - [Elizabeth Hernandez](https://github.com/elizabethhernandez5)
 
 ## Overview
