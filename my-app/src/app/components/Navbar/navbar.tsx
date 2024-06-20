@@ -17,7 +17,7 @@ function NavBar() {
     return (
       
       
-<div className="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-50 flex items-center justify-between w-full px-4 py-2 md:px-6">
+<div className="navbar-container">
       
     {/*Logo of the website*/}
     <Link href="/" passHref>
