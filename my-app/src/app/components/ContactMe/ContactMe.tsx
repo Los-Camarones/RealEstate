@@ -53,17 +53,22 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="flex-shrink-0 ml-4">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-            <a href="tel:+19165160007">Contact Me</a>
-          </button>
+        <div className="flex-shrink-0 ml-4 hidden sm:block"> {/*shows button on screens sm (640px) and above */}
+         <a href="tel:+19165160007" className="block">
+           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full ">
+             Contact Me
+           </button>
+         </a>
         </div>
+
       </div>
 
-      <div className='m-4'>
+      <div className='pl-20'>
         {/*Lourdes logo */}
         <Link href="/">
-          <img src="/logo_.png" alt="Lourdes logo" />
+          <img className = 'w-3/4 h-auto '
+          src="/logo_.png" 
+          alt="Lourdes logo" />
         </Link>
       </div>
     </div>
