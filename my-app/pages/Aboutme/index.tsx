@@ -1,6 +1,7 @@
 import NavBar from "../../src/app/components/Navbar/navbar";
 import React from "react";
 import "../../src/app/globals.css";
+import ContactMe from "../../src/app/components/ContactMe/ContactMe";
 
 const Aboutme = () => {
   return (
@@ -71,6 +72,9 @@ const Aboutme = () => {
         <div className="lg:w-1/2 p-4">
         <img src="/midtownSac.jpg" alt="Image of Midtown Sacramento" />
         </div>
+      </div>
+      <div>
+        <ContactMe></ContactMe>
       </div>
 
   </main>
