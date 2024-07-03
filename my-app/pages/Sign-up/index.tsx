@@ -38,11 +38,12 @@ const SignUp: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   // Placeholder form submission handler
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Implement sign-up logic here
-    console.log('Sign up with: ', { firstName, lastName, email, phone });
+    console.log('Sign up with: ', { firstName, lastName, email, phone, password});
   };
 // Sign-up form UI
   return (
@@ -103,6 +104,17 @@ const SignUp: React.FC = () => {
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+              required
+              placeholder="Phone Number"
+              className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
+
+            />
+            <input
+              type="password"
+              id="pwd"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password*"
               className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
