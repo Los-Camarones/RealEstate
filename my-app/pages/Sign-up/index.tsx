@@ -55,13 +55,13 @@ const SignUp: React.FC = () => {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-black">
             Create an account
           </h2>
-          <h4 className="text-center text-gray-600 mb-2">
+          <h4 className="text-center text-gray-600 mb-4">
             Create an account to schedule meetings immediately with Lourdes. <br className='br-style'></br>
             Access all MLS listings and stay current with daily updates.<br className='br-style'></br>
             Save and organize your favorite listings
           </h4>
         </div>
-        <div className="rounded-md border-2 border- w-1/2 p-4">
+        <div className="rounded-md border-2 border- md:w-1/2 p-4">
           <form className= "flex flex-col items-center " onSubmit={handleSubmit}>
 
             <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">Personal Infomation</h1>
@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
               *Create a password with 8 to 25 characters that includes at least one uppercase, one lowercase, and one number
             </p>
 
-              <button type="submit" className="mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+              <button type="submit" className="w-3/4 mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                 Create Account
               </button>
 
