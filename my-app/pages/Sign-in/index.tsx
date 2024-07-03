@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
               </a>
             </div>
             <div className="text-sm">
-              <a href="/Sign-up/page" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="/Sign-up" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Don't have an account? Sign up
               </a>
             </div>
