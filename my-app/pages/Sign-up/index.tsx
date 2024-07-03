@@ -46,69 +46,83 @@ const SignUp: React.FC = () => {
   };
 // Sign-up form UI
   return (
-            <>
-        
-        <NavBar />
-          <div style={{ paddingTop: '6rem' }}> {/* Inline style for testing purposes */}
-    <div className="sign-up-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Create Your Account now</h2>
-        <p>Signed Up? <a href="/Sign-in/page">Log In.</a></p>
+    <main>
+      <header>
+          <NavBar />
+      </header>
+      <div className= "min-h-screen flex flex-col items-center justify-center bg-white"> 
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-black">
+            Create an account
+          </h2>
+          <h4 className="text-center text-gray-600 mb-2">
+            Create an account to schedule meetings immediately with Lourdes. <br className='br-style'></br>
+            Access all MLS listings and stay current with daily updates.<br className='br-style'></br>
+            Save and organize your favorite listings
+          </h4>
+        </div>
+        <div className="rounded-md border-2 border- w-1/2 p-4">
+          <form className= "flex flex-col items-center " onSubmit={handleSubmit}>
 
-        <label htmlFor="firstName">*FIRST NAME</label>
-        <input
-          type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
+            <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">Personal Infomation</h1>
+            <input
+              type="text"
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              placeholder="First Name"
+              className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
 
-        <label htmlFor="lastName">*LAST NAME</label>
-        <input
-          type="text"
-          id="lastName"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
+            />
 
-        <label htmlFor="email">*EMAIL</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              placeholder="Last Name"
+              className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
 
-        <label htmlFor="phone">*PHONE (will be used as password)</label>
-        <input
-          type="tel"
-          id="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
+            />
+            <h1 className="text-left w-3/4 p-1 font-bold text-gray-600 mt-4">Account Information</h1>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email Address"
+              className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
 
-        <button type="submit">CONTINUE VIEWING</button>
+            />
 
-        <a href="/forgot-password">Forgot Password?</a>
-      </form>
+            <input
+              type="tel"
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              placeholder="Password*"
+              className="w-3/4 rounded-md border-2 border-gray-300 px-3 py-2 mt-2 focus:outline-none focus:border-blue-500"
 
-      <div className="benefits">
-        <h3>Access all MLS listings and stay current with daily updates.</h3>
-        <h4>Better Searching</h4>
-        <ul>
-          <li>Save searches</li>
-          <li>New property alerts</li>
-          <li>View property detailed information</li>
-          <li>Save & organize properties you like</li>
-        </ul>
+            />
+            <p className="w-3/4">
+              *Create a password with 8 to 25 characters that includes at least one uppercase, one lowercase, and one number
+            </p>
+
+              <button type="submit" className="mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                Create Account
+              </button>
+
+              <a href="/Sign-in" className="mt-2 block text-[#299FDD] hover:underline">
+              Already have an account?
+              </a>
+          </form>
+        </div>
       </div>
-    </div>
-  </div>
-    </>
+    </main>
   );
 };
 
