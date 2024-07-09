@@ -31,19 +31,53 @@
 
 import NavBar from "../../src/app/components/Navbar/navbar";
 import "../../src/app/globals.css";
+import supabase from '../../../src/config/supabaseClient'
 import React, { useState } from 'react';
 // Local state to store form field values
 const SignUp: React.FC = () => {
+
+  //user information
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  // Placeholder form submission handler
-  const handleSubmit = (event: React.FormEvent) => {
+
+  //error variable incase user gets error signing up
+  const [error, setError] = useState('');
+
+
+  //method to handle user sign up to supabase
+  const handleSubmit = async (event: React.FormEvent) => 
+  {
     event.preventDefault();
-    // Implement sign-up logic here
-    console.log('Sign up with: ', { firstName, lastName, email, phone, password});
+
+    try{
+      const {data,error} = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if(error)
+      {
+        setError(error.message)
+        return;
+      }
+
+      //handle succesful sign up
+      console.log('congrats ' ,firstName, ' u made an account');
+    }
+    catch (error)
+    {
+      //typescript catch clause variables have type unknown instead of any
+      //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
+      let errorMessage = 'error singing up for an account';
+      if(error instanceof Error)
+      {
+        errorMessage = error.message;
+      }
+      console.log(errorMessage);
+    }
   };
 // Sign-up form UI
   return (
