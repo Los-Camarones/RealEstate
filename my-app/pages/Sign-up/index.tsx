@@ -29,6 +29,9 @@
  * functionality.
  */
 
+import { revalidatePath } from "next/cache";
+import { redirect, useRouter } from 'next/navigation'
+import {createClient} from '../../utils/supabase/supabaseServer'
 import NavBar from "../../src/app/components/Navbar/navbar";
 import "../../src/app/globals.css";
 import supabase from '../../utils/supabase/supabaseClient';
@@ -46,6 +49,8 @@ const SignUp: React.FC = () => {
   //error variable incase user gets error signing up
   const [error, setError] = useState('');
 
+  const router = useRouter();
+
 
   //method to handle user sign up to supabase
   const handleSubmit = async (event: React.FormEvent) => 
@@ -53,19 +58,24 @@ const SignUp: React.FC = () => {
     event.preventDefault();
 
     try{
-      const {data,error} = await supabase.auth.signUp({
+      const {data, error} = await supabase.auth.signUp({
         email,
-        password
+        password,
+        phone
       });
 
       if(error)
       {
         setError(error.message)
+        throw error;
         return;
       }
 
       //handle succesful sign up
-      console.log('congrats ' ,firstName, ' u made an account');
+      console.log('congrats' , firstName, 'you made an account');
+
+      router.push('/account');
+      
     }
     catch (error)
     {
