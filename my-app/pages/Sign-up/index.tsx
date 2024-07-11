@@ -31,7 +31,7 @@
 
 import NavBar from "../../src/app/components/Navbar/navbar";
 import "../../src/app/globals.css";
-import supabase from '../../config/supabaseClient';
+import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
 // Local state to store form field values
 const SignUp: React.FC = () => {
