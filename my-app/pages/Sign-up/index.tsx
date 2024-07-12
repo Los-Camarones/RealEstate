@@ -47,7 +47,7 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState('');
 
   //error variable incase user gets error signing up
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>('');
 
   const router = useRouter();
 
@@ -80,12 +80,11 @@ const SignUp: React.FC = () => {
     {
       //typescript catch clause variables have type unknown instead of any
       //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
-      let errorMessage = 'error singing up for an account';
       if(error instanceof Error)
       {
-        errorMessage = error.message;
+        setError(error.message);
       }
-      console.log(errorMessage);
+      console.log("Error signing up");
     }
   };
 // Sign-up form UI
@@ -106,9 +105,20 @@ const SignUp: React.FC = () => {
           </h4>
         </div>
         <div className="rounded-md border-2 border- md:w-1/2 p-4">
+          {/*error div only appears if there was an error creating account */}
+          {error && (
+                  <div className="bg-red-100 border border-red-400 text-black px-2 py-3 rounded relative mt-4 mb-2">
+                    <h1 className=" text-1xl font-bold">
+                      Account creation unsuccessful.
+                    </h1>
+                    {error}
+                  </div>)
+          }
           <form className= "flex flex-col items-center " onSubmit={handleSubmit}>
 
-            <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">Personal Infomation</h1>
+            <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">
+            Personal Infomation
+            </h1>
             <input
               type="text"
               id="firstName"
