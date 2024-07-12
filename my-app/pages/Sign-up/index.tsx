@@ -68,13 +68,12 @@ const SignUp: React.FC = () => {
       {
         setError(error.message)
         throw error;
-        return;
       }
 
       //handle succesful sign up
       console.log('congrats' , firstName, 'you made an account');
 
-      router.push('/account');
+      router.push('/Account');
       
     }
     catch (error)

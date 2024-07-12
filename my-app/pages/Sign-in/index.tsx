@@ -27,21 +27,52 @@
 //'use client'
 
 import NavBar from "../../src/app/components/Navbar/navbar";
-import React from "react";
+import React, { useState } from "react";
 // pages/login.tsx in your Next.js project
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import "../../src/app/globals.css";
+import supabase from "../../utils/supabase/supabaseClient";
+import router from "next/router";
 
 const LoginPage: React.FC = () => {
             
-    
+  //email and password credentials variables
+  const [email, setEmail] = useState<string>('');
+  const[password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
       
   // Placeholder function for form submission
-  const handleLogin = async (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => 
+  {
     event.preventDefault();
-    // Add your login logic here, possibly using NextAuth's signIn function
-    await signIn('credentials', { redirect: false, email: '', password: '' });
+    //await signIn('credentials', { redirect: false, email: '', password: '' });
+
+    //try catch block using supabase authentication sign ing
+    try
+    {
+      let { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+
+      if(error)
+      {
+        throw error;
+      }
+      router.push('/Account');
+    }
+    catch (error)
+    {
+      //typescript catch clause variables have type unknown instead of any
+      //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
+      if(error instanceof Error)
+      {
+        setError(error.message);
+      }
+    }
+    
   };
 
   // Placeholder function for Google Sign-In
@@ -72,6 +103,14 @@ const LoginPage: React.FC = () => {
           <form className="mt-8 space-y-6" onSubmit={handleLogin}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-black px-2 py-3 rounded relative mt-4 mb-2">
+                  <h1 className=" text-1xl font-bold">
+                    Sign in unsuccessful.
+                  </h1>
+                  {error}
+                </div>)
+              }
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
@@ -84,6 +123,8 @@ const LoginPage: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  value = {email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -98,6 +139,8 @@ const LoginPage: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  value = {password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
