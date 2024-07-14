@@ -52,7 +52,12 @@ const SignUp: React.FC = () => {
   const router = useRouter();
 
 
-  //method to handle user sign up to supabase
+  /**
+   * Handles the account creation when user submits information to create an account
+   * 
+   * @param event - formEvent containing user information
+   * @returns Upon success the user will be rerouted to their personal account page, else error is thrown.
+   */
   const handleSubmit = async (event: React.FormEvent) => 
   {
     event.preventDefault();
@@ -70,6 +75,30 @@ const SignUp: React.FC = () => {
         throw error;
       }
 
+
+      //TODO: encrypt email and phone number
+      //const encryptedEmail = encryptData(email);
+      //const hashedPhoneNumber = await hashPhoneNumber
+
+      //add data to database schema
+      const {data, error: insertError } = await supabase
+      .from('User')
+      .insert([
+        {
+          //enter 
+          id: data.user?.id,
+          first_name: firstName,
+          last_name: lastName,
+          phoneNumber: phone,
+          email: email
+        }
+      ]);
+
+      if(insertError)
+      {
+        throw insertError;
+      }
+
       //handle succesful sign up
       console.log('congrats' , firstName, 'you made an account');
 
@@ -83,6 +112,7 @@ const SignUp: React.FC = () => {
       if(error instanceof Error)
       {
         setError(error.message);
+        console.log(error);
       }
       console.log("Error signing up");
     }
