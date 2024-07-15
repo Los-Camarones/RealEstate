@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
 
 
   /**
-   * Handles the account creation when user submits information to create an account
+   * Handles the account creation by calling back-end api 
    * 
    * @param event - formEvent containing user information
    * @returns Upon success the user will be rerouted to their personal account page, else error is thrown.
@@ -62,59 +62,31 @@ const SignUp: React.FC = () => {
   {
     event.preventDefault();
 
-    try{
-      const {data, error} = await supabase.auth.signUp({
-        email,
-        password,
-        phone
+    try {
+      const res = await fetch('/api/auth/CreateUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, email, phone, password }),
       });
 
-      if(error)
-      {
-        setError(error.message)
-        throw error;
+      if (!res.ok) {
+        throw new Error('Failed to create user');
       }
 
-
-      //TODO: encrypt email and phone number
-      //const encryptedEmail = encryptData(email);
-      //const hashedPhoneNumber = await hashPhoneNumber
-
-      //add data to database schema
-      const {data, error: insertError } = await supabase
-      .from('User')
-      .insert([
-        {
-          //enter 
-          id: data.user?.id,
-          first_name: firstName,
-          last_name: lastName,
-          phoneNumber: phone,
-          email: email
-        }
-      ]);
-
-      if(insertError)
-      {
-        throw insertError;
-      }
-
-      //handle succesful sign up
-      console.log('congrats' , firstName, 'you made an account');
-
-      router.push('/Account');
-      
-    }
-    catch (error)
+      // TODO: Handle success by routing to /account page 
+    } 
+    catch (error) 
     {
+      console.error('Error creating user:', error);
+            
       //typescript catch clause variables have type unknown instead of any
       //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
       if(error instanceof Error)
-      {
-        setError(error.message);
-        console.log(error);
-      }
-      console.log("Error signing up");
+        {
+          setError(error.message);
+        }
     }
   };
 // Sign-up form UI
