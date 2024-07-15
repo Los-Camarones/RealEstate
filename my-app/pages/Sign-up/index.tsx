@@ -71,11 +71,27 @@ const SignUp: React.FC = () => {
         body: JSON.stringify({ firstName, lastName, email, phone, password }),
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to create user');
+      if (!res.ok) 
+      {
+        //grab our response in json
+        const data = await res.json();
+        console.log(data.error);
+
+        //get specific message from 
+        if (data.error.code == "user_already_exists")
+        {
+          throw new Error("User already exists with that email");
+        }
+        else
+        {
+          throw new Error(data.error.code);
+        }
       }
 
+
+
       // TODO: Handle success by routing to /account page 
+      console.log('congrats', firstName , ' u made an account');
     } 
     catch (error) 
     {

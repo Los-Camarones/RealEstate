@@ -20,28 +20,28 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse)
       // Create user using credentials
       const {data: signupData, error } = await supabase.auth.signUp({
         email: email,
-        phone: phone,
-        password,
+        password
       });
 
       if (error) 
       {
         throw error;
       }
-
+      
+      //TODO: Fix schema so the below code can work
       //insert into our schema 
       const {data: insertData, error: insertError } = await supabase
-      .from('User')
+      .from('users')
       .insert([
         {
-          //enter 
-          id: signupData.user?.id,
-          first_name: firstName,
-          last_name: lastName,
+          //enter information from user
+          firstName: firstName,
+          lastName: lastName,
           phoneNumber: phone,
           email: email
         }
-      ]);
+      ])
+      .select();
 
       if(insertError)
       {
