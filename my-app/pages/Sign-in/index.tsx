@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
     try
     {
       //call api route
-      let response = await fetch('/api/SignIn',
+      let response = await fetch('/api/auth/SignIn',
         {
           method: 'POST',
           headers: {
@@ -64,6 +64,7 @@ const LoginPage: React.FC = () => {
       //reroute to account if 200 OK from api call
       if(response.ok)
       {
+        console.log('rerouting to /Account page');
         router.push('/Account');
       }
       else

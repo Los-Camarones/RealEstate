@@ -13,7 +13,7 @@ const Account = () => {
       try{
 
         //call api
-        const res = await fetch('/api/UserSession');
+        const res = await fetch('/api/auth/UserSession');
 
         //if 200 OK from api then get data
         if(res.ok)
@@ -53,7 +53,7 @@ const Account = () => {
       <header>
       </header>
       <h1>Welcome to your account!</h1>
-      <p>Email: {user.email}</p>
+      <p>Email: {user}</p>
     </main>
   )
 }
