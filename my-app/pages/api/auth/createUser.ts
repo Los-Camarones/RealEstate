@@ -39,9 +39,9 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse)
           lastName: lastName,
           phoneNumber: phone,
           email: email
-        }
+        },
+        { returning: 'minimal' }
       ])
-      .select();
 
       if(insertError)
       {

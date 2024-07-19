@@ -31,7 +31,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect, useRouter } from 'next/navigation'
-import {createClient} from '../../utils/supabase/supabaseServer'
 import NavBar from "../../src/app/components/Navbar/navbar";
 import "../../src/app/globals.css";
 import supabase from '../../utils/supabase/supabaseClient';
