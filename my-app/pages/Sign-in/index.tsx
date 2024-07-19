@@ -47,21 +47,34 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => 
   {
     event.preventDefault();
-    //await signIn('credentials', { redirect: false, email: '', password: '' });
 
     //try catch block using supabase authentication sign ing
     try
     {
-      let { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      })
+      //call api route
+      let response = await fetch('/api/SignIn',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({email, password}),
+        });
 
-      if(error)
+      //reroute to account if 200 OK from api call
+      if(response.ok)
       {
-        throw error;
+        router.push('/Account');
       }
-      router.push('/Account');
+      else
+      {
+        //handle failed sign in 
+        const data = await response.json();
+
+        //TODO: state explicitely error message like in sign up page
+        console.error('Sign in error', data.error);
+        setError(data.error);
+      }
     }
     catch (error)
     {
