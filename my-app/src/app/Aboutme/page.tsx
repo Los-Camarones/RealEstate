@@ -1,7 +1,7 @@
-import NavBar from "../../src/app/components/Navbar/navbar";
+import NavBar from "../components/Navbar/navbar";
 import React from "react";
-import "../../src/app/globals.css";
-import ContactMe from "../../src/app/components/ContactMe/ContactMe";
+import "../globals.css";
+import ContactMe from "../components/ContactMe/ContactMe";
 
 const Aboutme = () => {
   return (

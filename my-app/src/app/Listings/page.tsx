@@ -1,5 +1,5 @@
-import NavBar from "../../src/app/components/Navbar/navbar";
-import "../../src/app/globals.css";
+import NavBar from "../components/Navbar/navbar";
+import "../globals.css";
 const Listing= () => {
     return (
       <div>

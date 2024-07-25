@@ -31,9 +31,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect, useRouter } from 'next/navigation'
-import NavBar from "../../src/app/components/Navbar/navbar";
-import "../../src/app/globals.css";
-import supabase from '../../utils/supabase/supabaseClient';
+import NavBar from '../components/Navbar/navbar';
+import "../globals.css";
+import supabase from '../../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
 // Local state to store form field values
 const SignUp: React.FC = () => {

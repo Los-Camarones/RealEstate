@@ -26,12 +26,12 @@
  */
 //'use client'
 
-import NavBar from "../../src/app/components/Navbar/navbar";
+import NavBar from '../components/Navbar/navbar';
 import React, { useState } from "react";
 // pages/login.tsx in your Next.js project
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
-import "../../src/app/globals.css";
+import "../globals.css";
 import supabase from "../../utils/supabase/supabaseClient";
 import router from "next/router";
 
