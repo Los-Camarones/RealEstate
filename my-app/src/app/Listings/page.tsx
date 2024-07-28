@@ -1,4 +1,4 @@
-import NavBar from "../components/Navbar/navbar";
+import NavBar from "../../components/Navbar/navbar";
 import "../globals.css";
 const Listing= () => {
     return (

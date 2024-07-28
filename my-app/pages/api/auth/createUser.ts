@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import supabase from '../../../utils/supabase/supabaseClient';
+import supabase from '../../../src/utils/supabase/supabaseClient';
 
 
 /**Creates a user on supabase and inserts them into the schema

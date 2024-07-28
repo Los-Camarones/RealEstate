@@ -26,13 +26,13 @@
  */
 //'use client'
 
-import NavBar from '../components/Navbar/navbar';
+import NavBar from '../../components/Navbar/navbar';
 import React, { useState } from "react";
 // pages/login.tsx in your Next.js project
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import "../globals.css";
-import supabase from "../../utils/supabase/supabaseClient";
+//import supabase from "../../utils/supabase/supabaseClient";
 import router from "next/router";
 
 const LoginPage: React.FC = () => {

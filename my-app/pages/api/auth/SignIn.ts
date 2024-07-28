@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import supabase from '../../../utils/supabase/supabaseClient';
+import supabase from '../../../src/utils/supabase/supabaseClient';
 
 /**
  * Calls Supabase to handle sign in feature for users

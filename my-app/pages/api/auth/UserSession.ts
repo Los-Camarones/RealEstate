@@ -1,7 +1,7 @@
 'use server';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {createSupabaseServerClient} from '../../../utils/supabase/supabaseServer';
+import {createSupabaseServerClient} from '../../../src/utils/supabase/supabaseServer';
 
 
 export default async function handler(req: NextApiRequest,res: NextApiResponse) 

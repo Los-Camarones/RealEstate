@@ -1,17 +1,17 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import NavBar from './components/Navbar/navbar';
-import HomePageContent from './components/HomePageContent/HomePageContent';
+import NavBar from '../components/Navbar/navbar';
+import HomePageContent from '../components/HomePageContent/HomePageContent';
 import "./globals.css";
-import SearchHomes from './components/SearchHomes/SearchHomes';
-import ServiceList from './components/ServiceList/ServiceList';
+import SearchHomes from '../components/SearchHomes/SearchHomes';
+import ServiceList from '../components/ServiceList/ServiceList';
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import SocialMediaLinks from './components/SocialMedia/socialmedia';
+import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import exp from 'constants';
 
-import PhotoGallery from './components/PhotoGallery/PhotoGallery';
-import ScheduleaTourBotton from './components/SchTourbotton/scheduleatourbotton';
+import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
+import ScheduleaTourBotton from '../components/SchTourbotton/scheduleatourbotton';
 
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './src/app/components/Navbar/navbar';
+import NavBar from './src/components/Navbar/navbar';
 
 // since we are using TypeScript, we define the types of the props
 type RootLayoutProps = {
