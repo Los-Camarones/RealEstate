@@ -88,12 +88,6 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/Properties">
-            <button className={buttonStyle}>
-              Properties
-            </button>
-          </Link>
-
           <Link href="/WhatMyHomeWorth">
             <button className={buttonStyle}>
               What's My Home Worth?
