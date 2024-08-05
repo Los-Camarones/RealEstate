@@ -1,3 +1,4 @@
+"use server";
 import type { NextApiRequest, NextApiResponse } from 'next';
 import supabase from '../../../src/utils/supabase/supabaseClient';
 

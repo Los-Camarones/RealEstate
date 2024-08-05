@@ -6,6 +6,7 @@ import NavBar from '../../components/Navbar/navbar';
 //import "../globals.css";
 import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
+import { signUp } from "../../actions/AuthActions";
 
 
 // Local state to store form field values
@@ -24,59 +25,6 @@ const SignUp: React.FC = () => {
   const router = useRouter();
 
 
-  /**
-   * Handles the account creation by calling back-end api 
-   * 
-   * @param event - formEvent containing user information
-   * @returns Upon success the user will be rerouted to their personal account page, else error is thrown.
-   */
-  const handleSubmit = async (event: React.FormEvent) => 
-  {
-    event.preventDefault();
-
-    try {
-      const res = await fetch('/api/auth/CreateUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ firstName, lastName, email, phone, password }),
-      });
-
-      if (!res.ok) 
-      {
-        //grab our response in json
-        const data = await res.json();
-        console.log(data.error);
-
-        //get specific message from 
-        if (data.error.code == "user_already_exists")
-        {
-          throw new Error("User already exists with that email");
-        }
-        else
-        {
-          throw new Error(data.error.code);
-        }
-      }
-
-
-
-      // TODO: Handle success by routing to /account page 
-      console.log('congrats', firstName , ' u made an account');
-    } 
-    catch (error) 
-    {
-      console.error('Error creating user:', error);
-            
-      //typescript catch clause variables have type unknown instead of any
-      //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
-      if(error instanceof Error)
-        {
-          setError(error.message);
-        }
-    }
-  };
 // Sign-up form UI
   return (
     <main>
@@ -101,7 +49,7 @@ const SignUp: React.FC = () => {
                     {error}
                   </div>)
           }
-          <form className= "flex flex-col items-center " onSubmit={handleSubmit}>
+          <form className= "flex flex-col items-center ">
 
             <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">
             Personal Infomation
@@ -109,6 +57,7 @@ const SignUp: React.FC = () => {
             <input
               type="text"
               id="firstName"
+              name="firstName"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
@@ -120,6 +69,7 @@ const SignUp: React.FC = () => {
             <input
               type="text"
               id="lastName"
+              name="lastName"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
@@ -131,6 +81,7 @@ const SignUp: React.FC = () => {
             <input
               type="email"
               id="email"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -141,7 +92,8 @@ const SignUp: React.FC = () => {
 
             <input
               type="tel"
-              id="phone"
+              id="phoneNumber"
+              name="phoneNumber"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
@@ -152,7 +104,8 @@ const SignUp: React.FC = () => {
             />
             <input
               type="password"
-              id="pwd"
+              id="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -164,7 +117,7 @@ const SignUp: React.FC = () => {
               *Create a password with 8 to 25 characters that includes at least one uppercase, one lowercase, and one number
             </p>
 
-              <button type="submit" className="w-3/4 mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+              <button type="submit" formAction = {signUp} className="w-3/4 mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                 Create Account
               </button>
 
