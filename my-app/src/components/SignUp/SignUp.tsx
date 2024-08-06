@@ -25,6 +25,33 @@ const SignUp: React.FC = () => {
   const router = useRouter();
 
 
+  /**
+   * Handles login for user. Calls server action to supabase to validate credentials
+   * @param event 
+   */
+  const handleSignUp = async (event: React.FormEvent) => {
+
+    event.preventDefault();
+
+    //call server action to supabase
+    const response = await signUp(email, password);
+
+
+    //if bad credentials, return error
+    if (!response.success){
+      console.log(response)
+      setError(response.errorMessage  || "Unknown Error has occured")
+    }
+    //redirect to Account page
+    else
+    {
+      const userID = response.userID;
+      router.push('/Account'); //'Account/${userID}
+
+    }
+  }
+
+
 // Sign-up form UI
   return (
     <main>
@@ -49,7 +76,7 @@ const SignUp: React.FC = () => {
                     {error}
                   </div>)
           }
-          <form className= "flex flex-col items-center ">
+          <form className= "flex flex-col items-center " onSubmit={handleSignUp}>
 
             <h1 className="text-left w-3/4 p-1 font-bold text-gray-600">
             Personal Infomation
@@ -117,7 +144,7 @@ const SignUp: React.FC = () => {
               *Create a password with 8 to 25 characters that includes at least one uppercase, one lowercase, and one number
             </p>
 
-              <button type="submit" formAction = {signUp} className="w-3/4 mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+              <button type="submit" className="w-3/4 mt-4 px-4 py-2 bg-[#299FDD] text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                 Create Account
               </button>
 

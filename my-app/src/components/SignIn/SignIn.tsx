@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react'
-import NavBar from '../Navbar/navbar';
-import router from 'next/router';
+import { useRouter } from 'next/navigation'
 import Image from 'next/image';
+import { signIn } from '../../actions/AuthActions';
 
 
 const SignIn = () => {
@@ -12,53 +12,36 @@ const SignIn = () => {
   const[password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-// Placeholder function for form submission
-const handleLogin = async (event: React.FormEvent) => 
+  //router 
+  const router = useRouter();
+
+/**
+ * Handles login for user. Calls server action to supabase to validate credentials
+ * @param event 
+ */
+const handleLogin = async (event: React.FormEvent) => {
+
+  event.preventDefault();
+
+  //call server action to supabase
+  const response = await signIn(email, password);
+
+  
+  //if bad credentials, return error
+  if (!response.success){
+    console.log(response)
+    setError(response.errorMessage  || "Unknown Error has occured")
+  }
+  //redirect to Account page
+  else
   {
-    event.preventDefault();
+    const userID = response.userID;
+    router.push('/Account'); //'Account/${userID}
 
-    //try catch block using supabase authentication sign ing
-    try
-    {
-      //call api route
-      let response = await fetch('/api/auth/SignIn',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({email, password}),
-        });
+  }
+}
 
-      //reroute to account if 200 OK from api call
-      if(response.ok)
-      {
-        console.log('rerouting to /Account page');
-        router.push('/Account');
-      }
-      else
-      {
-        //handle failed sign in 
-        const data = await response.json();
-
-        //TODO: state explicitely error message like in sign up page
-        console.error('Sign in error', data.error);
-        setError(data.error);
-      }
-    }
-    catch (error)
-    {
-      //typescript catch clause variables have type unknown instead of any
-      //https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
-      if(error instanceof Error)
-      {
-        setError(error.message);
-      }
-    }
-    
-  };
-
-  // Placeholder function for Google Sign-In
+  // TODO: implement google sign in feature. may need to setup google cloud platform project .
   const handleGoogleSignIn = async () => {
     //await SignIn('google', { redirect: false });
   };
