@@ -10,8 +10,9 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-import createClient  from '../utils/supabase/supabaseClient'
-import supabase from '../utils/supabase/supabaseClient';
+//import supabase from '../utils/supabase/supabaseClient';
+import { createSupabaseServerClient } from '../utils/supabase/supabaseServer';
+
 
 
 /**
@@ -22,6 +23,9 @@ import supabase from '../utils/supabase/supabaseClient';
  */
 export async function signUp(email: string, password: string)
 {
+  //create supabase server client
+  const supabase = createSupabaseServerClient();
+
   //call supabase
   const {data, error} = await supabase.auth.signUp({email, password})
 
@@ -46,7 +50,11 @@ export async function signUp(email: string, password: string)
  * @param {string} password - User's password
  * @returns {Promise<Object>} - A promise that resolves to the sign-ind user or rejects with an error.
  */
-export async function signIn(email: string, password: string) {
+export async function signIn(email: string, password: string) 
+{
+  //create supabase server client
+  const supabase = createSupabaseServerClient();
+
 
   const {data, error} = await supabase.auth.signInWithPassword({email, password})
 
@@ -64,4 +72,35 @@ export async function signIn(email: string, password: string) {
     }
   }
 
+}
+
+/**
+ * TODO: function to insert new users to our schema. edit the parameters as needed.
+ * @param email 
+ * @param fName 
+ * @param lName 
+ * @param phoneNumber 
+ */
+export async function insertNewUser(email: string, fName: string, lName:string, phoneNumber: string)
+{
+  //create supabase server client
+  const supabase = createSupabaseServerClient();
+  
+  const {data: insertData, error: insertError } = await supabase
+      .from('users')
+      .insert([
+        {
+          //enter information from user
+          firstName: fName,
+          lastName: lName,
+          phoneNumber: phoneNumber,
+          email: email
+        },
+        { returning: 'minimal' }
+      ])
+
+      if(insertError)
+      {
+        throw insertError;
+      }
 }
