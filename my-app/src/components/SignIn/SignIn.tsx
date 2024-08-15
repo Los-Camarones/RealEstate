@@ -42,6 +42,7 @@ const handleLogin = async (event: React.FormEvent) => {
 }
 
   // TODO: implement google sign in feature. may need to setup google cloud platform project .
+  //See here for instructions to implement: https://egghead.io/lessons/supabase-create-an-oauth-app-with-github
   const handleGoogleSignIn = async () => {
     //await SignIn('google', { redirect: false });
   };

@@ -7,10 +7,8 @@
  */
 'use server';
 
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
-//import supabase from '../utils/supabase/supabaseClient';
+import supabase from '../utils/supabase/supabaseClient';
 import { createSupabaseServerClient } from '../utils/supabase/supabaseServer';
 
 
@@ -75,6 +73,31 @@ export async function signIn(email: string, password: string)
 }
 
 /**
+ * Handles the sign out function for a user
+ * @returns {Promise<Object>} - A promise that resolves to the sign-ind user or rejects with an error.
+ */
+export async function signOut() 
+{
+
+  const { error } = await supabase.auth.signOut()
+
+  //TODO: clear cookies?
+  if (error) {
+    return{
+      success: false,
+      errorMessage: error.message
+    };
+  }
+  else
+  {
+    return{
+      success: true,
+    }
+  }
+
+}
+
+/**
  * TODO: function to insert new users to our schema. edit the parameters as needed.
  * @param email 
  * @param fName 
@@ -85,7 +108,7 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
 {
   //create supabase server client
   const supabase = createSupabaseServerClient();
-  
+
   const {data: insertData, error: insertError } = await supabase
       .from('users')
       .insert([
