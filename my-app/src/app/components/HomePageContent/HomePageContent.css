@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 /* HomePageContent.css */
+.homepage-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
 .homepage-content {
   background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
@@ -18,7 +24,35 @@
   text-align: center; /* Center align all the text in the .about-me section */
 }
 
+.about-me-content {
+  display:flex;
+  align-items: flex-start;
+}
+
+.profile-image {
+  max-width: 200px; /*Adjust as needed*/
+  height: auto;
+  border: 4px solid white;
+  margin-right: 20px;
+  box-shadow: 0px 4px 10px rgbba(0, 0, 0, 0.1);
+}
+
+.about-me-text {
+  max-width: 600px;
+}
 .about-me h1 {
   color: #fff; /* Ensure the header is also white */
   text-align: center; /* Center the header text specifically if needed */
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2em;
+  color: #333;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #ffffff;
 }
