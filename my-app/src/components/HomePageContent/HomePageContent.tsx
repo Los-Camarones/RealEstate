@@ -6,7 +6,7 @@ const HomePageContent = () => {
     <div className="homepage-content">
       <section className="about-me">
         <div className="about-me-content">
-          <img src="/lourdes.jpg" alt="Lourdes Mendoza" className="profile-image" />
+          <img src="lourdes.jpg" alt="Lourdes Mendoza" className="profile-image" />
           <div className="about-me-text">
             <h1>About Lourdes Mendoza</h1>
             <p>
