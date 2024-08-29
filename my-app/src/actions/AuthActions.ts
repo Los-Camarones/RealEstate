@@ -98,7 +98,57 @@ export async function signOut()
 }
 
 /**
- * TODO: function to insert new users to our schema. edit the parameters as needed.
+ * Retrieves the user ID from the Supabase authentication.
+ * 
+ * This function attempts to fetch the user ID associated with the current authenticated session.
+ * It returns an object indicating the success of the operation, an optional error message, and the user ID if successful.
+ * 
+ * @returns {Promise<{ success: boolean; message: string; userId?: string }>}
+ * An object containing:
+ * - `success` (boolean): Indicates if the operation was successful.
+ * - `message` (string | undefined): Message explaining error if an error did occure, octherwise undefined.
+ * - `userId` (string | undefined): The user ID if the operation was successful; otherwise, it is undefined.
+ */
+export async function getUserID()
+{
+   //create supabase server client
+   const supabase = createSupabaseServerClient();
+
+   try{
+ 
+     //get user
+     const { data: { user }, error: authError } = await supabase.auth.getUser();
+ 
+     //return error if theres auth error
+     if(authError)
+     {
+       return { success: false, message: `Authentication error: ${authError.message}` };
+     }
+ 
+     //get id of user
+     const userID = user?.id;
+     
+     //if no user ID, ID return error 
+     if(!userID)
+     {
+       return { success: false, message: "No user id found" };
+     }
+     else
+     {
+      return {success: true, id: userID}
+     }
+    }
+    catch(error)
+    {
+      //catch all unexpected errors
+      return { success: false, message: 'An unexpected error occurred.' };
+    }
+}
+
+
+/**
+ * Function to insert new users to our schema. 
+ * Note: this is our own database schema, which is different from supabase auth schema 
  * @param email 
  * @param fName 
  * @param lName 
@@ -111,24 +161,14 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
 
   try{
 
-    //get user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-    //return if theres auth error
-    if(authError)
-    {
-      console.log("1");
-      return { success: false, message: `Authentication error: ${authError.message}` };
-    }
-
-    //get id of user
-    const userID = user?.id;
+    //get our userID if the user has a authenticated session
+    const userID = (await getUserID()).id
 
     if(!userID)
     {
-      console.log("2");
       return { success: false, message: "No user id found" };
     }
+
 
     // insert to our user table 
     const {data: insertData, error: insertError } = await supabase
@@ -158,4 +198,46 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
     return { success: false, message: 'An unexpected error occurred.' };
   }
 
+}
+
+/**
+ * Gets the user information via sql query.
+ */
+export async function getUserInformation()
+{
+    //create supabase server client
+    const supabase = createSupabaseServerClient();
+
+    
+    try {
+
+      //get our userID if the user has a authenticated session
+      const userID = (await getUserID()).id
+
+      if(!userID)
+      {
+        return { success: false, message: "No user id found" };
+      }
+
+      //use sql query to get user info based on their id
+      let { data: User, error } = await supabase
+        .from('Users')
+        .select("*")
+        .eq('id', userID)
+
+      if(error)
+      {
+        return { success: false, message: error.message};
+      }
+      else
+      {
+        return { success: true, data: User};
+      }
+
+      
+    } catch (error) 
+    {
+      //catch all unexpected errors
+      return { success: false, message: 'An unexpected error occurred.' };
+    }
 }
