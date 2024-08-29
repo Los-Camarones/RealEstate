@@ -109,21 +109,53 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
   //create supabase server client
   const supabase = createSupabaseServerClient();
 
-  const {data: insertData, error: insertError } = await supabase
-      .from('users')
-      .insert([
-        {
-          //enter information from user
-          firstName: fName,
-          lastName: lName,
-          phoneNumber: phoneNumber,
-          email: email
-        },
-        { returning: 'minimal' }
-      ])
+  try{
 
-      if(insertError)
-      {
-        throw insertError;
-      }
+    //get user
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    //return if theres auth error
+    if(authError)
+    {
+      console.log("1");
+      return { success: false, message: `Authentication error: ${authError.message}` };
+    }
+
+    //get id of user
+    const userID = user?.id;
+
+    if(!userID)
+    {
+      console.log("2");
+      return { success: false, message: "No user id found" };
+    }
+
+    // insert to our user table 
+    const {data: insertData, error: insertError } = await supabase
+        .from('Users')
+        .insert([
+          {
+            //enter information from user
+            id: userID,
+            firstName: fName,
+            lastName: lName,
+            phoneNumber: phoneNumber,
+            email: email
+          }
+        ])
+  
+        if(insertError)
+        {
+          console.log("3");
+          return { success: false, message: insertError.message};
+        }
+
+        return { success: true, message: 'User successfully added!', userId: userID };
+  }
+  catch(error)
+  {
+    //catch all unexpected errors
+    return { success: false, message: 'An unexpected error occurred.' };
+  }
+
 }

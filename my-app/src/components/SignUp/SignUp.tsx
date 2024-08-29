@@ -6,7 +6,7 @@ import NavBar from '../../components/Navbar/navbar';
 //import "../globals.css";
 import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
-import { signUp } from "../../actions/AuthActions";
+import { insertNewUser, signUp } from "../../actions/AuthActions";
 
 
 // Local state to store form field values
@@ -42,10 +42,18 @@ const SignUp: React.FC = () => {
       console.log(response)
       setError(response.errorMessage  || "Unknown Error has occured")
     }
+    
+    //call server action to insert user to schema
+    const responseInsert = await insertNewUser(email, firstName, lastName, phone);
+    
+    if(!responseInsert.success)
+    {
+      console.log(responseInsert.message)
+      setError(responseInsert.message  || "Error inserting user to database")
+    }
     //redirect to Account page
     else
     {
-      const userID = response.userID;
       router.push('/Account'); //'Account/${userID}
 
     }
