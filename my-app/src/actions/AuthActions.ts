@@ -7,11 +7,16 @@
  */
 'use server';
 
-
+import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
 import supabase from '../utils/supabase/supabaseClient';
 import { createSupabaseServerClient } from '../utils/supabase/supabaseServer';
 
-
+export interface User{
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
 
 /**
  * Handles the creation of an account for a user
@@ -166,7 +171,7 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
 
     if(!userID)
     {
-      return { success: false, message: "No user id found" };
+      return { success: false, errorMessage: "No user id found" };
     }
 
 
@@ -187,15 +192,15 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
         if(insertError)
         {
           console.log("3");
-          return { success: false, message: insertError.message};
+          return { success: false, errorMessage: insertError.message};
         }
 
-        return { success: true, message: 'User successfully added!', userId: userID };
+        return { success: true, errorMessage: 'User successfully added!', userId: userID };
   }
   catch(error)
   {
     //catch all unexpected errors
-    return { success: false, message: 'An unexpected error occurred.' };
+    return { success: false, errorMessage: 'An unexpected error occurred.' };
   }
 
 }
@@ -203,7 +208,7 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
 /**
  * Gets the user information via sql query.
  */
-export async function getUserInformation()
+export async function getUserInformation(): Promise<User | null>
 {
     //create supabase server client
     const supabase = createSupabaseServerClient();
@@ -216,28 +221,34 @@ export async function getUserInformation()
 
       if(!userID)
       {
-        return { success: false, message: "No user id found" };
+        throw new Error('User is not authenticated'); 
       }
 
       //use sql query to get user info based on their id
-      let { data: User, error } = await supabase
+      const {data, error} = await supabase
         .from('Users')
-        .select("*")
-        .eq('id', userID)
+        .select('firstName, lastName, email, phoneNumber')
+        .eq('id', userID);
+
 
       if(error)
       {
-        return { success: false, message: error.message};
+        throw new Error(`Error fetching user: ${error.message}`); // Rethrow the error with a message
+      }
+
+      if (!data) {
+        throw new Error('User not found');
       }
       else
       {
-        return { success: true, data: User};
-      }
-
+        // Typecast the data to the User interface
+        const user: User = data[0] as User;
+        return user;      }
       
     } catch (error) 
     {
       //catch all unexpected errors
-      return { success: false, message: 'An unexpected error occurred.' };
+      throw new Error('An unexpected error occurred.'); 
+
     }
 }

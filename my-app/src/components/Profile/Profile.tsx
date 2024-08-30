@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut } from '../../actions/AuthActions';
+import { getUserInformation } from '../../actions/AuthActions';
 import { useRouter } from 'next/navigation';
 
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
 const Profile: React.FC = () => {
 
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const router = useRouter();
 
   const handleSignOut = async () => 
   {
-
-    console.log('signed out');
 
     //call server to sign out
     const response = await signOut();
@@ -20,6 +27,7 @@ const Profile: React.FC = () => {
     //if good, redirect to home page
     if(response.success)
     {
+      console.log('signed out');
       router.push('/');
     }
     else
@@ -28,10 +36,42 @@ const Profile: React.FC = () => {
     }
 
   }
+
+  
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const userInfo = await getUserInformation();
+          setUser(userInfo);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchUser();
+    }, []);
+
+
+
+
+  
+
+  
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>No user data available</div>;
+
+
   return (
     <div>
       <div>
-        First name Last Name
+        <h2>User Profile</h2>
+            <p>First Name: {user.firstName}</p>
+            <p>Last Name: {user.lastName}</p>
+            <p>Email: {user.email}</p>
+            <p>Phone Number: {user.phoneNumber}</p>
       </div>
       {/*When an error occurs this will show up */}
       {error && <div style={{ color: 'red' }}>{error}</div>}
