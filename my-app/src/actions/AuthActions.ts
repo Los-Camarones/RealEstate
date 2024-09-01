@@ -1,18 +1,19 @@
 /**
- * This file serves for any actions that revolve around user authentication and authorization. These include:
- * Loggin in users
- * Creating new accounts
- * Checking for authorization
+ * This file serves for actions related to user authentication and authorization, including:
+ * - Logging in users
+ * - Creating new accounts
+ * - Checking authorization
  * 
+ * All actions are performed securely on the server side.
  */
 'use server';
 
-import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
-import supabase from '../utils/supabase/supabaseClient';
 import { createSupabaseServerClient } from '../utils/supabase/supabaseServer';
-import { cookies } from 'next/headers';
+import { cookies } from 'next/headers'; // For handling cookie management securely
+import { User, Session } from '@supabase/supabase-js'; // Importing relevant Supabase types
 
-export interface User{
+// Type definition for user data in our custom schema
+export interface CustomUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -20,250 +21,193 @@ export interface User{
 }
 
 /**
- * Handles the creation of an account for a user
+ * Handles the creation of an account for a user.
  * @param {string} email - User's email address
  * @param {string} password - User's password
- * @returns {Promise<Object>} - A promise that resolves to the newly created user or rejects with an error.
+ * @returns {Promise<{ success: boolean; userID?: string; errorMessage?: string }>}
  */
-export async function signUp(email: string, password: string)
-{
-  //create supabase server client
+export async function signUp(email: string, password: string): Promise<{ success: boolean; userID?: string; errorMessage?: string }> {
   const supabase = createSupabaseServerClient();
 
-  //call supabase
-  const {data, error} = await supabase.auth.signUp({email, password})
+  const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
-    return{
+    console.error('Error signing up:', error.message);
+    return {
       success: false,
       errorMessage: error.message
     };
   }
-  else
-  {
-    return{
-      success: true,
-      userID: data.user?.id
-    }
-  }
+
+  return {
+    success: true,
+    userID: data.user?.id
+  };
 }
 
 /**
- * Handles the sign in function for a user
+ * Handles the sign-in function for a user.
  * @param {string} email - User's email address
  * @param {string} password - User's password
- * @returns {Promise<Object>} - A promise that resolves to the sign-ind user or rejects with an error.
+ * @returns {Promise<{ success: boolean; userID?: string; errorMessage?: string }>}
  */
-export async function signIn(email: string, password: string) 
-{
-  //create supabase server client
+export async function signIn(email: string, password: string): Promise<{ success: boolean; userID?: string; errorMessage?: string }> {
   const supabase = createSupabaseServerClient();
 
-
-  const {data, error} = await supabase.auth.signInWithPassword({email, password})
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return{
+    console.error('Error signing in:', error.message);
+    return {
       success: false,
       errorMessage: error.message
     };
   }
-  else
-  {
-    return{
-      success: true,
-      userID: data.user.id
-    }
-  }
 
-}
-
-/**
- * Handles the sign out function for a user
- * @returns {Promise<Object>} - A promise that resolves to the sign-ind user or rejects with an error.
- */
-export async function signOut() 
-{
-
-    // Check if a user's logged in
-     const { data: { user }, error: authError } = await supabase.auth.getUser();
+  // Optionally, handle rate limiting here if needed (e.g., using middleware)
   
-    if (user) 
-    {
-      //sign out bro
-      const { error } = await supabase.auth.signOut();
-
-      //TODO: clear cookies?
-      if (error) {
-        return{
-          success: false,
-          errorMessage: error.message
-        };
-      }
-      else
-      {
-        return{
-          success: true,
-        }
-      }
-    }
-    else
-    {
-      return{
-        success: true
-        //user already logged out
-      }
-    }
+  return {
+    success: true,
+    userID: data.user?.id
+  };
 }
 
 /**
- * Retrieves the user ID from the Supabase authentication.
- * 
- * This function attempts to fetch the user ID associated with the current authenticated session.
- * It returns an object indicating the success of the operation, an optional error message, and the user ID if successful.
- * 
- * @returns {Promise<{ success: boolean; message: string; userId?: string }>}
- * An object containing:
- * - `success` (boolean): Indicates if the operation was successful.
- * - `message` (string | undefined): Message explaining error if an error did occure, octherwise undefined.
- * - `userId` (string | undefined): The user ID if the operation was successful; otherwise, it is undefined.
+ * Handles the sign-out function for a user.
+ * @returns {Promise<{ success: boolean; errorMessage?: string }>}
  */
-export async function getUserID()
-{
-   //create supabase server client
-   const supabase = createSupabaseServerClient();
-
-   try{
- 
-     //get user
-     const { data: { user }, error: authError } = await supabase.auth.getUser();
- 
-     //return error if theres auth error
-     if(authError)
-     {
-       return { success: false, message: `Authentication error: ${authError.message}` };
-     }
- 
-     //get id of user
-     const userID = user?.id;
-     
-     //if no user ID, ID return error 
-     if(!userID)
-     {
-       return { success: false, message: "No user id found" };
-     }
-     else
-     {
-      return {success: true, id: userID}
-     }
-    }
-    catch(error)
-    {
-      //catch all unexpected errors
-      return { success: false, message: 'An unexpected error occurred.' };
-    }
-}
-
-
-/**
- * Function to insert new users to our schema. 
- * Note: this is our own database schema, which is different from supabase auth schema 
- * @param email 
- * @param fName 
- * @param lName 
- * @param phoneNumber 
- */
-export async function insertNewUser(email: string, fName: string, lName:string, phoneNumber: string)
-{
-  //create supabase server client
+export async function signOut(): Promise<{ success: boolean; errorMessage?: string }> {
   const supabase = createSupabaseServerClient();
 
-  try{
+  // Fetch current user to ensure there's an active session
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-    //get our userID if the user has a authenticated session
-    const userID = (await getUserID()).id
+  if (authError || !user) {
+    console.error('Error fetching user or user not logged in:', authError?.message);
+    return {
+      success: false,
+      errorMessage: authError?.message || 'User is not logged in.'
+    };
+  }
 
-    if(!userID)
-    {
-      return { success: false, errorMessage: "No user id found" };
+  // Perform sign-out and clear session cookies
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error('Error signing out:', error.message);
+    return {
+      success: false,
+      errorMessage: error.message
+    };
+  }
+
+  // Clear session-related cookies securely
+  cookies().delete('sb-access-token'); // Clear access token cookie
+  cookies().delete('sb-refresh-token'); // Clear refresh token cookie
+
+  return {
+    success: true
+  };
+}
+
+/**
+ * Retrieves the user ID from the Supabase authentication, validating JWT securely.
+ * @returns {Promise<{ success: boolean; userId?: string; message?: string }>}
+ */
+export async function getUserID(): Promise<{ success: boolean; userId?: string; message?: string }> {
+  const supabase = createSupabaseServerClient();
+
+  try {
+    // Securely fetch user session and validate JWT against Supabase server
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      console.error('Error fetching user:', error?.message);
+      return { success: false, message: error?.message || 'No user found.' };
     }
 
-
-    // insert to our user table 
-    const {data: insertData, error: insertError } = await supabase
-        .from('Users')
-        .insert([
-          {
-            //enter information from user
-            id: userID,
-            firstName: fName,
-            lastName: lName,
-            phoneNumber: phoneNumber,
-            email: email
-          }
-        ])
-  
-        if(insertError)
-        {
-          console.log("3");
-          return { success: false, errorMessage: insertError.message};
-        }
-
-        return { success: true, errorMessage: 'User successfully added!', userId: userID };
+    return { success: true, userId: user.id };
+  } catch (error) {
+    console.error('Unexpected error fetching user ID:', error);
+    return { success: false, message: 'An unexpected error occurred.' };
   }
-  catch(error)
-  {
-    //catch all unexpected errors
+}
+
+/**
+ * Function to insert new users into our custom schema.
+ * @param {string} email - User's email address
+ * @param {string} fName - User's first name
+ * @param {string} lName - User's last name
+ * @param {string} phoneNumber - User's phone number
+ * @returns {Promise<{ success: boolean; userId?: string; errorMessage?: string }>}
+ */
+export async function insertNewUser(email: string, fName: string, lName: string, phoneNumber: string): Promise<{ success: boolean; userId?: string; errorMessage?: string }> {
+  const supabase = createSupabaseServerClient();
+
+  try {
+    const userResult = await getUserID();
+    if (!userResult.success) {
+      console.error('Error getting user ID:', userResult.message);
+      return { success: false, errorMessage: userResult.message };
+    }
+
+    const { userId } = userResult;
+
+    // Insert user into the custom Users schema
+    const { data, error } = await supabase
+      .from('Users')
+      .insert({
+        id: userId,
+        firstName: fName,
+        lastName: lName,
+        phoneNumber,
+        email
+      });
+
+    if (error) {
+      console.error('Error inserting new user:', error.message);
+      return { success: false, errorMessage: error.message };
+    }
+
+    return { success: true, userId };
+  } catch (error) {
+    console.error('Unexpected error inserting new user:', error);
     return { success: false, errorMessage: 'An unexpected error occurred.' };
   }
-
 }
 
 /**
- * Gets the user information via sql query.
+ * Gets the user information via SQL query from the custom Users table.
+ * @returns {Promise<CustomUser | { error: string }>}
  */
-export async function getUserInformation(): Promise<User | { error: string }>
-{
-    //create supabase server client
-    const supabase = createSupabaseServerClient();
+export async function getUserInformation(): Promise<CustomUser | { error: string }> {
+  const supabase = createSupabaseServerClient();
 
-    
-    try {
-
-      //get our userID if the user has a authenticated session
-      const userID = (await getUserID()).id
-
-      if(!userID)
-      {
-        return {error: "user id not found"};
-      }
-
-      //use sql query to get user info based on their id
-      const {data, error} = await supabase
-        .from('Users')
-        .select('firstName, lastName, email, phoneNumber')
-        .eq('id', userID);
-
-
-      if(error)
-      {
-        return { error: `Error fetching user on ID`};
-      }
-
-      if (!data) {
-        return { error: 'User not found' };
-      }
-      else
-      {
-        // Typecast the data to the User interface
-        const user: User = data[0] as User;
-        return user;      
-      }
-      
-    } catch (error) 
-    {
-      //catch all unexpected errors
-      return { error: 'An unexpected error occurred' }; 
-
+  try {
+    const userResult = await getUserID();
+    if (!userResult.success) {
+      console.error('Error getting user ID:', userResult.message);
+      return { error: userResult.message || 'User ID not found.' };
     }
+
+    const { userId } = userResult;
+
+    const { data, error } = await supabase
+      .from('Users')
+      .select('firstName, lastName, email, phoneNumber')
+      .eq('id', userId)
+      .single();
+
+    if (error || !data) {
+      console.error('Error fetching user information:', error?.message);
+      return { error: 'Error fetching user information or user not found.' };
+    }
+
+    // Ensure the data conforms to the CustomUser interface
+    const user: CustomUser = data;
+    return user;
+  } catch (error) {
+    console.error('Unexpected error fetching user information:', error);
+    return { error: 'An unexpected error occurred.' };
+  }
 }

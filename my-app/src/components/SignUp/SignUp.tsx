@@ -48,8 +48,8 @@ const SignUp: React.FC = () => {
     
     if(!responseInsert.success)
     {
-      console.log(responseInsert.message)
-      setError(responseInsert.message  || "Error inserting user to database")
+      console.log(responseInsert.errorMessage)
+      setError(responseInsert.errorMessage  || "Error inserting user to database")
     }
     //redirect to Account page
     else
