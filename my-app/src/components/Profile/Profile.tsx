@@ -55,8 +55,15 @@ const Profile: React.FC = () => {
     useEffect(() => {
       const fetchUser = async () => {
         try {
-          const userInfo = await getUserInformation();
-          setUser(userInfo);
+          const result = await getUserInformation();
+          if('error' in result)
+          {
+            setError(result.error);
+          }
+          else
+          {
+            setUser(result);
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
@@ -75,7 +82,7 @@ const Profile: React.FC = () => {
   
   //loading states
   if (loading) return <div>Loading...</div>;
-  if (!user) return <div>No user data available</div>;
+  if (!user) return <div>{error}</div>;
 
 
   return (

@@ -222,7 +222,7 @@ export async function insertNewUser(email: string, fName: string, lName:string, 
 /**
  * Gets the user information via sql query.
  */
-export async function getUserInformation(): Promise<User | null>
+export async function getUserInformation(): Promise<User | { error: string }>
 {
     //create supabase server client
     const supabase = createSupabaseServerClient();
@@ -235,7 +235,7 @@ export async function getUserInformation(): Promise<User | null>
 
       if(!userID)
       {
-        throw new Error('User is not authenticated'); 
+        return {error: "user id not found"};
       }
 
       //use sql query to get user info based on their id
@@ -247,11 +247,11 @@ export async function getUserInformation(): Promise<User | null>
 
       if(error)
       {
-        throw new Error(`Error fetching user: ${error.message}`); // Rethrow the error with a message
+        return { error: `Error fetching user on ID`};
       }
 
       if (!data) {
-        throw new Error('User not found');
+        return { error: 'User not found' };
       }
       else
       {
@@ -263,7 +263,7 @@ export async function getUserInformation(): Promise<User | null>
     } catch (error) 
     {
       //catch all unexpected errors
-      throw new Error('An unexpected error occurred.'); 
+      return { error: 'An unexpected error occurred' }; 
 
     }
 }
