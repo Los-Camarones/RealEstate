@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { signOut } from '../../actions/AuthActions';
 import { getUserInformation } from '../../actions/AuthActions';
 import { useRouter } from 'next/navigation';
+import { clear } from 'console';
 
 type User = {
   firstName: string;
@@ -18,16 +19,29 @@ const Profile: React.FC = () => {
   const [error, setError] = useState<string>('');
   const router = useRouter();
 
+  //function to clear all cookies
+  const clearCookies = () => {
+    document.cookie.split(';').forEach(cookie => {
+      const [name] = cookie.split('=');
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
+    });
+  };
+
+  //function to handle sign out 
   const handleSignOut = async () => 
   {
 
-    //call server to sign out
+    //call supabase server to sign out
     const response = await signOut();
 
-    //if good, redirect to home page
+    //if good, clear cookies and session and redirect to home page
     if(response.success)
     {
       console.log('signed out');
+      clearCookies();
+      //supabase.auth.setSession(null);
+      localStorage.clear();
+      sessionStorage.clear();
       router.push('/');
     }
     else
@@ -37,7 +51,7 @@ const Profile: React.FC = () => {
 
   }
 
-  
+    //fetch user information from supabase
     useEffect(() => {
       const fetchUser = async () => {
         try {
@@ -59,7 +73,7 @@ const Profile: React.FC = () => {
   
 
   
-
+  //loading states
   if (loading) return <div>Loading...</div>;
   if (!user) return <div>No user data available</div>;
 

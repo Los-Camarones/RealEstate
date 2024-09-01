@@ -10,6 +10,7 @@
 import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
 import supabase from '../utils/supabase/supabaseClient';
 import { createSupabaseServerClient } from '../utils/supabase/supabaseServer';
+import { cookies } from 'next/headers';
 
 export interface User{
   firstName: string;
@@ -84,22 +85,35 @@ export async function signIn(email: string, password: string)
 export async function signOut() 
 {
 
-  const { error } = await supabase.auth.signOut()
+    // Check if a user's logged in
+     const { data: { user }, error: authError } = await supabase.auth.getUser();
+  
+    if (user) 
+    {
+      //sign out bro
+      const { error } = await supabase.auth.signOut();
 
-  //TODO: clear cookies?
-  if (error) {
-    return{
-      success: false,
-      errorMessage: error.message
-    };
-  }
-  else
-  {
-    return{
-      success: true,
+      //TODO: clear cookies?
+      if (error) {
+        return{
+          success: false,
+          errorMessage: error.message
+        };
+      }
+      else
+      {
+        return{
+          success: true,
+        }
+      }
     }
-  }
-
+    else
+    {
+      return{
+        success: true
+        //user already logged out
+      }
+    }
 }
 
 /**
@@ -243,7 +257,8 @@ export async function getUserInformation(): Promise<User | null>
       {
         // Typecast the data to the User interface
         const user: User = data[0] as User;
-        return user;      }
+        return user;      
+      }
       
     } catch (error) 
     {
