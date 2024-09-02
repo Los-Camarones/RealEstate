@@ -20,11 +20,15 @@ const SignIn = () => {
     if (!response.success) {
       setError(response.errorMessage || 'Unknown Error has occurred');
     } else {
-      // Debugging: Check the value of the redirect parameter
-      const redirectTo = searchParams.get('redirect') || '/Account';
-      console.log('Redirecting to:', redirectTo); // Debug log
+      // Determine where to redirect after a successful login
+      let redirectTo = searchParams.get('redirect') || '/Account';
 
-      // Double-check that redirectTo is a valid path
+      // If the target is Schedule a Tour, adjust to open the modal via a query parameter
+      if (redirectTo === '/ScheduleaTour') {
+        redirectTo = '/?showTour=true'; // Redirect to the main page and open the modal via the parameter
+      }
+
+      // Redirect user to the specified or adjusted page
       router.push(redirectTo);
     }
   };
