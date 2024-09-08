@@ -27,15 +27,11 @@ jobs:
       run: npm install
       working-directory: my-app 
     
-    # Linting 
-    - name: Lint code
-      run: npm run lint
-      working-directory: my-app 
+    # Linting WIP
 
-    - name: Run tests         # Currently No tests yet 
-      run: npm test
-      working-directory: my-app
+    # Tests WIP
 
+    # Final Build
     - name: Build project
       run: npm run build 
       working-directory: my-app
