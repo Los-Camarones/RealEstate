@@ -31,7 +31,7 @@ jobs:
     #  run: npm run lint
     #  working-directory: my-app 
 
-    # Tests WIP (Commented Out for Now)
+    # Tests WIP (Commented Out for Now) JEST, POSTMAN, CYPRESS
     #- name: Run tests 
     #  run: npm test
     #  working-directory: my-app
