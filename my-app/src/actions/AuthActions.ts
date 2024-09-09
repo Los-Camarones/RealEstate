@@ -300,6 +300,7 @@ export async function updatePassword(password: string)
 
     if(error)
     {
+      console.log(error);
       return{success: false, error: 'Could not update password'}
     }
     else

@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect, useRouter } from 'next/navigation'
 import NavBar from '../../components/Navbar/navbar';
 //import "../globals.css";
-import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
 import { insertNewUser, signUp } from "../../actions/AuthActions";
 
