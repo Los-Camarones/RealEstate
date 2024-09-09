@@ -10,36 +10,49 @@ const PasswordUpdate = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-
-  useEffect(() => {
-    async function init() {
-
+  useEffect(() => {async function init() {
       const supabase = createClient();
 
+      //get the pkce code from url
+      const tokenHash = new URLSearchParams(window.location.search).get(
+        "token_hash"
+      );
 
-      const { data } = await supabase.auth.getUser();
+      if (!tokenHash) {
+        setError("Missing token hash parameter");
+        return;
+      }
 
-      if (!data.user) {
-        const code = new URLSearchParams(window.location.search).get("code");
-        if (!code) {
-          console.error("Missing code");
+      if (tokenHash.startsWith("pkce_")) {
+
+        //remove the pkce_ in front of token
+        const code = tokenHash.substring(5);
+
+        console.log("CODE", code);
+
+        //exchange code for a session
+        const { data, error } = await supabase.auth.exchangeCodeForSession(
+          code
+        );
+        console.log(data);
+        if (error) {
+          console.log("error with session");
+          setError(error.message);
           return;
         }
-
-        const { data: newSession, error: newSessionError } =
-          await supabase.auth.exchangeCodeForSession(code);
-
-        console.log("NEW SESSION DATA:", newSession.session);
-
-        if (newSessionError) {
-          console.log(newSessionError);
+        //check validity of session
+        if (data.session) {
+          console.log("Session aquired", data.session);
+        } else {
+          setError("Invalid session");
         }
-      }
-    }
+      } 
 
+    }
     init();
+
   }, []);
-  
+
   const handlePasswordUpdate = async (event: React.FormEvent) => {
     event.preventDefault();
 
