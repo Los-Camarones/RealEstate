@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -6,14 +7,11 @@ import { signIn } from '../../actions/AuthActions';
 
 
 const SignIn = () => {
-
-  //email and password credentials variables
   const [email, setEmail] = useState<string>('');
   const[password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
-
-  //router 
   const router = useRouter();
+ 
 
 /**
  * Handles login for user. Calls server action to supabase to validate credentials
