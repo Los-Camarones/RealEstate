@@ -42,7 +42,7 @@ const SearchHomes = () => {
             type="text"
             value={searchQuery}
             onChange={handleChange}
-            placeholder="Search for a home"
+            placeholder="Enter City,Zip,County, Neighboorhood"
             className="search-input"
           />
           <button type="submit" className="search-button">

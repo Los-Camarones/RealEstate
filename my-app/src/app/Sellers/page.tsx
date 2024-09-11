@@ -1,5 +1,7 @@
 import NavBar from "../../components/Navbar/navbar";
 import "../globals.css";
+import ContactMe from "../../components/ContactMe/ContactMe";
+import Footer from "../../components/Footer/footer";
 const Sellers = () => {
     return (
       <div>
@@ -10,6 +12,12 @@ const Sellers = () => {
         <p> give an estimate house price for user's house , if the user enter they houes address . </p>
        
 
+      </div>
+      <div>
+        <ContactMe></ContactMe>
+      </div>
+      <div>
+        <Footer></Footer>
       </div>
       </div>
     );

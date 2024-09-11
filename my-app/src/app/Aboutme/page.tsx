@@ -2,8 +2,11 @@ import NavBar from "../../components/Navbar/navbar";
 import React from "react";
 import "../globals.css";
 import ContactMe from "../../components/ContactMe/ContactMe";
+import Reviews from "../../components/staticReviews/reviews";
+import Footer from "../../components/Footer/footer";
 
-const Aboutme = () => {
+
+const Aboutme: React.FC = () => {
   return (
     <main>
       <header>
@@ -73,8 +76,16 @@ const Aboutme = () => {
         <img src="/midtownSac.jpg" alt="Image of Midtown Sacramento" />
         </div>
       </div>
+      <div className="Aboutme">
+        <h1>Customer reviews</h1>
+        <Reviews />
+      </div>
+       
       <div>
         <ContactMe></ContactMe>
+      </div>
+      <div>
+        <Footer></Footer>
       </div>
 
   </main>

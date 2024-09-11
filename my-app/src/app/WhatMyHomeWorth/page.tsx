@@ -2,6 +2,9 @@
 import React from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import "../globals.css";
+import ConactMe from "../../components/ContactMe/ContactMe";
+import Footer from '../../components/Footer/footer';
+
 function WhatMyHomeWorth() {
     return (
         <div>
@@ -13,6 +16,12 @@ function WhatMyHomeWorth() {
                 ask the user for their address.
                 give an estimate house price for user's house, if the user enters their house address.
             </p>
+        </div>
+        <div>
+            <ConactMe></ConactMe>
+        </div>
+        <div>
+            <Footer></Footer>
         </div>
         </div>
     );

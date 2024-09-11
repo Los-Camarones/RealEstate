@@ -1,5 +1,7 @@
 import NavBar from "../../components/Navbar/navbar";
 import "../globals.css";
+import ContactMe from "../../components/ContactMe/ContactMe";
+import Footer from "../../components/Footer/footer";
 const Listing= () => {
     return (
       <div>
@@ -10,7 +12,17 @@ const Listing= () => {
         <p>and google API ( maybe :v ) </p>
 
       </div>
+
+      <div>
+        <ContactMe></ContactMe>
       </div>
+      <div>
+        <Footer></Footer>
+      </div>
+      </div>
+      
+       
+
     );
   }
   

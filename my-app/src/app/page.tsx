@@ -10,8 +10,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import exp from 'constants';
 
+
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 import ScheduleaTourBotton from '../components/SchTourbotton/scheduleatourbotton';
+import ContactMe from '../components/ContactMe/ContactMe';
 
 
 
@@ -120,10 +122,12 @@ function Page(){
           
         </div>
       
-        
+        <div>
+          <ContactMe></ContactMe>
+        </div>
     
         <div style={{ textAlign: 'center' }}>
-        <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate.</p>
+        <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate. DRE: 0777831</p>
         <p style={{ color: 'green' ,padding: '10px' }}>Powered by Los Camarones. </p>
 
 

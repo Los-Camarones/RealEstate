@@ -1,6 +1,9 @@
 import React from "react"
 import NavBar from "../../components/Navbar/navbar";
 import "../globals.css";
+import ContactMe from "../../components/ContactMe/ContactMe";
+import Footer from "../../components/Footer/footer";
+import GetPreApproved from "../../components/getPreApproved/GetPreApproved";
 const Buyers = () => {
     return (
      
@@ -12,6 +15,16 @@ const Buyers = () => {
         <p> detail from metralist plzzz give me the API detailllllllahhhhhh
         </p>
       </div>
+      
+        <GetPreApproved></GetPreApproved>
+      
+      <div>
+        <ContactMe></ContactMe>
+      </div>
+      <div>
+        <Footer></Footer>
+      </div>
+
       </div>
       
     );

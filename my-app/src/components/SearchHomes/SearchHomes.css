@@ -10,13 +10,39 @@
 .search-homes input {
   flex: 1; /* Allow input to grow and fill available space */
   padding: 10px;
-  border: 1px solid #000000;
-  border-radius: 4px;
+  border: 2px solid black;
   border-radius: 8px;
+  border-radius: 12px;
 }
 
 .search-homes .search-icon {
   margin-left: 10px; /* Adds margin to the left of the icon */
   color: #999; /* Sets the icon color */
   font-size: 18px; /* Sets the icon size */
+}
+
+.search-homes-button-animated{
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.search-homes-button-animated{
+  margin-right: 8px;
+  transition: transform 0.3s;
+}
+
+.search-homes-button-animated:hover i {
+  transform: translateX(10px);
+
+}
+
+.search-homes-button-animated span {
+  display: inline-block;
+  transition: opacity 0.3s;
+}
+
+.search-homes-button-animated:hover span{
+  opacity: 0;
 }
