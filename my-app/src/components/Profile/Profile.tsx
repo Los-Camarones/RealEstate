@@ -1,25 +1,47 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut } from '../../actions/AuthActions';
+import { getUserInformation } from '../../actions/AuthActions';
 import { useRouter } from 'next/navigation';
+import { clear } from 'console';
 
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
 const Profile: React.FC = () => {
 
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const router = useRouter();
 
+  //function to clear all cookies
+  const clearCookies = () => {
+    document.cookie.split(';').forEach(cookie => {
+      const [name] = cookie.split('=');
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
+    });
+  };
+
+  //function to handle sign out 
   const handleSignOut = async () => 
   {
 
-    console.log('signed out');
-
-    //call server to sign out
+    //call supabase server to sign out
     const response = await signOut();
 
-    //if good, redirect to home page
+    //if good, clear cookies and session and redirect to home page
     if(response.success)
     {
+      console.log('signed out');
+      clearCookies();
+      //supabase.auth.setSession(null);
+      localStorage.clear();
+      sessionStorage.clear();
       router.push('/');
     }
     else
@@ -28,10 +50,49 @@ const Profile: React.FC = () => {
     }
 
   }
+
+    //fetch user information from supabase
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const result = await getUserInformation();
+          if('error' in result)
+          {
+            setError(result.error);
+          }
+          else
+          {
+            setUser(result);
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchUser();
+    }, []);
+
+
+
+
+  
+
+  
+  //loading states
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>{error}</div>;
+
+
   return (
     <div>
       <div>
-        First name Last Name
+        <h2>User Profile</h2>
+            <p>First Name: {user.firstName}</p>
+            <p>Last Name: {user.lastName}</p>
+            <p>Email: {user.email}</p>
+            <p>Phone Number: {user.phoneNumber}</p>
       </div>
       {/*When an error occurs this will show up */}
       {error && <div style={{ color: 'red' }}>{error}</div>}

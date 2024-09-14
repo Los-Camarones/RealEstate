@@ -1,3 +1,27 @@
+// /app/Login/page.tsx
+'use client';
+
+import SignIn from '../../components/SignIn/SignIn';
+import NavBar from '../../components/Navbar/navbar';  // Adjust path if necessary
+import '../globals.css';  // Adjust path if needed
+
+const LoginPage = () => {
+  return (
+    <main>
+      <header>
+        <NavBar />
+      </header>
+      <div style={{ paddingTop: '6rem' }}>
+        <h1>Property Organizer Login</h1>
+        {/* Render the SignIn IDX Widget */}
+        <SignIn />
+      </div>
+    </main>
+  );
+};
+
+export default LoginPage;
+
 /**
  * LoginPage Component
  *
@@ -23,7 +47,7 @@
  * The component is currently standalone and does not interface with any backend services or
  * databases. The intended behavior, once integrated, is for successful authentication to redirect
  * the user to their dashboard or home page and handle any login failures appropriately.
- */
+ 
 //'use client'
 
 import NavBar from '../../components/Navbar/navbar';
@@ -49,3 +73,4 @@ return(
 }
 
 export default LoginPage;
+*/
