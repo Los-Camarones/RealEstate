@@ -1,4 +1,45 @@
+// /components/SignIn.tsx
 'use client';
+
+import { useEffect, useRef } from 'react';
+
+const SignIn = () => {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (widgetRef.current) {
+      // Prevent adding the script multiple times
+      if (!widgetRef.current.querySelector('script')) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          document.currentScript.replaceWith(ihfKestrel.render({
+            "component": "loginWidget",
+            "style": "vertical"
+          }));
+        `;
+        widgetRef.current.appendChild(script);
+      }
+
+      // Cleanup to prevent duplicates
+      return () => {
+        while (widgetRef.current && widgetRef.current.firstChild) {
+          widgetRef.current.removeChild(widgetRef.current.firstChild);
+        }
+      };
+    }
+  }, []);
+
+  return (
+    <div>
+      {/* Placeholder where the IDX widget will be rendered */}
+      <div ref={widgetRef} />
+    </div>
+  );
+};
+
+export default SignIn;
+
+/*'use client';
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -148,3 +189,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+*/

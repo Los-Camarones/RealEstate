@@ -24,10 +24,7 @@ const Listing = () => {
   return (
     <div>
       <NavBar />
-      <div style={{ paddingTop: '6rem' }}> {/* Inline style for testing purposes */}
-        <h1>Home Listing</h1>
-        <p>More detail with Metrolist API.</p>
-        <p>And Google API (maybe :v)</p>
+      <div style={{ paddingTop: '2rem' }}> {/* Inline style for testing purposes */}
       </div>
     </div>
   );

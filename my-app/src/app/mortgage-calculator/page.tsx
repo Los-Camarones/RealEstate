@@ -1,12 +1,12 @@
-// /app/sold-featured-listings/page.tsx
+// /app/mortgage-calculator/page.tsx
 'use client';
 
 import React, { useEffect } from 'react';
-import NavBar from '../../components/Navbar/navbar';  // Adjust the path as necessary
+import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
 import Head from 'next/head'; // Importing Head to add meta tags for SEO
 import '../globals.css';  // Adjust the path based on your project structure
 
-export default function SoldFeaturedListings() {
+const MortgageCalculatorPage = () => {
   useEffect(() => {
     // Adding the IDX rendering script to the body
     const script = document.createElement('script');
@@ -27,19 +27,21 @@ export default function SoldFeaturedListings() {
     <>
       <Head>
         {/* SEO Meta Tags */}
-        <title>Sold Featured Listings</title>
+        <title>Mortgage Calculator</title>
         <meta
           name="description"
-          content="Explore our sold featured listings. See photos, property details, and information on recently sold properties."
+          content="Use our mortgage calculator to estimate your monthly mortgage payments and understand how different factors affect your home loan."
         />
       </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Sold Featured Listings</h1>
-          <p>Displaying sold featured listings using IDX integration.</p>
+          <h1>Mortgage Calculator</h1>
+          <p>Calculate your mortgage payments using the IDX Mortgage Calculator integration.</p>
         </div>
       </main>
     </>
   );
-}
+};
+
+export default MortgageCalculatorPage;
