@@ -1,24 +1,32 @@
-// /app/sold-featured-listings/page.tsx
-'use client';
+'use client'; // Enables client-side rendering, required for DOM manipulation.
 
-import React, { useEffect } from 'react';
-import NavBar from '../../components/Navbar/navbar';  // Adjust the path as necessary
-import Head from 'next/head'; // Importing Head to add meta tags for SEO
-import '../globals.css';  // Adjust the path based on your project structure
+import React, { useEffect, useRef } from 'react';
+import NavBar from '../../components/Navbar/navbar'; // Adjust the path if necessary
+import '../globals.css'; // Adjust the path based on your project structure
+import Head from 'next/head'; // Importing Head for SEO settings.
 
-export default function SoldFeaturedListings() {
+const SoldFeaturedListingsPage = () => {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Adding the IDX rendering script to the body
-    const script = document.createElement('script');
-    script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render());
-    `;
-    document.body.appendChild(script);
+    // Function to add the IDX Sold Featured Listings widget script
+    const addScript = () => {
+      if (widgetRef.current && !widgetRef.current.querySelector('script')) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          document.currentScript.replaceWith(ihfKestrel.render());
+        `;
+        widgetRef.current.appendChild(script);
+      }
+    };
 
-    // Cleanup function to remove the script when the component unmounts
+    // Add the script on component mount
+    addScript();
+
+    // Cleanup function to remove the script on component unmount
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+      if (widgetRef.current) {
+        widgetRef.current.innerHTML = ''; // Clear all children including the script
       }
     };
   }, []);
@@ -30,16 +38,19 @@ export default function SoldFeaturedListings() {
         <title>Sold Featured Listings</title>
         <meta
           name="description"
-          content="Explore our sold featured listings. See photos, property details, and information on recently sold properties."
+          content="Explore our sold featured listings. View details on recently sold properties, including photos and other relevant information."
         />
       </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Sold Featured Listings</h1>
-          <p>Displaying sold featured listings using IDX integration.</p>
+       
+          {/* Placeholder for the IDX Sold Featured Listings widget */}
+          <div ref={widgetRef} />
         </div>
       </main>
     </>
   );
-}
+};
+
+export default SoldFeaturedListingsPage;

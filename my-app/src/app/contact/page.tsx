@@ -1,23 +1,31 @@
-// /app/contact/page.tsx
 'use client'; // Enables client-side rendering, required for DOM manipulation.
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
 
 export default function Contact() {
   const widgetRef = useRef<HTMLDivElement>(null);
+  const scriptRef = useRef<HTMLScriptElement | null>(null);
 
   useEffect(() => {
     // Function to add the IDX contact form widget script
     const addScript = () => {
-      if (widgetRef.current && !widgetRef.current.querySelector('script')) {
+      if (!document.body.contains(scriptRef.current!)) {
         const script = document.createElement('script');
         script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render({
-            "component": "contactFormWidget"
-          }));
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render({
+                "component": "contactFormWidget"
+              }));
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          } else {
+            console.error('ihfKestrel is not defined or render function is missing.');
+          }
         `;
-        widgetRef.current.appendChild(script);
+        document.body.appendChild(script);
+        scriptRef.current = script; // Save the script element in the ref
       }
     };
 
@@ -26,24 +34,19 @@ export default function Contact() {
 
     // Cleanup function to remove the script on component unmount
     return () => {
-      if (widgetRef.current) {
-        widgetRef.current.innerHTML = ''; // Clear all children including the script
+      if (scriptRef.current && document.body.contains(scriptRef.current)) {
+        document.body.removeChild(scriptRef.current);
       }
     };
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Contact Us</title> {/* Optionally set the page title */}
-        <meta name="description" content="Contact us for more information." /> {/* SEO meta description */}
-      </Head>
-      <main>
-        <h1>Contact Us</h1>
-        <p>Fill out the form below to get in touch with us.</p>
-        {/* Placeholder for the IDX contact form widget */}
-        <div ref={widgetRef} />
-      </main>
-    </>
+    <main>
+      <h1>Contact Us</h1>
+      <p>Fill out the form below to get in touch with us.</p>
+      {/* Placeholder for the IDX contact form widget */}
+      <div ref={widgetRef} />
+    </main>
   );
 }
+

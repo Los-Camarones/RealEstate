@@ -1,8 +1,6 @@
-// /app/agent/page.tsx
 'use client'; // Enables client-side rendering, required for DOM manipulation.
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
 import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
 import '../globals.css';  // Adjust the path based on your project structure
 
@@ -15,9 +13,15 @@ const AgentPage = () => {
       if (widgetRef.current && !widgetRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render({
-            "component": "agentWidget"
-          }));
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render({
+                "component": "agentWidget"
+              }));
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          }
         `;
         widgetRef.current.appendChild(script);
       }
@@ -36,19 +40,9 @@ const AgentPage = () => {
 
   return (
     <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>{`{agentName}`}</title>
-        <meta
-          name="description"
-          content="Learn more about our agents, view their profiles, and get in touch for personalized real estate services."
-        />
-      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>{`Agent: {agentName}`}</h1>
-          <p>Explore the profile of our agent and connect for personalized real estate services.</p>
           {/* Placeholder for the IDX Agent widget */}
           <div ref={widgetRef} />
         </div>
