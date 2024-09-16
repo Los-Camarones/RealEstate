@@ -1,4 +1,45 @@
+// /components/SignIn.tsx
 'use client';
+
+import { useEffect, useRef } from 'react';
+
+const SignIn = () => {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (widgetRef.current) {
+      // Prevent adding the script multiple times
+      if (!widgetRef.current.querySelector('script')) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          document.currentScript.replaceWith(ihfKestrel.render({
+            "component": "loginWidget",
+            "style": "vertical"
+          }));
+        `;
+        widgetRef.current.appendChild(script);
+      }
+
+      // Cleanup to prevent duplicates
+      return () => {
+        while (widgetRef.current && widgetRef.current.firstChild) {
+          widgetRef.current.removeChild(widgetRef.current.firstChild);
+        }
+      };
+    }
+  }, []);
+
+  return (
+    <div>
+      {/* Placeholder where the IDX widget will be rendered */}
+      <div ref={widgetRef} />
+    </div>
+  );
+};
+
+export default SignIn;
+
+/*'use client';
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -20,11 +61,15 @@ const SignIn = () => {
     if (!response.success) {
       setError(response.errorMessage || 'Unknown Error has occurred');
     } else {
-      // Debugging: Check the value of the redirect parameter
-      const redirectTo = searchParams.get('redirect') || '/Account';
-      console.log('Redirecting to:', redirectTo); // Debug log
+      // Determine where to redirect after a successful login
+      let redirectTo = searchParams.get('redirect') || '/Account';
 
-      // Double-check that redirectTo is a valid path
+      // If the target is Schedule a Tour, adjust to open the modal via a query parameter
+      if (redirectTo === '/ScheduleaTour') {
+        redirectTo = '/?showTour=true'; // Redirect to the main page and open the modal via the parameter
+      }
+
+      // Redirect user to the specified or adjusted page
       router.push(redirectTo);
     }
   };
@@ -144,3 +189,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+*/
