@@ -1,10 +1,9 @@
-// /app/pending-featured-listings/page.tsx
 'use client'; // Enables client-side rendering, required for DOM manipulation.
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
-import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
+import NavBar from '../../components/Navbar/navbar'; // Adjust the path if necessary
 import '../globals.css';  // Adjust the path based on your project structure
+import Head from 'next/head'; // Import Head to include SEO settings correctly
 
 const PendingFeaturedListingsPage = () => {
   const widgetRef = useRef<HTMLDivElement>(null);
@@ -39,14 +38,12 @@ const PendingFeaturedListingsPage = () => {
         <title>Pending Featured Listings</title>
         <meta
           name="description"
-          content="Explore our pending featured listings to find properties currently under contract and awaiting sale."
+          content="Explore our pending featured listings to find properties currently under contract. Stay updated on the latest pending real estate listings and discover opportunities in the market."
         />
       </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Pending Featured Listings</h1>
-          <p>Browse through our featured listings that are currently pending and under contract.</p>
           {/* Placeholder for the IDX Pending Featured Listings widget */}
           <div ref={widgetRef} />
         </div>

@@ -1,10 +1,8 @@
-// /app/open-home-report/page.tsx
 'use client'; // Enables client-side rendering, required for DOM manipulation.
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
-import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
-import '../globals.css';  // Adjust the path based on your project structure
+import NavBar from '../../components/Navbar/navbar'; // Adjust the path if necessary
+import '../globals.css'; // Adjust the path based on your project structure
 
 const OpenHomeReportPage = () => {
   const widgetRef = useRef<HTMLDivElement>(null);
@@ -15,7 +13,13 @@ const OpenHomeReportPage = () => {
       if (widgetRef.current && !widgetRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render());
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render());
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          }
         `;
         widgetRef.current.appendChild(script);
       }
@@ -34,19 +38,9 @@ const OpenHomeReportPage = () => {
 
   return (
     <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>{`{marketName}: Open Home Report`}</title>
-        <meta
-          name="description"
-          content="{marketDescription}"
-        />
-      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>{`Open Home Report: {marketName}`}</h1>
-          <p>Explore open home reports to get insights on the latest market trends and available properties in the market.</p>
           {/* Placeholder for the IDX Open Home Report widget */}
           <div ref={widgetRef} />
         </div>

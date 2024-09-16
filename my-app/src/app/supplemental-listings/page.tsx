@@ -1,8 +1,6 @@
-// /app/supplemental-listings/page.tsx
-'use client'; // Enables client-side rendering, required for DOM manipulation.
+'use client';
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
 import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
 import '../globals.css';  // Adjust the path based on your project structure
 
@@ -15,7 +13,13 @@ const SupplementalListingsPage = () => {
       if (widgetRef.current && !widgetRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render());
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render());
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          }
         `;
         widgetRef.current.appendChild(script);
       }
@@ -34,19 +38,9 @@ const SupplementalListingsPage = () => {
 
   return (
     <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>Supplemental Listings</title>
-        <meta
-          name="description"
-          content="Explore supplemental listings to find unique properties and opportunities not found in the main listings database."
-        />
-      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Supplemental Listings</h1>
-          <p>Discover additional listings that provide unique opportunities and insights into the real estate market.</p>
           {/* Placeholder for the IDX Supplemental Listings widget */}
           <div ref={widgetRef} />
         </div>
@@ -56,3 +50,4 @@ const SupplementalListingsPage = () => {
 };
 
 export default SupplementalListingsPage;
+

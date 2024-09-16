@@ -1,8 +1,6 @@
-// /app/featured-listings/page.tsx
 'use client'; // Enables client-side rendering, required for DOM manipulation.
 
 import React, { useEffect, useRef } from 'react';
-import Head from 'next/head'; // Importing Head for SEO settings.
 import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
 import '../globals.css';  // Adjust the path based on your project structure
 
@@ -15,7 +13,13 @@ const FeaturedListingsPage = () => {
       if (widgetRef.current && !widgetRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render());
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render());
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          }
         `;
         widgetRef.current.appendChild(script);
       }
@@ -34,19 +38,9 @@ const FeaturedListingsPage = () => {
 
   return (
     <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>Featured Listings</title>
-        <meta
-          name="description"
-          content="Explore our featured listings to find the best properties available. View detailed information, photos, and more."
-        />
-      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Featured Listings</h1>
-          <p>Browse through our curated featured listings to discover exceptional properties.</p>
           {/* Placeholder for the IDX Featured Listings widget */}
           <div ref={widgetRef} />
         </div>

@@ -1,43 +1,47 @@
-// /app/mortgage-calculator/page.tsx
 'use client';
 
-import React, { useEffect } from 'react';
-import NavBar from '../../components/Navbar/navbar';  // Adjust the path if necessary
-import Head from 'next/head'; // Importing Head to add meta tags for SEO
-import '../globals.css';  // Adjust the path based on your project structure
+import React, { useEffect, useRef } from 'react';
+import NavBar from '../../components/Navbar/navbar'; // Adjust the path if necessary
+import '../globals.css'; // Adjust the path based on your project structure
 
 const MortgageCalculatorPage = () => {
-  useEffect(() => {
-    // Adding the IDX rendering script to the body
-    const script = document.createElement('script');
-    script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render());
-    `;
-    document.body.appendChild(script);
+  const widgetRef = useRef<HTMLDivElement>(null);
 
-    // Cleanup function to remove the script when the component unmounts
+  useEffect(() => {
+    // Adding the IDX Mortgage Calculator widget script
+    const addScript = () => {
+      if (widgetRef.current && !widgetRef.current.querySelector('script')) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
+            try {
+              document.currentScript.replaceWith(ihfKestrel.render());
+            } catch (error) {
+              console.error('Error rendering ihfKestrel:', error);
+            }
+          }
+        `;
+        widgetRef.current.appendChild(script);
+      }
+    };
+
+    addScript();
+
+    // Cleanup function to remove the script on component unmount
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+      if (widgetRef.current) {
+        widgetRef.current.innerHTML = ''; // Clear all children including the script
       }
     };
   }, []);
 
   return (
     <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>Mortgage Calculator</title>
-        <meta
-          name="description"
-          content="Use our mortgage calculator to estimate your monthly mortgage payments and understand how different factors affect your home loan."
-        />
-      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          <h1>Mortgage Calculator</h1>
-          <p>Calculate your mortgage payments using the IDX Mortgage Calculator integration.</p>
+          {/* Placeholder for the IDX Mortgage Calculator widget */}
+          <div ref={widgetRef} />
         </div>
       </main>
     </>
