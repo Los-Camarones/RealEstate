@@ -252,3 +252,71 @@ export async function getUserInformation(): Promise<CustomUser | { error: string
     return { error: 'An unexpected error occurred.' };
   }
 }
+
+/**
+ * Sends a password request to user's email
+ * @param email 
+ * @returns 
+ */
+export async function sendResetPasswordRequest(email: string)
+{
+  const supabase = createSupabaseServerClient();
+
+  try{
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+    //handle error
+    if(error)
+    {
+      return {success: false, error: 'Error reseting password.'}
+    }
+    else
+    {
+      return {success: true}
+
+    }
+
+  }
+  catch(error)
+  {
+    return {success: false,  error: 'An unexpected error occurred.' };
+
+  }
+}
+
+/**
+ * Updates a user's password
+ * @param password 
+ * @returns 
+ */
+export async function updatePassword(password: string)
+{
+  const supabase = createSupabaseServerClient();
+
+  try{
+
+    //update the user's password
+    const { data, error } = await supabase.auth.updateUser({password: password});
+
+    if(error)
+    {
+      console.log(error);
+      return{success: false, error: 'Could not update password'}
+    }
+    else
+    {
+      return{
+        success: true,
+        userID: data.user?.id
+      }
+
+    }
+    
+  }
+  catch(error)
+  {
+    return {success: false,  error: 'An unexpected error occurred.' };
+
+  }
+
+}

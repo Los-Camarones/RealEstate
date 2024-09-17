@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect, useRouter } from 'next/navigation'
 import NavBar from '../../components/Navbar/navbar';
 //import "../globals.css";
-import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
 import { insertNewUser, signUp } from "../../actions/AuthActions";
 
@@ -44,6 +43,9 @@ const SignUp: React.FC = () => {
     }
     
     //call server action to insert user to schema
+    //TODO: fix this section. cannot insert into our schema if user has not confirmed email (bc no session state)
+    //So user cannot access /Account page
+    //Solution: maybe reroute user to new page, wait till confirmation, then can add to schema 
     const responseInsert = await insertNewUser(email, firstName, lastName, phone);
     
     if(!responseInsert.success)
