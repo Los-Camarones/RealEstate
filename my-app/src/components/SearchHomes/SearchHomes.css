@@ -20,3 +20,50 @@
   color: #999; /* Sets the icon color */
   font-size: 18px; /* Sets the icon size */
 }
+
+.search-homes {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 20px; /* Adds some padding on the sides */
+  margin: 0 auto;
+}
+
+.search-homes .search-form {
+  display: flex;
+  width: 100%; /* Takes full width of the page */
+  max-width: 1200px; /* Optional: Set a max-width if you don’t want it too wide */
+}
+
+.search-homes .search-input-container {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Makes sure the container takes up full width */
+}
+
+.search-homes input.search-input {
+  flex-grow: 1; /* This ensures the input will take up the remaining width */
+  padding: 10px 50px 10px 10px; /* Adjusts padding, leaves space for icon */
+  border: 1px solid #000000;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.search-homes .search-button {
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: -40px; /* Overlaps the icon onto the input */
+  padding: 10px;
+}
+
+.search-homes .search-icon {
+  color: #8ae4dc;
+  font-size: 30px;
+}
+
+.search-homes .search-logo {
+  width: 20px;
+  height: 20px;
+}
