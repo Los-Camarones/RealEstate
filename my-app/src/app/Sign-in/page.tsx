@@ -1,29 +1,5 @@
 
 
-// import NavBar from '../../components/Navbar/navbar';
-// import React, { useState } from "react";
-// import SignIn from '../../components/SignIn/SignIn';
-// import Image from 'next/image';
-// import { signIn } from 'next-auth/react';
-// import "../globals.css";
-// //import supabase from "../../utils/supabase/supabaseClient";
-// import router from "next/router";
-
-// const LoginPage: React.FC = () => {
-// return(
-//   <main>
-//       <header>
-//         <NavBar />
-//       </header>
-//     <div>
-//       <SignIn></SignIn>
-//     </div>
-//   </main>
-// )
-// }
-
-// export default LoginPage;
-
 
 import NavBar from '../../components/Navbar/navbar';
 import React, { useState } from "react";
@@ -35,15 +11,6 @@ import "../globals.css";
 import router from "next/router";
 import { createClient } from '@supabase/supabase-js';
 import { kMaxLength } from 'buffer';
-
-
-
-// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-// const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-// const supabase = createClient(supabaseUrl, supabaseKey);
-
-// export default supabase;
-
 
 
 
