@@ -5,15 +5,16 @@ import React, { useState } from "react";
 import "../globals.css";
 import { useRouter } from "next/navigation";
 
+
 // Sidebar component
 const Sidebar = () => {
   const router = useRouter();
-  
+
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Users", path: "/users" },
-    { name: "Settings", path: "/settings" },
-    { name: "Reports", path: "/reports" },
+    { name: "Dashboard", path: "/Admin/dashboard" },
+    { name: "Users", path: "/Admin/users" },
+    { name: "Settings", path: "/Admin/settings" }, // Added link to settings
+    { name: "Reports", path: "/Admin/reports" },
   ];
 
   return (
@@ -26,10 +27,7 @@ const Sidebar = () => {
               <a
                 href={item.path}
                 className="text-lg hover:bg-gray-700 rounded-lg px-3 py-2 block"
-                onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  router.push(item.path);
-                }}
+                onClick={() => router.push(item.path)}
               >
                 {item.name}
               </a>
@@ -38,10 +36,7 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="mb-4">
-        <button
-          className="w-full bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded"
-          onClick={() => alert('Logging out...')}
-        >
+        <button className="w-full bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded" onClick={() => alert('Logging out...')}>
           Logout
         </button>
       </div>
@@ -57,14 +52,14 @@ const AdminPage = () => {
     <div className="flex">
       {/* Sidebar */}
       <Sidebar />
-      
+
       {/* Main content area */}
       <div className="flex-1 p-10 bg-gray-100 h-screen">
-        <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
+        <h2 className="text-4xl font-bold mb-8">Admin Dashboard</h2>
 
         {/* Example content section */}
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-semibold mb-4">Overview</h2>
+          <h2 className="text-2xl font-semibold mb-4">Welcome to the Admin Dashboard, Lourdes!</h2>
           <p className="text-gray-600">{content}</p>
         </div>
 
@@ -87,7 +82,8 @@ const AdminPage = () => {
   );
 };
 
-const Admin = () => {
+// Main Admin Component
+const Admin: React.FC = () => {
   return (
     <main>
       <header>
@@ -95,7 +91,7 @@ const Admin = () => {
       </header>
       <div>
         <p>
-          
+          {/* Any additional content or placeholders */}
         </p>
       </div>
       <AdminPage /> {/* Add AdminPage component here */}
