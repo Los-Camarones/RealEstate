@@ -37,9 +37,9 @@ const SearchHomes = () => {
             className="search-input"
           />
           <button type="submit" className="search-button">
-            <i className='search-icon'></i>
+        
             {/* Uncomment and adjust if using an image icon */}
-            {/* <img src={searchIcon} alt="Search Icon" className='search-logo' /> */}
+            { <img src='search-icon.jpg' alt="Search Icon" className='search-logo' /> }
           </button>
         </div>
       </form>
