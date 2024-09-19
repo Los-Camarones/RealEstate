@@ -1,99 +1,64 @@
-// /components/SignIn.tsx
-'use client';
-
-import { useEffect, useRef } from 'react';
-
-const SignIn = () => {
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (widgetRef.current) {
-      // Prevent adding the script multiple times
-      if (!widgetRef.current.querySelector('script')) {
-        const script = document.createElement('script');
-        script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render({
-            "component": "loginWidget",
-            "style": "vertical"
-          }));
-        `;
-        widgetRef.current.appendChild(script);
-      }
-
-      // Cleanup to prevent duplicates
-      return () => {
-        while (widgetRef.current && widgetRef.current.firstChild) {
-          widgetRef.current.removeChild(widgetRef.current.firstChild);
-        }
-      };
-    }
-  }, []);
-
-  return (
-    <div>
-      {/* Placeholder where the IDX widget will be rendered */}
-      <div ref={widgetRef} />
-    </div>
-  );
-};
-
-export default SignIn;
-
-/*'use client';
-import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Image from 'next/image';
+"use client";
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { signIn } from '../../actions/AuthActions';
+import Image from 'next/image';
+
+
 
 const SignIn = () => {
+
+  //email and password credentials variables
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const[password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
 
+  //router 
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
 
-    const response = await signIn(email, password);
-
-    if (!response.success) {
-      setError(response.errorMessage || 'Unknown Error has occurred');
-    } else {
-      // Determine where to redirect after a successful login
-      let redirectTo = searchParams.get('redirect') || '/Account';
-
-      // If the target is Schedule a Tour, adjust to open the modal via a query parameter
-      if (redirectTo === '/ScheduleaTour') {
-        redirectTo = '/?showTour=true'; // Redirect to the main page and open the modal via the parameter
-      }
-
-      // Redirect user to the specified or adjusted page
-      router.push(redirectTo);
-    }
-  };
-
-  // Placeholder for future Google sign-in implementation
+/**
+ * Handles login for user. Calls server action to supabase to validate credentials
+ * @param event 
+ */
+const handleLogin = async (event: React.FormEvent) => {
+  event.preventDefault();
+  //call server action to supabase
+  const response = await signIn(email, password);
+  
+  //if bad credentials, return error
+  if (!response.success){
+    console.log(response)
+    setError(response.errorMessage  || "Unknown Error has occured")
+  }
+  //redirect to Account page
+  else
+  {
+    const userID = response.userID;
+    router.push('/Account'); //'Account/${userID}
+  }
+}
+  // TODO: implement google sign in feature. may need to setup google cloud platform project .
+  //See here for instructions to implement: https://egghead.io/lessons/supabase-create-an-oauth-app-with-github
   const handleGoogleSignIn = async () => {
-    // await signIn('google', { redirect: false });
+    //await SignIn('google', { redirect: false });
   };
-
+  
   return (
     <main>
-      <div className="flex flex-col items-center justify-center bg-white">
+      <div className= "flex flex-col items-center justify-center bg-white"> 
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-black">
             Sign in to your account
           </h2>
           <h4 className="text-center text-gray-600 mb-2">
-            Access your account to schedule meetings with Lourdes. <br className="br-style" />
-            Access all MLS listings and stay current with daily updates.<br className="br-style" />
+            Access your account to schedule meetings with Lourdes. <br className='br-style'></br>
+            Access all MLS listings and stay current with daily updates.<br className='br-style'></br>
             Save and organize your favorite listings.
           </h4>
         </div>
       </div>
-      <div>
+      <div> {/* Inline style for testing purposes */}
         <div className="flex items-center justify-center bg-white">
           <div className="max-w-lg w-full space-y-8">
             <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -101,12 +66,12 @@ const SignIn = () => {
               <div className="rounded-md shadow-sm -space-y-px">
                 {error && (
                   <div className="bg-red-100 border border-red-400 text-black px-2 py-3 rounded relative mt-4 mb-2">
-                    <h1 className="text-1xl font-bold">
+                    <h1 className=" text-1xl font-bold">
                       Sign in unsuccessful.
                     </h1>
                     {error}
-                  </div>
-                )}
+                  </div>)
+                }
                 <div>
                   <label htmlFor="email-address" className="sr-only">
                     Email address
@@ -119,7 +84,7 @@ const SignIn = () => {
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Email address"
-                    value={email}
+                    value = {email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -135,15 +100,15 @@ const SignIn = () => {
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Password"
-                    value={password}
+                    value = {password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
-
+              
               <div className="flex items-center justify-between">
                 <div className="text-sm">
-                  <a href="/forgotpassword" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                     Forgot your password?
                   </a>
                 </div>
@@ -153,7 +118,7 @@ const SignIn = () => {
                   </a>
                 </div>
               </div>
-
+              
               <div>
                 <button
                   type="submit"
@@ -176,6 +141,8 @@ const SignIn = () => {
                 <button
                   onClick={handleGoogleSignIn}
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  {/* This should be replaced with the actual image source */}
+              
                   <Image src="/google-sign-up-button.jpg" alt="Sign in with Google" width={20} height={20} />
                   <span className="ml-2">Sign in with Google</span>
                 </button>
@@ -184,9 +151,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-    </main>
-  );
+  </main>
+);
 };
-
-export default SignIn;
-*/
+export default SignIn
