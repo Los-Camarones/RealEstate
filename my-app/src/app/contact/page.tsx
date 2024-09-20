@@ -1,31 +1,22 @@
-'use client'; // Enables client-side rendering, required for DOM manipulation.
+'use client';
 
 import React, { useEffect, useRef } from 'react';
+import NavBar from '../../components/Navbar/navbar';
+import '../globals.css';
+import Head from 'next/head';
 
-export default function Contact() {
-  const widgetRef = useRef<HTMLDivElement>(null);
-  const scriptRef = useRef<HTMLScriptElement | null>(null);
+const ContactPage = () => {
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Function to add the IDX contact form widget script
+    // Function to add the IDX Contact widget script
     const addScript = () => {
-      if (!document.body.contains(scriptRef.current!)) {
+      if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
-            try {
-              document.currentScript.replaceWith(ihfKestrel.render({
-                "component": "contactFormWidget"
-              }));
-            } catch (error) {
-              console.error('Error rendering ihfKestrel:', error);
-            }
-          } else {
-            console.error('ihfKestrel is not defined or render function is missing.');
-          }
+          document.currentScript.replaceWith(ihfKestrel.render());
         `;
-        document.body.appendChild(script);
-        scriptRef.current = script; // Save the script element in the ref
+        pageRef.current.appendChild(script);
       }
     };
 
@@ -34,19 +25,31 @@ export default function Contact() {
 
     // Cleanup function to remove the script on component unmount
     return () => {
-      if (scriptRef.current && document.body.contains(scriptRef.current)) {
-        document.body.removeChild(scriptRef.current);
+      if (pageRef.current) {
+        pageRef.current.innerHTML = ''; // Clear all children including the script
       }
     };
   }, []);
 
   return (
-    <main>
-      <h1>Contact Us</h1>
-      <p>Fill out the form below to get in touch with us.</p>
-      {/* Placeholder for the IDX contact form widget */}
-      <div ref={widgetRef} />
-    </main>
+    <>
+      <Head>
+        {/* SEO Meta Tags */}
+        <title>Contact</title>
+        <meta
+          name="description"
+          content="Get in touch with us for any inquiries, questions, or feedback. We're here to assist you with all your real estate needs."
+        />
+      </Head>
+      <NavBar />
+      <main>
+        <div style={{ padding: '20px' }}>
+          {/* Placeholder for the IDX Contact widget */}
+          <div ref={pageRef} />
+        </div>
+      </main>
+    </>
   );
-}
+};
 
+export default ContactPage;
