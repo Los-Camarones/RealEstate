@@ -5,11 +5,11 @@ import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
 
-const MarketReportPage = () => {
+const PropertySearchPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Function to add the IDX Market Report widget script
+    // Function to add the widget script
     const addScript = () => {
       if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
@@ -35,16 +35,32 @@ const MarketReportPage = () => {
     <>
       <Head>
         {/* SEO Meta Tags */}
-        <title>Market Report</title>
+        <title>PropertySearch</title>
         <meta
           name="description"
-          content="Get the latest market reports and trends in real estate. Stay informed with detailed analysis and insights on the current market conditions."
+          content="Photos and Property Details for {listingAddress}. Get complete property information, maps, street view, schools, walk score and more. Request additional information, schedule a showing, save to your property organizer."
+        />
+        <meta
+          name="keywords"
+          content="{listingAddress}, {listingCity} Real Estate, {listingCity} Property for Sale"
+        />
+        <meta
+          property="og:image"
+          content="{listingPhotoUrl}"
+        />
+        <meta
+          property="og:image:width"
+          content="{listingPhotoWidth}"
+        />
+        <meta
+          property="og:image:height"
+          content="{listingPhotoHeight}"
         />
       </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          {/* Placeholder for the IDX Market Report widget */}
+          {/* Placeholder for the property search widget */}
           <div ref={pageRef} />
         </div>
       </main>
@@ -52,5 +68,4 @@ const MarketReportPage = () => {
   );
 };
 
-export default MarketReportPage;
-
+export default PropertySearchPage;

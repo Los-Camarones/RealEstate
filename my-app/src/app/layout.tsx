@@ -26,7 +26,7 @@ export default function RootLayout({
             __html: `
               window.ihfKestrel = window.ihfKestrel || {};
               ihfKestrel.config = {
-                platform: "",
+                platform: "custom",
                 activationToken: "${activationToken}", // Use the activation token from the environment variable
               };
             `,
