@@ -1,66 +1,26 @@
+// /app/Login/page.tsx
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import NavBar from '../../components/Navbar/navbar';
-import '../globals.css';
-import Head from 'next/head';
+import SignIn from '../../components/SignIn/SignIn';
+import NavBar from '../../components/Navbar/navbar';  // Adjust path if necessary
+import '../globals.css';  // Adjust path if needed
 
-const PropertyOrganizerLoginPage = () => {
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Function to add the IDX Property Organizer Login widget script
-    const addScript = () => {
-      if (pageRef.current && !pageRef.current.querySelector('script')) {
-        const script = document.createElement('script');
-        script.innerHTML = `
-          document.currentScript.replaceWith(ihfKestrel.render({
-            "component": "loginWidget",
-            "style": "vertical",
-            "params": {
-              "section": "profile"
-            }
-          }));
-        `;
-        pageRef.current.appendChild(script);
-      }
-    };
-
-    // Add the script on component mount
-    addScript();
-
-    // Cleanup function to remove the script on component unmount
-    return () => {
-      if (pageRef.current) {
-        pageRef.current.innerHTML = ''; // Clear all children including the script
-      }
-    };
-  }, []);
-
+const LoginPage = () => {
   return (
-    <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>Property Organizer Login</title>
-        <meta
-          name="description"
-          content="Log in to access your saved properties, custom searches, and other personalized real estate tools."
-        />
-      </Head>
-      <NavBar />
-      <main>
-        <div style={{ padding: '20px' }}>
-          {/* Placeholder for the IDX Property Organizer Login widget */}
-          <div ref={pageRef} />
-        </div>
-      </main>
-    </>
+    <main>
+      <header>
+        <NavBar />
+      </header>
+      <div style={{ paddingTop: '6rem' }}>
+        <h1>Property Organizer Login</h1>
+        {/* Render the SignIn IDX Widget */}
+        <SignIn />
+      </div>
+    </main>
   );
 };
 
-export default PropertyOrganizerLoginPage;
-
-
+export default LoginPage;
 
 /**
  * LoginPage Component

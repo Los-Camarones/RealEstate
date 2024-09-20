@@ -14,7 +14,7 @@ const SignIn = () => {
         script.innerHTML = `
           document.currentScript.replaceWith(ihfKestrel.render({
             "component": "loginWidget",
-            "style": "twoline"
+            "style": "vertical"
           }));
         `;
         widgetRef.current.appendChild(script);
