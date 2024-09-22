@@ -5,11 +5,11 @@ import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
 
-const MarketReportPage = () => {
+const ListingReportPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Function to add the IDX Market Report widget script
+    // Function to add the IDX Listing Report widget script
     const addScript = () => {
       if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
@@ -35,16 +35,16 @@ const MarketReportPage = () => {
     <>
       <Head>
         {/* SEO Meta Tags */}
-        <title>Market Report</title>
+        <title>{'{marketName}'}: Listing Report</title>
         <meta
           name="description"
-          content="Get the latest market reports and trends in real estate. Stay informed with detailed analysis and insights on the current market conditions."
+          content="{marketDescription}"
         />
       </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
-          {/* Placeholder for the IDX Market Report widget */}
+          {/* Placeholder for the IDX Listing Report widget */}
           <div ref={pageRef} />
         </div>
       </main>
@@ -52,5 +52,4 @@ const MarketReportPage = () => {
   );
 };
 
-export default MarketReportPage;
-
+export default ListingReportPage;

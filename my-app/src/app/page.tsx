@@ -11,7 +11,7 @@ import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import exp from 'constants';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
-import ScheduleaTourBotton from '../components/SchTourbotton/scheduleatourbotton';
+
 
 
 
@@ -176,11 +176,7 @@ function Page(){
           <ServiceList/>
         </div>
 
-        {/*Schedule a tour button*/}
-        <div>
-          <ScheduleaTourBotton/>
-        </div>
-      
+
 
         {/* Rest of the page content */}
         <div>

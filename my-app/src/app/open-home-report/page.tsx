@@ -1,27 +1,22 @@
-'use client'; // Enables client-side rendering, required for DOM manipulation.
+'use client';
 
 import React, { useEffect, useRef } from 'react';
-import NavBar from '../../components/Navbar/navbar'; // Adjust the path if necessary
-import '../globals.css'; // Adjust the path based on your project structure
+import NavBar from '../../components/Navbar/navbar';
+import '../globals.css';
+import Head from 'next/head';
 
 const OpenHomeReportPage = () => {
-  const widgetRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Function to add the IDX Open Home Report widget script
     const addScript = () => {
-      if (widgetRef.current && !widgetRef.current.querySelector('script')) {
+      if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
-          if (typeof ihfKestrel !== 'undefined' && ihfKestrel.render) {
-            try {
-              document.currentScript.replaceWith(ihfKestrel.render());
-            } catch (error) {
-              console.error('Error rendering ihfKestrel:', error);
-            }
-          }
+          document.currentScript.replaceWith(ihfKestrel.render());
         `;
-        widgetRef.current.appendChild(script);
+        pageRef.current.appendChild(script);
       }
     };
 
@@ -30,19 +25,27 @@ const OpenHomeReportPage = () => {
 
     // Cleanup function to remove the script on component unmount
     return () => {
-      if (widgetRef.current) {
-        widgetRef.current.innerHTML = ''; // Clear all children including the script
+      if (pageRef.current) {
+        pageRef.current.innerHTML = ''; // Clear all children including the script
       }
     };
   }, []);
 
   return (
     <>
+      <Head>
+        {/* SEO Meta Tags */}
+        <title>Open Home Report</title>
+        <meta
+          name="description"
+          content="View our open home report to find upcoming open houses. Stay updated with the latest open home listings in your area."
+        />
+      </Head>
       <NavBar />
       <main>
         <div style={{ padding: '20px' }}>
           {/* Placeholder for the IDX Open Home Report widget */}
-          <div ref={widgetRef} />
+          <div ref={pageRef} />
         </div>
       </main>
     </>
