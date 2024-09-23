@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 // Sidebar component
 const Sidebar = () => {
-  const router = useRouter();
+  const router = useRouter();``
 
   const menuItems = [
     { name: "Dashboard", path: "/Admin/dashboard" },
