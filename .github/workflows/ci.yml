@@ -9,60 +9,21 @@ on:
       - main
 
 jobs:
-  # Builds the project and notifies the team of the outcome
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18.17.0'
-
-    # Setup & Building Section
-    - name: Install dependencies
-      run: npm install
-      working-directory: my-app 
-
-    # Linting WIP (Commented Out for Now)
-    #- name: Lint code
-    #  run: npm run lint
-    #  working-directory: my-app 
-
-    # Tests WIP (Commented Out for Now)
-    #- name: Run tests 
-    #  run: npm test
-    #  working-directory: my-app
-
-    # Final Build
-    - name: Build project
-      run: npm run build 
-      working-directory: my-app
-
-    # Simplified Get author-name
-    - name: Get author-name
-      run: |
-        AUTHOR_NAME=$(jq --raw-output '.head_commit.author.name // .pull_request.user.login // "Unknown Author"' $GITHUB_EVENT_PATH)
-        echo "AUTHOR_NAME=$AUTHOR_NAME" >> $GITHUB_ENV
-      env:
-        GITHUB_EVENT_PATH: ${{ github.event_path }}
-
-    # Push Results to Discord
-    - name: Send notification to Discord
-      uses: rjstone/discord-webhook-notify@v1.0.0
-      if: always()  # This ensures the notification is sent whether the previous steps failed or succeeded
-      with:
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        username: 'GitHub Actions CI'
-        text: >
-          **CI Update**:
-          - **Repository**: ${{ github.repository }}
-          - **Run**: [View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - **Status**: ${{ job.status }}
-          - **Branch**: ${{ github.ref_name }}
-          - **Commit**: ${{ github.sha }}
-          - **Actor**: ${{ env.AUTHOR_NAME }}
-          - **Event Name**: ${{ github.event_name }}
-          - **Severity**: ${{ job.status == 'success' && 'Info' || 'Error' }}  
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+        working-directory: my-app
+      - name: Build project
+        run: npm run build
+        working-directory: my-app
+      - name: Run tests
+        run: npm test
+        working-directory: my-app
