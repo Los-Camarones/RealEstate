@@ -13,7 +13,6 @@ import exp from 'constants';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 import ScheduleaTourBotton from '../components/SchTourbotton/scheduleatourbotton';
-import ContactMe from '../components/ContactMe/ContactMe';
 
 
 
@@ -40,50 +39,120 @@ function Page(){
       <NavBar />
         {/* Carousel */}
 
-        <Carousel autoPlay interval={3000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
+        <Carousel autoPlay interval={4000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
           <div className= {background_adjust}>
 
-            <img src="/MyBR.jpg" alt="Image 1" />
 
+            <img src="/MyBR.jpg" alt="Image 1" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"> <button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/picture2.jpg" alt="Image 2" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
         
           <div className = {background_adjust}>
-
             <img src="/picture4.jpg" alt="Image 4" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/322 Tomato Alley Front Room Sofa View.jpg" alt="Image 5" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/322 Tomato Alley Front Room.jpg" alt="Image 6" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/322 Tomato Alley Front View w gate.jpg" alt="Image 7" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
-          <div className = {background_adjust}>
-            <img src="/322 Tomato Alley Front View.jpg" alt="Image 8" />
-          </div>
+
+
           <div className = {background_adjust}>
             <img src="/322 Tomato Alley Kitchen View.jpg" alt="Image 9" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/f8-1813109-1838001-08.jpg" alt="Image 10" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/f8-1813109-1838001-10.jpg" alt="Image 11" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
+
           <div className = {background_adjust}>
             <img src="/f8-1813109-1838002-12.jpg" alt="Image 12" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
+          </div>
 
+          <div className = {background_adjust}>
             <img src="/picture4.jpg" alt="Image 3" />
-    
-
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
           </div>
         </Carousel>
-      
 
         <div>
           {/*Search component*/}
@@ -104,11 +173,7 @@ function Page(){
           <ServiceList/>
         </div>
 
-        {/*Schedule a tour button*/}
-        <div>
-          <ScheduleaTourBotton/>
-        </div>
-      
+
 
         {/* Rest of the page content */}
         <div>

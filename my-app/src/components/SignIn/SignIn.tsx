@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image';
 import { signIn } from '../../actions/AuthActions';
+import Image from 'next/image';
+
 
 
 const SignIn = () => {
@@ -15,17 +16,15 @@ const SignIn = () => {
   //router 
   const router = useRouter();
 
+
 /**
  * Handles login for user. Calls server action to supabase to validate credentials
  * @param event 
  */
 const handleLogin = async (event: React.FormEvent) => {
-
   event.preventDefault();
-
   //call server action to supabase
   const response = await signIn(email, password);
-
   
   //if bad credentials, return error
   if (!response.success){
@@ -37,10 +36,8 @@ const handleLogin = async (event: React.FormEvent) => {
   {
     const userID = response.userID;
     router.push('/Account'); //'Account/${userID}
-
   }
 }
-
   // TODO: implement google sign in feature. may need to setup google cloud platform project .
   //See here for instructions to implement: https://egghead.io/lessons/supabase-create-an-oauth-app-with-github
   const handleGoogleSignIn = async () => {
@@ -157,7 +154,4 @@ const handleLogin = async (event: React.FormEvent) => {
   </main>
 );
 };
-
-
-
 export default SignIn

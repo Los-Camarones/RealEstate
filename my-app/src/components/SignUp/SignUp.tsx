@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect, useRouter } from 'next/navigation'
 import NavBar from '../../components/Navbar/navbar';
 //import "../globals.css";
-import supabase from '../../utils/supabase/supabaseClient';
+//import supabase from '../../utils/supabase/supabaseClient';
 import React, { useState } from 'react';
 import { signUp } from "../../actions/AuthActions";
 
@@ -66,7 +66,7 @@ const SignUp: React.FC = () => {
             Save and organize your favorite listings
           </h4>
         </div>
-        <div className="rounded-md border-2 border- md:w-1/2 p-4">
+        <div className="rounded-md border-2 border- md:w-1/2 p-4" style={loginBoxStyle}>
           {/*error div only appears if there was an error creating account */}
           {error && (
                   <div className="bg-red-100 border border-red-400 text-black px-2 py-3 rounded relative mt-4 mb-2">
@@ -156,6 +156,28 @@ const SignUp: React.FC = () => {
       </div>
     </main>
   );
+};
+
+
+
+
+
+
+// this login box style is not showing up in the page , fix this late 
+/*
+You can temporarily remove the className attributes from the div that contains your form. 
+This will let you isolate whether the classes are causing the issue. For example:
+<div style={loginBoxStyle}>
+ //</div>
+*/
+const loginBoxStyle = {
+  padding: '40px',
+  borderRadius: '12px',
+  backgroundColor: 'rgba(255, 255, 255, 0.5)', // 50% transparency
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', // Soft shadow
+  maxWidth: '500px',
+  width: '100%',
+  textAlign: 'center' as 'center',
 };
 
 export default SignUp;

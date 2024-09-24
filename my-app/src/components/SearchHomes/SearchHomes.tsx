@@ -56,3 +56,4 @@ const SearchHomes = () => {
 };
 
 export default SearchHomes;
+

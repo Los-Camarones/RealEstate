@@ -45,3 +45,28 @@
     text-decoration: none;
     color: inherit;
 }
+.image-container{
+    display: flex;
+    justify-content:center;
+    gap: 20px;
+}
+
+.image-wrapper{
+    text-align: center;
+}
+
+.circular-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: 10px;
+}
+
+.caption{
+    margin-top: 5px;
+    border: 1px;
+    border-radius: 4px;
+    background-color:grey;
+    font-family: serif;
+    color:ghostwhite;
+}

@@ -181,7 +181,6 @@ This software uses the following open source packages:
 
 - [NextJS](https://nextjs.org/)
 - [Node.js](https://nodejs.org/)
-- [Docker](https://www.docker.com/)
 - [AWS](https://aws.amazon.com/)
 
 

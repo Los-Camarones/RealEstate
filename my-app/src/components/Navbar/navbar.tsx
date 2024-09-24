@@ -58,7 +58,7 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/Listings">
+          <Link href="/property-search">
             <button className={buttonStyle}>
               Listings
             </button>
@@ -82,19 +82,19 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/Communities">
+          <Link href="/markets">
             <button className={buttonStyle}>
               Communities
             </button>
           </Link>
 
-          <Link href="/WhatMyHomeWorth">
+          <Link href="/valuation">
             <button className={buttonStyle}>
               What's My Home Worth?
             </button>
           </Link>
 
-          <Link href="/Sign-in">
+          <Link href="/property-organizer">
             <button className={buttonStyle}>
               Sign in
             </button>
@@ -111,7 +111,7 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/Listings">
+          <Link href="/property-search">
             <button className={buttonStyle}>
               Listings
             </button>
@@ -135,7 +135,7 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/Communities">
+          <Link href="/markets">
             <button className={buttonStyle}>
               Communities
             </button>
@@ -147,13 +147,13 @@ function NavBar() {
             </button>
           </Link>
 
-          <Link href="/WhatMyHomeWorth">
+          <Link href="/valuation">
             <button className={buttonStyle}>
               What's My Home Worth?
             </button>
           </Link>
           
-          <Link href="/Sign-in">
+          <Link href="/property-organizer">
             <button className={buttonStyle}>
               Sign in
             </button>
