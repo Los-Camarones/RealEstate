@@ -1,52 +1,5 @@
 .image-container{
     display: flex;
-    flex-wrap: wrap;
-    justify-content:center;
-    gap: 10px;
-    
-}
-
-.image-wrapper{
-    
-    position: relative;
-    width: 350px;
-    /*height: 450px;*/
-    overflow:hidden;
-    /*border-radius: 40%;*/
-    /*display:flex;*/
-    /*align-items: center;
-    justify-content: center;*/
-}
-
-.circular-image{
-    width: 100%;
-    height: auto;
-    /*object-fit: cover;*/
-    transition: transform 0.3s ease;
-    /*border-radius: 100%;*/
-    
-}
-
-.image-wrapper:hover .circular-image{
-    transform: scale(1.1);
-}
-
-.caption{
-    text-align: center;
-    margin-top: 10px;
-    font: size 10px;
-    font-weight: bold;
-    font-family: system-ui;
-
-}
-
-.image-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.image-container{
-    display: flex;
     justify-content:center;
     gap: 20px;
 }

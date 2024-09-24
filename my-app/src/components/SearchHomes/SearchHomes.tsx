@@ -1,37 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import './SearchHomes.css'
+import React, { useState } from 'react';
+import './SearchHomes.css';
 import { useRouter } from 'next/navigation';
-import searchIcon from '../../../../public/searchIcon.svg'
-/*
-  Function for a search bar to search for homes
-*/
+
 const SearchHomes = () => {
-  
-  //create variable searchQuery using the useState hook, empty initiliazation
-  //create function setSearchQuery to update searchQuery
+  // State to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
 
-  //create a router so that all inputs are directed to the appropriate page from NEXTjs
+  // Router to handle navigation
   const router = useRouter();
 
-  //needs to capture change
+  // Handle input changes
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
-  //handles submission of an input
+  // Handle form submission
   const handleSubmit = (event: React.FormEvent) => {
-
-    //do not refresh page
     event.preventDefault();
 
-    //when a user searches a home, we need to encode the search query
+    // Encode the search query for URL usage
     const encodedSearchQuery = encodeURI(searchQuery);
 
-    console.log("encoded:" ,encodedSearchQuery);
-
-    //push the input to the URL
-    router.push('/Properties/search?q=${encodedSerachQuery}');
+    // Navigate to the search results page with the encoded query
+    router.push(`/Properties/search?q=${encodedSearchQuery}`);
   };
 
   return (
@@ -42,12 +33,13 @@ const SearchHomes = () => {
             type="text"
             value={searchQuery}
             onChange={handleChange}
-            placeholder="Enter City,Zip,County, Neighboorhood"
+            placeholder="Search for a home"
             className="search-input"
           />
           <button type="submit" className="search-button">
-            <i className='search-icon'></i>
-            {/*<img src={searchIcon} alt="Search Icon" className='search-logo' />}*/}
+        
+            {/* Uncomment and adjust if using an image icon */}
+            { <img src='search-icon.jpg' alt="Search Icon" className='search-logo' /> }
           </button>
         </div>
       </form>

@@ -11,14 +11,14 @@
 }
 
 .homepage-content {
-  background: white; /*white background to blend rest of website*/
-  color: #4169E1; /* Royal blue color to match logo*/
+  background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+  color: #fff; /* White text color for readability */
   padding: 20px; /* Add padding */
 }
 
 .about-me {
-  color: black; /* Ensure the header is also white */
-  max-width: 2000px; /* Or any max width or width you prefer */
+  color: #fff; /* Ensure the header is also white */
+  max-width: 1200px; /* Or any max width or width you prefer */
   margin: 0 auto; /* This will center content */
   padding: 40px 20px; /* Add some padding */
   text-align: center; /* Center align all the text in the .about-me section */
@@ -38,27 +38,21 @@
 }
 
 .about-me-text {
-  max-width: 2000px;
-  font-family: system-ui;
+  max-width: 600px;
 }
-
 .about-me h1 {
-  color: black; /* Ensure the header is also white */
+  color: #fff; /* Ensure the header is also white */
   text-align: center; /* Center the header text specifically if needed */
-  font-family: system-ui;
 }
 
 h1 {
   margin-top: 0;
-  font-size: 16px;
-  width: 200px; 
-  color: #4169E1;
-  font-family: 'Roboto', sans-serif;
-  
+  font-size: 2em;
+  color: #333;
 }
 
 p {
   font-size: 1.1em;
   line-height: 1.6;
-  color: black;
+  color: #ffffff;
 }

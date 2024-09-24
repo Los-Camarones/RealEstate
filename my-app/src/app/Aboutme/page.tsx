@@ -49,7 +49,7 @@ const Aboutme: React.FC = () => {
         </div>
       </section>
 
-      <section className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 p-4">
           <h2 className="text-3xl font-bold mb-4">Dedicated to Your Success in Real Estate</h2>
           <p className="text-2xl mb-4">
@@ -71,4 +71,3 @@ const Aboutme: React.FC = () => {
   );
 };
 
-export default Aboutme;
