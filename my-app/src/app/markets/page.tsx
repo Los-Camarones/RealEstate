@@ -58,12 +58,22 @@ const MarketsPage = () => {
     const addScript = () => {
       if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
+<<<<<<< HEAD
+        script.innerHTML = `
+          document.currentScript.replaceWith(ihfKestrel.render());
+        `;
+=======
         script.innerHTML = `document.currentScript.replaceWith(ihfKestrel.render());`;
+>>>>>>> 09ee2320c708dcaa09d49393663e9291835fee61
         pageRef.current.appendChild(script);
       }
     };
 
+<<<<<<< HEAD
+    // Add the script on component mount
+=======
     // Add the script as soon as the component is mounted
+>>>>>>> 09ee2320c708dcaa09d49393663e9291835fee61
     addScript();
 
     // Cleanup function to remove the script on component unmount
@@ -85,6 +95,14 @@ const MarketsPage = () => {
         />
       </Head>
       <NavBar />
+<<<<<<< HEAD
+      <main>
+        <div style={{ padding: '20px' }}>
+          {/* Placeholder for the IDX Markets widget */}
+          <div ref={pageRef} />
+        </div>
+      </main>
+=======
       <main className="relative min-h-screen flex flex-col items-center justify-center text-white">
         {/* Background Image */}
         <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: "url('/bailey-anselme-Bkp3gLygyeA-unsplash.jpg')" }}></div>
@@ -126,6 +144,7 @@ const MarketsPage = () => {
           backdrop-filter: blur(10px);
         }
       `}</style>
+>>>>>>> 09ee2320c708dcaa09d49393663e9291835fee61
     </>
   );
 };
