@@ -59,6 +59,8 @@ const Aboutme: React.FC = () => {
         <div className="lg:w-1/2 p-4">
           <img src="/midtownSac.jpg" alt="Midtown Sacramento" className="w-full h-auto" />
         </div>
+      </div>
+
       
       <div>
         <ContactMe></ContactMe>
