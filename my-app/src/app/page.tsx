@@ -8,6 +8,7 @@ import ServiceList from '../components/ServiceList/ServiceList';
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from '../components/SocialMedia/socialmedia';
+import Footer from '../components/Footer/footer';
 import exp from 'constants';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
@@ -191,14 +192,11 @@ function Page(){
         </div>
       
         
-    
-        <div style={{ textAlign: 'center' }}>
-        <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate.</p>
-        <p style={{ color: 'green' ,padding: '10px' }}>Powered by Los Camarones. </p>
-
+      <div>
+        <Footer/>
+      </div>
 
         </div>
-      </div>
     </>
   );
 }
