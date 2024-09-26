@@ -8,6 +8,7 @@ import ServiceList from '../components/ServiceList/ServiceList';
 import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from '../components/SocialMedia/socialmedia';
+import Footer from '../components/Footer/footer';
 import exp from 'constants';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
@@ -39,17 +40,8 @@ function Page(){
         {/* Carousel */}
 
         <Carousel autoPlay interval={4000} infiniteLoop useKeyboardArrows dynamicHeight showIndicators={false} showThumbs={false} showStatus={false} selectedItem={selectedItem} onChange={setSelectedItem} showArrows={true}>
-          <div className= {background_adjust}>
 
-
-            <img src="/MyBR.jpg" alt="Image 1" />
-            <div className="text-overlay">
-              <h1 className="heading1">Turning Your Dreams into an Address</h1>
-              <h2 className="heading2">LOURDES MENDOZA</h2>
-              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"> <button className="contact-btn">Contact Me</button></a>
-            </div>
-          </div>
+          
 
           <div className = {background_adjust}>
             <img src="/picture2.jpg" alt="Image 2" />
@@ -58,6 +50,17 @@ function Page(){
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
               <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+            </div>
+          </div>
+
+          
+          <div className = {background_adjust}>
+            <img src="/MyBR.jpg" alt="Image 1" />
+            <div className="text-overlay">
+              <h1 className="heading1">Turning Your Dreams into an Address</h1>
+              <h2 className="heading2">LOURDES MENDOZA</h2>
+              <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
+              <a href="/Aboutme"> <button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
         
@@ -80,6 +83,7 @@ function Page(){
               <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
+
 
           <div className = {background_adjust}>
             <img src="/322 Tomato Alley Front Room.jpg" alt="Image 6" />
@@ -151,6 +155,7 @@ function Page(){
               <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
+
         </Carousel>
 
         <div>
@@ -187,14 +192,11 @@ function Page(){
         </div>
       
         
-    
-        <div style={{ textAlign: 'center' }}>
-        <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate.</p>
-        <p style={{ color: 'green' ,padding: '10px' }}>Powered by Los Camarones. </p>
-
+      <div>
+        <Footer/>
+      </div>
 
         </div>
-      </div>
     </>
   );
 }
