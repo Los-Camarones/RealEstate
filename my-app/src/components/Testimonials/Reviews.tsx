@@ -39,6 +39,10 @@ const Reviews: React.FC = () => {
     ));
   };
   return (
+    <div>
+    <header>
+      <h1 className={styles.header}>Reviews from clients</h1>
+    </header>
     <div className={styles.reviewList}>
       {reviews.map((review, index) => (
         <div key={index} className={styles.card}>
@@ -54,6 +58,7 @@ const Reviews: React.FC = () => {
           </a>
         </div>
       ))}
+    </div>
     </div>
   );
 };
