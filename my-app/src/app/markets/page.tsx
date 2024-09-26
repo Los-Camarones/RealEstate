@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState, useRef } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
@@ -58,49 +57,47 @@ const MarketsPage = () => {
     const addScript = () => {
       if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
-        script.innerHTML = `document.currentScript.replaceWith(ihfKestrel.render());`;
+          script.innerHTML = `document.currentScript.replaceWith(ihfKestrel.render());`;
         pageRef.current.appendChild(script);
       }
     };
-
-    // Add the script as soon as the component is mounted
+    
+ // Add the script as soon as the component is mounted
     addScript();
 
-    // Cleanup function to remove the script on component unmount
-    return () => {
-      if (pageRef.current) {
-        pageRef.current.innerHTML = ''; // Clear all children including the script
-      }
-    };
-  }, []);
+ // Cleanup function to remove the script on component unmount
+ return () => {
+    if (pageRef.current) {
+      pageRef.current.innerHTML = ''; // Clear all children including the script
+    }
+  };
+}, []);
 
-  return (
-    <>
-      <Head>
-        {/* SEO Meta Tags */}
-        <title>Real Estate Markets</title>
-        <meta
-          name="description"
-          content="Explore detailed real estate market information and trends. Get insights on various markets, including property values, market conditions, and more."
-        />
-      </Head>
-      <NavBar />
-      <main className="relative min-h-screen flex flex-col items-center justify-center text-white">
+return (
+  <>
+    <Head>
+      {/* SEO Meta Tags */}
+      <title>Real Estate Markets</title>
+      <meta
+        name="description"
+        content="Explore detailed real estate market information and trends. Get insights on various markets, including property values, market conditions, and more."
+      />
+    </Head>
+    <NavBar />
+    
+        <main className="relative min-h-screen flex flex-col items-center justify-center text-white">
         {/* Background Image */}
         <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: "url('/bailey-anselme-Bkp3gLygyeA-unsplash.jpg')" }}></div>
         <div className="absolute inset-0 bg-black opacity-50"></div>
-
         {/* Content Container */}
         <div className="relative z-10 text-center px-4 mt-8">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Explore Real Estate Markets</h1>
           <h2 className="text-6xl md:text-8xl font-bold mb-8">Coming Soon</h2>
           <p className="text-lg md:text-xl mb-4">Stay tuned! Look up houses based on your community.</p>
-
           {/* Countdown Timer */}
           <div className="text-3xl md:text-4xl font-bold mb-4">
             Time Remaining: {formatTime(remainingTime)}
           </div>
-
           {/* Wall Clock */}
           <div className="flex justify-center items-center mb-8">
             <div className="wall-clock rounded-full border-4 border-white w-48 h-48 flex items-center justify-center">
@@ -108,18 +105,15 @@ const MarketsPage = () => {
             </div>
           </div>
         </div>
-
         {/* IDX Markets Widget */}
         <div ref={pageRef} className="relative z-10 text-center mt-16 p-4 bg-white bg-opacity-90 rounded-lg shadow-lg w-full max-w-5xl">
           <h3 className="text-xl font-semibold mb-4">Market Information Loading...</h3>
           <p className="text-sm mb-4">Please wait while we fetch the latest market data for you.</p>
         </div>
-
         <footer className="mt-16 text-center text-sm relative z-10 text-white">
           <p>© 2024 Lourdes Mendoza. All Rights Reserved.</p>
         </footer>
       </main>
-
       <style jsx>{`
         .wall-clock {
           background-color: rgba(255, 255, 255, 0.2);
@@ -129,5 +123,4 @@ const MarketsPage = () => {
     </>
   );
 };
-
 export default MarketsPage;
