@@ -8,7 +8,7 @@ const HomePageContent = () => {
         <div className="about-me-content">
           <img src="lourdes.jpg" alt="Lourdes Mendoza" className="profile-image" />
           <div className="about-me-text">
-            <h1>About Lourdes Mendoza</h1>
+            <h1>ABOUT LOURDES MENDOZA</h1>
             <p>
               I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
               and friends, friends of my friends, and other personal referrals to buy and sell real estate in the greater Sacramento area, as 

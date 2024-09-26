@@ -5,7 +5,6 @@ import ContactMe from "../../components/ContactMe/ContactMe";
 import Reviews from "../../components/staticReviews/reviews";
 import Footer from "../../components/Footer/footer";
 
-
 const Aboutme: React.FC = () => {
   return (
     <main>
@@ -49,7 +48,7 @@ const Aboutme: React.FC = () => {
         </div>
       </section>
 
-      <div className="flex flex-col lg:flex-row">
+      <section className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 p-4">
           <h2 className="text-3xl font-bold mb-4">Dedicated to Your Success in Real Estate</h2>
           <p className="text-2xl mb-4">
@@ -59,12 +58,7 @@ const Aboutme: React.FC = () => {
         <div className="lg:w-1/2 p-4">
           <img src="/midtownSac.jpg" alt="Midtown Sacramento" className="w-full h-auto" />
         </div>
-      </div>
-
-      
-      <div>
-        <ContactMe></ContactMe>
-      </div>
+      </section>
 
       <footer>
         <ContactMe />
@@ -72,4 +66,7 @@ const Aboutme: React.FC = () => {
     </main>
   );
 };
+
+export default Aboutme;
+
 
