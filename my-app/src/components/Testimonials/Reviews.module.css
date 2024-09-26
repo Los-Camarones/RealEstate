@@ -1,0 +1,89 @@
+.reviewList {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+  grid-auto-rows: minmax(150px, auto); /* Allows rows to expand based on content */
+}
+
+@media (min-width: 768px) {
+  .reviewList {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for medium-sized screens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .reviewList {
+    grid-template-columns: repeat(3, 1fr); /* Three columns for larger screens */
+  }
+}
+
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.userPicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+}
+
+.stars {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 14px;
+  color: gold;
+}
+
+.date {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-size: 12px;
+  color: gray;
+}
+
+.review {
+  margin-top: 50px; /* Adjust margin to accommodate user picture */
+  font-size: 14px;
+  color: black;
+}
+
+.name {
+  position: absolute;
+  top: 8px;
+  left: 60px; /* Adjusted to accommodate user picture */
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+.googleIcon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 24px;
+  color: #4285F4; /* Google blue */
+}
+
+.header {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  font-size: 2.5rem;
+  color: #333; /* Dark text color */
+}
+

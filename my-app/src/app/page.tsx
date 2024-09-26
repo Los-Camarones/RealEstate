@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar/navbar';
 import HomePageContent from '../components/HomePageContent/HomePageContent';
 import "./globals.css";
@@ -10,6 +10,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import Footer from '../components/Footer/footer';
 import exp from 'constants';
+import Reviews1 from '../components/Testimonials/Reviews';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 
@@ -189,6 +190,9 @@ function Page(){
             </strong>
           </center>
           
+        </div>
+        <div>
+          <Reviews1/>
         </div>
       
         
