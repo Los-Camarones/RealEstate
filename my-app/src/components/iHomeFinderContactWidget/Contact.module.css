@@ -1,0 +1,29 @@
+/* IHomeFinderContactWidget.module.css */
+.shadowRoot {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadowRoot input {
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .shadowRoot button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .shadowRoot button:hover {
+    background-color: #2980b9;
+  }
+
+
+  
