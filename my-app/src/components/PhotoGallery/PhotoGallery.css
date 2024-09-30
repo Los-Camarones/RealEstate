@@ -2,6 +2,7 @@
   text-align: center;
   margin-bottom: 50px;
 }
+
 .heading h2 {
   font-family: 'Arial', sans-serif;
   font-size: 2rem;
@@ -15,19 +16,19 @@
   height: 2px;
   background-color: black;
   margin: 10px auto;
-  
 }
 
+/* Photo Gallery Styling */
 .photo-gallery {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 50px; /* Add padding to the left and right to squeeze the gallery */
+  padding: 0 20px; /* Reduced padding for more space on mobile */
 }
 
 .photo {
   position: relative;
-  width: calc(33.33% - 10px); /* Set width with some spacing */
+  width: calc(33.33% - 10px); /* Width for large screens */
   margin-bottom: 20px;
   overflow: hidden;
   transition: transform 0.2s ease;
@@ -40,7 +41,7 @@
 }
 
 .photo:hover {
-  transform: scale(1.05); /* Scale up the image on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 .photo .overlay {
@@ -52,7 +53,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   transition: background-color 0.3s ease;
 }
 
@@ -76,9 +77,40 @@
 }
 
 .photo:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.7); /* Darken overlay background on hover */
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
 }
 
 .photo .overlay button:hover {
-  background-color: #0056b3; /* Darken button color on hover */
+  background-color: #0056b3; /* Darker button on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .photo {
+    width: calc(50% - 10px); /* For tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .photo {
+    width: calc(50% - 10px); /* For small tablets and large phones */
+  }
+
+  .photo-gallery {
+    padding: 0 10px; /* Reduce padding */
+  }
+}
+
+@media (max-width: 480px) {
+  .photo {
+    width: calc(100% - 10px); /* Full width for mobile screens */
+  }
+
+  .photo-gallery {
+    padding: 0 5px; /* Further reduce padding */
+  }
+
+  .heading h2 {
+    font-size: 1.5rem; /* Smaller font size for mobile */
+  }
 }
