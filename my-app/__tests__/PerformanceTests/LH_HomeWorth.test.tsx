@@ -1,24 +1,29 @@
-const { exec } = require('child_process');
-const fs = require('fs');
+import { exec } from 'child_process';
+import fs from 'fs';
+import { AuditRef, LighthouseReport } from '../types'; // Ensure correct path to types
+
 const path = './__tests__/PerformanceTests/reports/homeworth-page-report.json';
 
 describe('HomeWorth (Valuation) Page Performance Tests', () => {
 
   // 1. Run Lighthouse performance test for the HomeWorth (Valuation) page
-  it('should run Lighthouse performance test for the HomeWorth (Valuation) page', (done) => {
-    exec('lighthouse http://localhost:3000/valuation --output=json --output-path=./__tests__/PerformanceTests/reports/homeworth-page-report.json', (err, stdout, stderr) => {
-      if (err) {
-        console.error(`exec error: ${err}`);
-        return;
+  it('should run Lighthouse performance test for the HomeWorth (Valuation) page', (done: jest.DoneCallback) => {
+    exec(
+      'lighthouse http://localhost:3000/valuation --output=json --output-path=./__tests__/PerformanceTests/reports/homeworth-page-report.json',
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error(`exec error: ${err}`);
+          return;
+        }
+        console.log(`Lighthouse stdout: ${stdout}`);
+        console.error(`Lighthouse stderr: ${stderr}`);
+        done();
       }
-      console.log(`Lighthouse stdout: ${stdout}`);
-      console.error(`Lighthouse stderr: ${stderr}`);
-      done();
-    });
+    );
   }, 30000); // Set the timeout to 30 seconds for this test
 
   // 2. Read the report and analyze key performance metrics
-  it('should analyze Lighthouse report and ensure key performance metrics are met', (done) => {
+  it('should analyze Lighthouse report and ensure key performance metrics are met', (done: jest.DoneCallback) => {
     // Read the generated Lighthouse report
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
@@ -26,14 +31,17 @@ describe('HomeWorth (Valuation) Page Performance Tests', () => {
         return;
       }
 
-      const report = JSON.parse(data);
+      const report: LighthouseReport = JSON.parse(data);
 
       // Extract performance metrics from the report
-      const metrics = report.categories.performance.auditRefs.reduce((acc, auditRef) => {
-        const { title, numericValue } = report.audits[auditRef.id];
-        acc[title] = numericValue;
-        return acc;
-      }, {});
+      const metrics = report.categories.performance.auditRefs.reduce(
+        (acc: Record<string, number>, auditRef: AuditRef) => {
+          const { title, numericValue } = report.audits[auditRef.id];
+          acc[title] = numericValue;
+          return acc;
+        },
+        {}
+      );
 
       // Log key metrics for debugging
       console.log('First Contentful Paint (FCP):', metrics['First Contentful Paint']);

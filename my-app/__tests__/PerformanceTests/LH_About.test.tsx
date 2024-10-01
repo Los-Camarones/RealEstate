@@ -1,11 +1,13 @@
-const { exec } = require('child_process');
-const fs = require('fs');
+import { exec } from 'child_process';
+import fs from 'fs';
+import { AuditRef, LighthouseReport } from '../types';
+
 const path = './__tests__/PerformanceTests/reports/aboutme-page-report.json';
 
 describe('About Me Page Performance Tests', () => {
 
   // 1. Run Lighthouse performance test for the About Me page
-  it('should run Lighthouse performance test for the About Me page', (done) => {
+  it('should run Lighthouse performance test for the About Me page', (done: jest.DoneCallback) => {
     exec('lighthouse http://localhost:3000/Aboutme --output=json --output-path=./__tests__/PerformanceTests/reports/aboutme-page-report.json', (err, stdout, stderr) => {
       if (err) {
         console.error(`exec error: ${err}`);
@@ -18,7 +20,7 @@ describe('About Me Page Performance Tests', () => {
   }, 30000);  // Set the timeout to 30 seconds
 
   // 2. Read the report and analyze key performance metrics
-  it('should analyze Lighthouse report and ensure key performance metrics are met', (done) => {
+  it('should analyze Lighthouse report and ensure key performance metrics are met', (done: jest.DoneCallback) => {
     // Read the generated Lighthouse report
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
@@ -26,10 +28,10 @@ describe('About Me Page Performance Tests', () => {
         return;
       }
 
-      const report = JSON.parse(data);
+      const report: LighthouseReport = JSON.parse(data);
 
       // Extract performance metrics from the report
-      const metrics = report.categories.performance.auditRefs.reduce((acc, auditRef) => {
+      const metrics = report.categories.performance.auditRefs.reduce((acc: Record<string, number>, auditRef: AuditRef) => {
         const { title, numericValue } = report.audits[auditRef.id];
         acc[title] = numericValue;
         return acc;

@@ -1,7 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Sellers from '@/app/Sellers/page';
 import { useRouter } from 'next/navigation';
+import '@testing-library/jest-dom/extend-expect';
 
+// Mock the useRouter hook
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
@@ -38,14 +40,14 @@ describe('Sellers Page', () => {
   // Test to check if the background image is applied correctly
   it('applies the correct background image', () => {
     render(<Sellers />);
-    const container = screen.getByRole('banner'); // You can adjust the role based on the parent element
+    const container = screen.getByRole('banner'); // Assuming the banner role is used for the main container
     expect(container).toHaveStyle(`background-image: url('/bailey-anselme-Bkp3gLygyeA-unsplash.jpg')`);
   });
 
   // Test the redirection button to /valuation
   it('navigates to /valuation when the button is clicked', () => {
     const mockPush = jest.fn();
-    useRouter.mockReturnValue({ push: mockPush });
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush }); // Properly mock useRouter
     render(<Sellers />);
 
     const button = screen.getByText(/Want to know how much your house is worth\? Click here/i);
@@ -62,14 +64,14 @@ describe('Sellers Page', () => {
     expect(button).toBeInTheDocument();
   });
 
-  // Test to check if the about us section is rendered
+  // Test to check if the About Us section is rendered
   it('renders the About Us section', () => {
     render(<Sellers />);
     expect(screen.getByText(/About Us/i)).toBeInTheDocument();
     expect(screen.getByText(/We are working on something amazing/i)).toBeInTheDocument();
   });
 
-  // Test to check if the footer is rendered
+  // Test to check if the footer is rendered with correct copyright text
   it('renders the footer with correct copyright text', () => {
     render(<Sellers />);
     expect(screen.getByText(/© 2024 Lourdes Mendoza. All Rights Reserved./i)).toBeInTheDocument();

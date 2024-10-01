@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom'; 
 import { render, screen } from '@testing-library/react';
 import ValuationRequestPage from '@/app/valuation/page'; // Correct path to the component
 
@@ -36,7 +37,7 @@ describe('Valuation Request Page', () => {
     const { container } = render(<ValuationRequestPage />);
     
     // Check if the placeholder div exists
-    const widgetDiv = container.querySelector('div');
+    const widgetDiv = container.querySelector('div#widget-placeholder'); // Use a more specific selector if available
     expect(widgetDiv).toBeInTheDocument(); // Placeholder div for the widget should be rendered
   });
 });

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'; 
 import MarketsPage from '@/app/markets/page'; // Update with the correct import
 
 describe('Markets Page', () => {
@@ -39,8 +40,9 @@ describe('Markets Page', () => {
     const mainContent = container.querySelector('.relative.min-h-screen');
     expect(mainContent).toHaveStyle({ opacity: 0 });
     
+    // -->IMPLEMENTATION NEEDED<--
     // We would need to mock the animation or wait for it to change to visible
-    // Add checks for the final animation state, depending on your testing library's capabilities
+    // You can use `waitFor` from `@testing-library/react` to wait for opacity to change
   });
 
   // Test to check if the widget script is injected (if applicable)
