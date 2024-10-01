@@ -16,6 +16,7 @@
     "@supabase/ssr": "^0.4.0",
     "@tailwindcss/forms": "^0.5.7",
     "amqplib": "^0.10.4",
+    "boxicons": "^2.1.4",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.9.0",
     "next": "^14.2.4",

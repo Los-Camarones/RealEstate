@@ -10,7 +10,7 @@ const HomePageContent = () => {
           <div className="about-me-text">
             <h1>ABOUT LOURDES MENDOZA</h1>
             <p>
-              I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
+                  I consider myself extremely fortunate to be doing exactly what I want to do in life. In my case this means working with my family 
               and friends, friends of my friends, and other personal referrals to buy and sell real estate in the greater Sacramento area, as 
               well as in Sutter, Yolo and Yuba Counties. I lived in Marysville until I graduated from Lindhurst H.S. After H.S., I was off to
               CSU Sacramento where I obtained a B.S. in Communication Studies. Coming from an agricultural, migrant background, my parents did 
