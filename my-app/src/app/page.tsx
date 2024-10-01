@@ -185,8 +185,7 @@ function Page(){
           <br></br>
           <center>
             <strong>
-              <h1>Explore by County</h1>
-              <PhotoGallery/>
+             <PhotoGallery/>
             </strong>
           </center>
           

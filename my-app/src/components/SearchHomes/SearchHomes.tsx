@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchHomes.css';
 import { useRouter } from 'next/navigation';
+// Import Boxicons CSS
+import 'boxicons/css/boxicons.min.css';
 
 const SearchHomes = () => {
   // State to hold the search query
@@ -21,9 +23,28 @@ const SearchHomes = () => {
     // Encode the search query for URL usage
     const encodedSearchQuery = encodeURI(searchQuery);
 
-    // Navigate to the search results page with the encoded query
-    router.push(`/Properties/search?q=${encodedSearchQuery}`);
+    // Directly navigate to a specified URL
+    window.location.href = `https://www.lourdesmendoza.com/valuation`; // Replace with your desired base URL
   };
+
+  // UseEffect to inject the script into the component after it mounts
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.innerHTML = `
+      document.currentScript.replaceWith(ihfKestrel.render({
+        "component": "valuationFormWidget",
+        "style": "twoline"
+      }));
+    `;
+    document.body.appendChild(script);
+
+    // Cleanup function
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script); // Only remove the script if it still exists
+      }
+    };
+  }, []); // Empty dependency array ensures this runs only after the component mounts
 
   return (
     <div className="search-homes">
@@ -33,19 +54,17 @@ const SearchHomes = () => {
             type="text"
             value={searchQuery}
             onChange={handleChange}
-            placeholder="Search for a home"
+            placeholder="What is the Value of my House?"
             className="search-input"
           />
           <button type="submit" className="search-button">
-        
-            {/* Uncomment and adjust if using an image icon */}
-            { <img src='search-icon.jpg' alt="Search Icon" className='search-logo' /> }
+            <i className='bx bx-search-alt-2 search-icon'></i>
           </button>
         </div>
       </form>
+      <div id="valuationFormWidgetContainer"></div>
     </div>
   );
 };
 
 export default SearchHomes;
-
