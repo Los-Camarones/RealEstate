@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import styles from './Contact.module.css';
-
+import styles from './Contact.module.css'
 const IHomeFinderContactWidget = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +31,13 @@ const IHomeFinderContactWidget = () => {
 
   return (
     <div>
+      <header className={styles.header}>
+        <h1>Send me a message!</h1>
+      </header>
       <div id="iHomeFinderContactWidget">
         {/* The widget will be rendered inside this div */}
+        <div ref={pageRef} />
       </div>
-      <div className = {styles.shadowRoot } ref={pageRef} />
     </div>
   );
 };

@@ -1,29 +1,16 @@
-/* IHomeFinderContactWidget.module.css */
-.shadowRoot {
+/* Basic styles for the header */
+.header {
     background-color: #ffffff;
+    text-align: center;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .shadowRoot input {
-    border: 2px solid #3498db;
-    border-radius: 5px;
-    padding: 10px;
-  }
-  
-  .shadowRoot button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .shadowRoot button:hover {
-    background-color: #2980b9;
-  }
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+/* Styling for the h1 tag */
+.header h1 {
+    font-size: 2.5em;
+    color: #000000;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
 
-  

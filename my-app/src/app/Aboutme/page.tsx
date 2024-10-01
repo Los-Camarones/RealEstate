@@ -62,7 +62,9 @@ const Aboutme: React.FC = () => {
         </div>
       </section>
 
-      <RecentlySoldHouses/>
+      {/**Commenting recently sold houses because theres not data on it */}
+      {/**  <RecentlySoldHouses/>*/}
+     
       <div>
         <IHomeFinderContactWidget/>
       </div>
