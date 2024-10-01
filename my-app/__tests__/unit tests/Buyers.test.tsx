@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom'; // Added this to use jest-dom matchers
 import Buyers from '@/app/Buyers/page';
 import { useRouter } from 'next/navigation';
 
@@ -8,6 +9,19 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('Buyers Page', () => {
+  let mockRouter: any;
+
+  beforeEach(() => {
+    mockRouter = {
+      push: jest.fn(), // Mock the push function for useRouter
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter); // Return mockRouter whenever useRouter is called
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks(); // Clear all mock usage between tests
+  });
+
   // Test to check if the NavBar component is rendered
   it('renders the NavBar component', () => {
     render(<Buyers />);
@@ -36,7 +50,6 @@ describe('Buyers Page', () => {
 
   // Test to ensure the "Property Search" button is rendered and navigates correctly
   it('renders the "Property Search" button and handles click', () => {
-    const mockRouter = useRouter();
     render(<Buyers />);
     
     const propertySearchButton = screen.getByRole('button', { name: /Property Search/i });
@@ -48,7 +61,6 @@ describe('Buyers Page', () => {
 
   // Test to ensure the "Mortgage Calculator" button is rendered and navigates correctly
   it('renders the "Mortgage Calculator" button and handles click', () => {
-    const mockRouter = useRouter();
     render(<Buyers />);
 
     const mortgageCalculatorButton = screen.getByRole('button', { name: /Mortgage Calculator/i });

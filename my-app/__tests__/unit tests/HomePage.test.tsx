@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'; 
 import Page from '@/app/page';
 
 describe('Home Page', () => {
@@ -59,25 +60,24 @@ describe('Home Page', () => {
   });
 
   // Test for the auto-play functionality of the Carousel (using jest timers)
-it('auto-plays the Carousel', () => {
-  jest.useFakeTimers(); // Mock timers to control the carousel's interval
-  render(<Page />);
+  it('auto-plays the Carousel', () => {
+    jest.useFakeTimers(); // Mock timers to control the carousel's interval
+    render(<Page />);
 
-  // Initially, the first image should be visible
-  expect(screen.getByAltText('Image 1')).toBeInTheDocument();
+    // Initially, the first image should be visible
+    expect(screen.getByAltText('Image 1')).toBeInTheDocument();
 
-  // Fast-forward the carousel by 4 seconds (4000ms)
-  jest.advanceTimersByTime(4000);
+    // Fast-forward the carousel by 4 seconds (4000ms)
+    jest.advanceTimersByTime(4000);
 
-  // After 4 seconds, the second image should be visible
-  expect(screen.getByAltText('Image 2')).toBeInTheDocument();
+    // After 4 seconds, the second image should be visible
+    expect(screen.getByAltText('Image 2')).toBeInTheDocument();
 
-  // Fast-forward the carousel by another 4 seconds
-  jest.advanceTimersByTime(4000);
+    // Fast-forward the carousel by another 4 seconds
+    jest.advanceTimersByTime(4000);
 
-  // After 8 seconds in total, the third image should be visible
-  expect(screen.getByAltText('Image 4')).toBeInTheDocument();
-});
-
+    // After 8 seconds in total, the third image should be visible
+    expect(screen.getByAltText('Image 4')).toBeInTheDocument();
+  });
 
 });
