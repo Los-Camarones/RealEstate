@@ -94,6 +94,12 @@ function NavBar() {
             </button>
           </Link>
 
+          <Link href="/contact">
+            <button className={buttonStyle}>
+              Contact
+            </button>
+          </Link>
+
           <Link href="/property-organizer">
             <button className={buttonStyle}>
               Sign in
