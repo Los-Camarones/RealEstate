@@ -7,7 +7,7 @@ const path = './__tests__/PerformanceTests/reports/buyers-page-report.json';
 describe('Buyers Page Performance Tests', () => {
   it('should run Lighthouse performance test for the buyers page', (done: jest.DoneCallback) => {
     exec(
-      'lighthouse http://localhost:3000/buyers --output=json --output-path=./__tests__/PerformanceTests/reports/buyers-page-report.json',
+      'lighthouse http://localhost:3000/Buyers --output=json --output-path=./__tests__/PerformanceTests/reports/buyers-page-report.json',
       (err, stdout, stderr) => {
         if (err) {
           console.error(`exec error: ${err}`);
