@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
+"use client";
 import './Footer.css'; //Import css file
 import ContactMe from "../../components/ContactMe/ContactMe";
 
