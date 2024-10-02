@@ -10,6 +10,10 @@
 "use client";
 import React, {useState} from 'react';
 
+import "../globals.css";
+import Head from 'next/head';
+import NavBar from "../../components/Navbar/navbar";
+
 const GetPreApproved: React.FC = () => {
     //state variables for form fields
     const [name, setName] = useState('');
@@ -38,6 +42,9 @@ const GetPreApproved: React.FC = () => {
 
   
     return (
+        <div>
+            <NavBar />
+        
         <div style={styles.container}>
             {submitted ? (
                 <div style={styles.thankYouMessage}>
@@ -93,6 +100,7 @@ const GetPreApproved: React.FC = () => {
 
                     </form>
             )}
+        </div>
         </div>
     );
 };

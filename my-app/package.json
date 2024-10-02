@@ -2,17 +2,16 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "test": "jest",
-  "performance-tests": "jest __tests__/PerformanceTests",
-  "lighthouse": "lighthouse http://localhost:3000 --config-path=./lighthouse-config.js",
-  "all-tests": "npm run test && npm run performance-tests && npm run lighthouse"
-}
-,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "performance-tests": "jest __tests__/PerformanceTests",
+    "lighthouse": "lighthouse http://localhost:3000 --config-path=./lighthouse-config.js",
+    "all-tests": "npm run test && npm run performance-tests && npm run lighthouse"
+  },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -33,6 +32,7 @@
     "react-icons": "^5.1.0",
     "react-intersection-observer": "^9.13.1",
     "react-responsive-carousel": "^3.2.23",
+    "reactjs-popup": "^2.0.6",
     "tailwind": "^4.0.0"
   },
   "devDependencies": {

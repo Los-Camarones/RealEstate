@@ -60,9 +60,9 @@ const Aboutme: React.FC = () => {
         </div>
       </section>
 
-      <footer>
-        <ContactMe />
-      </footer>
+      <div>
+        <footer></footer>
+      </div>
     </main>
   );
 };

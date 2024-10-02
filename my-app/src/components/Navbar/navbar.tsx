@@ -1,16 +1,37 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
+const dropdownItemStyle = "block px-4 py-2 text-black hover:bg-gray-100";
 
 function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  }
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
 
   return (
     <nav className="navbar-container">
@@ -76,9 +97,16 @@ function NavBar() {
             </button>
           </Link>
 
+          <Link href=" /GetPreQualified">
+            <button className={buttonStyle}>
+            Get PreQualified
+            </button>
+          </Link>
+
           <Link href="/Buyers">
             <button className={buttonStyle}>
               Buyers
+              
             </button>
           </Link>
 
