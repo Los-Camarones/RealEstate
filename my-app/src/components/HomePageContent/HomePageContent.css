@@ -51,6 +51,7 @@ h1 {
   margin-top: 0;
   font-size: 30em;
   color: #333;
+  font-family: system-ui;
 }
 
 p {

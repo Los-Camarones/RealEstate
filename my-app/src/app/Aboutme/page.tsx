@@ -71,6 +71,9 @@ const Aboutme: React.FC = () => {
       <footer>
         <ContactMe />
       </footer>
+      <div>
+        <footer></footer>
+      </div>
     </main>
   );
 };
