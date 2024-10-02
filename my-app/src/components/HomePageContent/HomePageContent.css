@@ -1,55 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* HomePageContent.css */
-.homepage-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
 
 .homepage-content {
-  background: rgb(80, 80, 80); /* Dark semi-transparent background */
-  color: #fff; /* White text color for readability */
-  padding: 20px; /* Add padding */
+  font-family: 'Arial', sans-serif;
+  padding: 2rem;
+  background-color: #f9f9f9;
 }
 
 .about-me {
-  color: #000000; /* Ensure the header is also white */
-  max-width: 1200px; /* Or any max width or width you prefer */
-  margin: 0 auto; /* This will center content */
-  padding: 40px 20px; /* Add some padding */
-  text-align: center; /* Center align all the text in the .about-me section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .about-me-content {
-  display:flex;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .profile-image {
-  max-width: 1000px; /*Adjust as needed*/
+  max-width: 150px;
   height: auto;
-  border: 4px solid white;
-  margin-right: 20px;
-  box-shadow: 0px 4px 10px rgbba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  margin-bottom: 1rem;
 }
 
-.about-me-text {
-  max-width: 1000px;
-}
-.about-me h1 {
-  font-family:Arial, Helvetica, sans-serif;
-  color: #ffffff; /* Ensure the header is also white */
-  text-align: center; /* Center the header text specifically if needed */
-  font-size: 2.5em;
+.about-me-text h1 {
+  color: #299FDD;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-h1 {
-  margin-top: 0;
-  font-size: 30em;
+.about-me-text p {
+  font-size: 1rem;
   color: #333;
   font-family: system-ui;
 }
@@ -58,5 +48,6 @@ p {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.1em;
   line-height: 1.6;
-  color: #ffffff;
+  max-width: 800px;
+  text-align:justify;
 }

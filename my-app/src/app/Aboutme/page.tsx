@@ -2,6 +2,7 @@ import NavBar from "../../components/Navbar/navbar";
 import React from "react";
 import "../globals.css";
 import ContactMe from "../../components/ContactMe/ContactMe";
+import './about.module.css';
 import Reviews from "../../components/staticReviews/reviews";
 import Footer from "../../components/Footer/footer";
 import RecentlySoldHouses from "../../components/RecentlySoldHouses/RecentlySoldHouses";
