@@ -2,10 +2,10 @@
 'use client';
 
 
-
 import link from 'next/link';
 import React, {useState} from 'react';
 import Popup from '../../components/Popup/Popup';
+
 
 const LandingPage = () => {
 
@@ -21,6 +21,10 @@ const LandingPage = () => {
     };
 
     return (
+    
+            
+        
+
         <div className="bg-gradient-to-r from-blue-600 to-blue-300 min-h-screen flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-5xl flex flex-col md:flex-row items-center md:items-start">
                 {/*Main Content*/}
