@@ -1,24 +1,121 @@
+.photo-gallery-container {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.heading h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.underline {
+  width: 50px;
+  height: 2px;
+  background-color: black;
+  margin: 10px auto;
+}
+
+/* Photo Gallery Styling */
 .photo-gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Distribute items evenly along the main axis */
+  justify-content: space-between;
+  padding: 0 20px; /* Padding on both sides */
 }
 
 .photo {
-  width: calc(33.33% - 10px); /* 33.33% width with margin */
-  margin-bottom: 20px; /* Add some bottom margin between rows */
-  transition: transform 0.2s ease; /* Define transition effect for transform property */
+  position: relative;
+  width: calc(33.33% - 10px); /* Consistent width for large screens */
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  height: 300px; /* Fixed height for consistency */
 }
 
 .photo img {
   width: 100%;
-  height: auto;
+  height: 100%; /* Ensure image fills the height */
+  object-fit: cover; /* Maintain aspect ratio and crop if necessary */
   display: block;
 }
 
 .photo:hover {
-  transform: scale(1.05); /* Scale up the image by 5% on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
+.photo .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  transition: background-color 0.3s ease;
+}
 
-  
+.photo .overlay h3 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  text-align: center;
+}
+
+.photo .overlay button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.photo:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+}
+
+.photo .overlay button:hover {
+  background-color: #0056b3; /* Darker button on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .photo {
+    width: calc(50% - 10px); /* For tablets */
+    height: 250px; /* Adjust height for tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .photo {
+    width: calc(50% - 10px); /* For small tablets and large phones */
+    height: 200px; /* Adjust height for smaller screens */
+  }
+
+  .photo-gallery {
+    padding: 0 10px; /* Reduce padding */
+  }
+}
+
+@media (max-width: 480px) {
+  .photo {
+    width: calc(100% - 10px); /* Full width for mobile screens */
+    height: 200px; /* Adjust height for mobile */
+  }
+
+  .photo-gallery {
+    padding: 0 5px; /* Further reduce padding */
+  }
+
+  .heading h2 {
+    font-size: 1.5rem; /* Smaller font size for mobile */
+  }
+}
