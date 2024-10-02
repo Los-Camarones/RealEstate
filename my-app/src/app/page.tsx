@@ -25,7 +25,7 @@ function Page(){
   useEffect(() => { // Auto play the carousel
     const interval = setInterval(() => {
       setSelectedItem((prevSelectedItem) => (prevSelectedItem + 1) % 12); // Replace 3 with the number of images
-    }, 3000); // Change the number to adjust the speed of the carousel
+    }, 4000); // Change the number to adjust the speed of the carousel
 
     return () => clearInterval(interval); // Clear the interval when the component unmounts
   }, []);
@@ -71,7 +71,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="#footer"> <button className="contact-btn">Contact Me</button></a>
+              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
