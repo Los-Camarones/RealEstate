@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
+import styles from './contact.module.css'
 
 const ContactPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -34,8 +35,6 @@ const ContactPage = () => {
   return (
     <>
       <Head>
-        {/* SEO Meta Tags */}
-        <title>Contact</title>
         <meta
           name="description"
           content="Get in touch with us for any inquiries, questions, or feedback. We're here to assist you with all your real estate needs."
@@ -43,6 +42,10 @@ const ContactPage = () => {
       </Head>
       <NavBar />
       <main>
+        <div className={styles.mainHeader}>      
+          <h1 >Send me a message!</h1>
+        </div>
+
         <div style={{ padding: '20px' }}>
           {/* Placeholder for the IDX Contact widget */}
           <div ref={pageRef} />

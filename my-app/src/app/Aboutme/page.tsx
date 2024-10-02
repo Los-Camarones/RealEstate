@@ -4,6 +4,8 @@ import "../globals.css";
 import ContactMe from "../../components/ContactMe/ContactMe";
 import Reviews from "../../components/staticReviews/reviews";
 import Footer from "../../components/Footer/footer";
+import RecentlySoldHouses from "../../components/RecentlySoldHouses/RecentlySoldHouses";
+import IHomeFinderContactWidget from "../../components/iHomeFinderContactWidget/iHomeFinderContactWidget";
 
 const Aboutme: React.FC = () => {
   return (
@@ -60,9 +62,15 @@ const Aboutme: React.FC = () => {
         </div>
       </section>
 
+      {/**Commenting recently sold houses because theres not data on it */}
+      {/**  <RecentlySoldHouses/>*/}
+     
       <div>
-        <footer></footer>
+        <IHomeFinderContactWidget/>
       </div>
+      <footer>
+        <ContactMe />
+      </footer>
     </main>
   );
 };

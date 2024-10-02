@@ -27,24 +27,25 @@ const SearchHomes = () => {
     window.location.href = `https://www.lourdesmendoza.com/valuation`; // Replace with your desired base URL
   };
 
+  //TODO: Fix this code because it duplicates twice. Not sure if its necessary because it works without it.
   // UseEffect to inject the script into the component after it mounts
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render({
-        "component": "valuationFormWidget",
-        "style": "twoline"
-      }));
-    `;
-    document.body.appendChild(script);
+  // useEffect(() => {
+  //   const script = document.createElement('script');
+  //   script.innerHTML = `
+  //     document.currentScript.replaceWith(ihfKestrel.render({
+  //       "component": "valuationFormWidget",
+  //       "style": "twoline"
+  //     }));
+  //   `;
+  //   document.body.appendChild(script);
 
-    // Cleanup function
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script); // Only remove the script if it still exists
-      }
-    };
-  }, []); // Empty dependency array ensures this runs only after the component mounts
+  //   // Cleanup function
+  //   return () => {
+  //     if (document.body.contains(script)) {
+  //       document.body.removeChild(script); // Only remove the script if it still exists
+  //     }
+  //   };
+  // }, []); // Empty dependency array ensures this runs only after the component mounts
 
   return (
     <div className="search-homes">
