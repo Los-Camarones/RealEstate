@@ -2,17 +2,16 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "test": "jest",
-  "performance-tests": "jest __tests__/PerformanceTests",
-  "lighthouse": "lighthouse http://localhost:3000 --config-path=./lighthouse-config.js",
-  "all-tests": "npm run test && npm run performance-tests && npm run lighthouse"
-}
-,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "performance-tests": "jest __tests__/PerformanceTests",
+    "lighthouse": "lighthouse http://localhost:3000 --config-path=./lighthouse-config.js",
+    "all-tests": "npm run test && npm run performance-tests && npm run lighthouse"
+  },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
