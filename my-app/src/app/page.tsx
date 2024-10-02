@@ -50,7 +50,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -61,7 +61,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"> <button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"> <button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
         
@@ -71,7 +71,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"> <button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -81,7 +81,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -92,7 +92,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -102,7 +102,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -113,7 +113,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -123,7 +123,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -133,7 +133,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ function Page(){
               <h1 className="heading1">Turning Your Dreams into an Address</h1>
               <h2 className="heading2">LOURDES MENDOZA</h2>
               <h3 className="heading3">Big Block Realty North® | CA DRE# 01527343</h3>
-              <a href="/Aboutme"><button className="contact-btn">Contact Me</button></a>
+              <a href="#footer"><button className="contact-btn">Contact Me</button></a>
             </div>
           </div>
 
