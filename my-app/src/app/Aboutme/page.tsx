@@ -63,11 +63,14 @@ const Aboutme: React.FC = () => {
       <div>
         <ContactMe></ContactMe>
       </div>
+      </div>
 
-      <footer>
-        <ContactMe />
-      </footer>
+      <div>
+        <footer></footer>
+      </div>
     </main>
   );
 };
+
+export default Aboutme;
 

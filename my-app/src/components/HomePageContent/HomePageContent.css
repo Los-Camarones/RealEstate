@@ -18,7 +18,7 @@
 
 .about-me {
   color: #fff; /* Ensure the header is also white */
-  max-width: 1200px; /* Or any max width or width you prefer */
+  max-width: 2000px; /* Or any max width or width you prefer */
   margin: 0 auto; /* This will center content */
   padding: 40px 20px; /* Add some padding */
   text-align: center; /* Center align all the text in the .about-me section */
@@ -38,17 +38,19 @@
 }
 
 .about-me-text {
-  max-width: 600px;
+  max-width: 2000px;
 }
 .about-me h1 {
   color: #fff; /* Ensure the header is also white */
   text-align: center; /* Center the header text specifically if needed */
+  font-family: system-ui;
 }
 
 h1 {
   margin-top: 0;
   font-size: 2em;
   color: #333;
+  font-family: system-ui;
 }
 
 p {

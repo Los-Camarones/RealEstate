@@ -9,6 +9,7 @@ import {Carousel} from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import exp from 'constants';
+import Contact from '../components/ContactMe/ContactMe';
 
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 
@@ -186,7 +187,9 @@ function Page(){
           
         </div>
       
-        
+        <div>
+          <Contact></Contact>
+        </div>
     
         <div style={{ textAlign: 'center' }}>
         <p style={{ color: 'blue' , padding: '10px' }}>Copyright 2024. Real Estate.</p>
