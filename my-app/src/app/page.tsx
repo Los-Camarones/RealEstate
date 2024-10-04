@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar/navbar';
 import HomePageContent from '../components/HomePageContent/HomePageContent';
 import "./globals.css";
