@@ -4,6 +4,8 @@ import NavBar from "../../components/Navbar/navbar";
 import React, { useState } from "react";
 import "../globals.css";
 import { useRouter } from "next/navigation";
+import LineChart from "@/components/Dashboard/LineChart/LineChart";
+
 
 
 // Sidebar component
@@ -46,7 +48,6 @@ const Sidebar = () => {
 
 // Main Admin Page Component
 const AdminPage = () => {
-  const [content, setContent] = useState("Welcome to the Admin Dashboard!");
 
   return (
     <div className="flex">
@@ -60,7 +61,6 @@ const AdminPage = () => {
         {/* Example content section */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Welcome to the Admin Dashboard, Lourdes!</h2>
-          <p className="text-gray-600">{content}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -75,6 +75,9 @@ const AdminPage = () => {
           <div className="bg-white shadow-md rounded-lg p-6">
             <h3 className="text-xl font-semibold mb-2">System Health</h3>
             <p>Status: Healthy</p>
+          </div>
+          <div>
+            <LineChart></LineChart>
           </div>
         </div>
       </div>
