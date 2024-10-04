@@ -12,7 +12,7 @@
 export async function getSubscriberCount() {
   //check if environment vars are present
   if (!process.env.NEXT_PUBLIC_IHOMEFINDER_USERNAME || !process.env.NEXT_PUBLIC_IHOMEFINDER_PASSWORD) {
-    return { sucess: false, error: "Missing API credentials" };
+    return { success: false, error: "Missing API credentials" };
   }
   try {
     //call the api to call HTTP response
