@@ -72,7 +72,7 @@ const LineChart = () => {
   }
 
   return (
-    <Line data={chartData} options={{}} />
+    <Line data={chartData} options={{plugins:{title:{display:true,text:'Subscriber Leads Over Time'}}}} />
   );
 };
 
