@@ -21,7 +21,7 @@ export async function getSubscriberCount() {
       {
         headers: {
           Authorization: `Basic ${btoa(
-            `${process.env.NEXT_PUBLIC_IHOMEFINDER_USERNAME}:${process.env.NEXT_PUBLIC_IHOMEFINDER_PASSWORD}`
+            `${process.env.IHOMEFINDER_USERNAME}:${process.env.IHOMEFINDER_USERNAME}`
           )}`,
         },
       }
