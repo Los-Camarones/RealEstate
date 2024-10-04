@@ -19,7 +19,6 @@ export async function insertSubscriberCount(subscriberCount: number): Promise<{ 
     const { data, error } = await supabase
       .from("Statistics")
       .insert([{ type: "Subscribers", count: subscriberCount }])
-      .select();
 
     if (error) {
       return {
