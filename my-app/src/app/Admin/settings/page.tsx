@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
+import useAuth from '../../hooks/useAuth';  // Import useAuth hook
 
 const updateUserSettings = async (data: any) => {
   // Replace with actual API call
@@ -8,6 +9,12 @@ const updateUserSettings = async (data: any) => {
 };
 
 const SettingsPage: React.FC = () => {
+  const auth = useAuth();  // Check if user is authenticated
+
+  if (!auth) {
+    return <div>Loading...</div>;  // Show loading spinner if not authenticated
+  }
+
   const [username, setUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -62,7 +69,7 @@ const SettingsPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-gray-700 font-medium"> My Username</label>
+            <label htmlFor="username" className="block text-gray-700 font-medium">My Username</label>
             <input
               type="text"
               id="username"

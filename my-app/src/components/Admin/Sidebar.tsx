@@ -15,10 +15,10 @@ const Sidebar: React.FC = () => {
     // The paths are just placeholders for now
     // The paths should be updated to the actual paths of the pages
     // that will be created for the admin panel
-    { name: "Dashboard", path: "/admin/dashboard" },
-    { name: "Users", path: "/admin/users" },
-    { name: "Settings", path: "/admin/settings" },
-    { name: "Reports", path: "/admin/reports" },
+    { name: "Dashboard", path: "/Admin/dashboard" },
+    { name: "Users", path: "/Admin/users" },
+    { name: "Settings", path: "/Admin/settings" },
+    { name: "Reports", path: "/Admin/reports" },
   ];
 
   // The Logout button call the /api/logout endpoint

@@ -25,7 +25,7 @@ const SignIn: React.FC = () => {
     try {
       const response = await axios.post('/api/login', { username, password });
       if (response.status === 200) {
-        router.push('/dashboard'); // Redirect to the dashboard after login
+        router.push('/Admin'); // Redirect to the dashboard after login
       }
     } catch (err) {
       setError('Login failed. Please check your credentials.');

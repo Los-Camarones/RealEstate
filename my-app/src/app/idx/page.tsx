@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
