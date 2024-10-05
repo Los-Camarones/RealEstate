@@ -34,7 +34,7 @@ function NavBar() {
 
 
   return (
-    <nav className="navbar-container">
+    <nav className="navbar-container bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4">
       <div className=" mx-auto flex items-center">
         {/* Logo */}
         <Link href="/" passHref>
