@@ -5,6 +5,7 @@ import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
 import styles from './contact.module.css'
+import Link from 'next/link';
 
 const ContactPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -45,6 +46,12 @@ const ContactPage = () => {
         <div className={styles.mainHeader}>      
           <h1 >Send me a message!</h1>
         </div>
+        
+        <Link href="/Referrals">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+            Check out my list of referrals
+          </button>
+        </Link>
 
         <div style={{ padding: '20px' }}>
           {/* Placeholder for the IDX Contact widget */}

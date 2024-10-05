@@ -1,16 +1,19 @@
-import NavBar from "../../components/Navbar/navbar";
 import React from "react";
 import "../globals.css";
 import Link from 'next/link';
+import NavBar from "../../components/Navbar/navbar";
+
 
 
 //header component 
 
 const Header = () => {
     return (
+            
         <header className="flex items-center justify-between p-5">
+            <NavBar />
             <div className="flex items-center">
-                <img src="/logo_.png" alt="Lourdes Mendoza" className="h-20" />
+                
                 <div className="ml-3">
                     <h1 className="text-lg font-bold font-serif text-gray-800">Real Estate Services</h1>
                     <p className="text-sm text-gray-500">Turning your dreams into an address</p>

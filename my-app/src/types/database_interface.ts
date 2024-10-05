@@ -18,3 +18,10 @@ type IUser = {
     user_name: string,
     profile_picture: string
   };
+
+  export interface IStatistic {
+    id: number;
+    created_at: string;
+    type: string;
+    count: number;
+  }

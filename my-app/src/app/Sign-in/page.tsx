@@ -1,88 +1,60 @@
-
-
-
 import NavBar from '../../components/Navbar/navbar';
-import React, { useState } from "react";
+import React from 'react';
 import SignIn from '../../components/SignIn/SignIn';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
 import "../globals.css";
-//import supabase from "../../utils/supabase/supabaseClient";
-import router from "next/router";
-import { createClient } from '@supabase/supabase-js';
-import { kMaxLength } from 'buffer';
 
-
-
-/*
- *******     note about this signup page file  *********
-the chuncks of code below are for the background and navbar header  resizing in the sign up page, 
-just some basic appeaence sitting of the website, but the  pre-built authentication component with google sign at the bottom.
-are located in a different signin page under the components folder thats under this app folder. 
-
-don't change the wrong things. 
-
----xuanxuan 09/06/24 @12:02PM 
-
-*/
 const LoginPage: React.FC = () => {
-return(
-
-// -> pre-built authentication component with google sign at the bottom.
-
-
-  <main style={mainStyle}>
-  <header style={headerStyle}>
-    <NavBar />
-  </header>
-  <div style={containerStyle}>
-    <div style={loginBoxStyle}>
-      <SignIn/>
-    </div>
-  </div>
-</main>
-);
+  return (
+    <main style={mainStyle}>
+      <header style={headerStyle}>
+        <NavBar />
+      </header>
+      <div style={containerStyle}>
+        <div style={loginBoxStyle}>
+          <SignIn />  {/* This should handle authentication logic */}
+        </div>
+      </div>
+    </main>
+  );
 };
 
-// Make the header take up the full width of the screen
+// Header Style: Full-width navbar
 const headerStyle = {
-  width: '100%',       // Ensure the header spans full width
-  backgroundColor: '#fff', // Optional: Add background color for better visibility
-  padding: '8px 0',   // Optional: Add padding to give space inside the header
+  width: '100%',
+  backgroundColor: '#fff',  // Optional background color for better visibility
+  padding: '8px 0',
 };
 
-
+// Main Style: Full-height, center content
 const mainStyle = {
-display: 'flex',
-flexDirection: 'column' as 'column',
-alignItems: 'center',
-justifyContent: 'center',
-height: '100vh',
-//background: 'linear-gradient(to right, #516b91,#e08b46, #4bab81, #cca558, #cf9d3a, #b253cf)'
-backgroundImage:'url(picture2.jpg)',
-backgroundSize: 'cover',
-backgroudPosition: 'center',
+  display: 'flex',
+  flexDirection: 'column' as 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  backgroundImage: 'url(picture2.jpg)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backdropFilter: 'blur(6px)',  // Adds a blur effect for clarity on top of the background
 };
 
+// Container Style: Center the login box
 const containerStyle = {
-display: 'flex',
-justifyContent: 'center',
-alignItems: 'center',
-height: '100%',
-//backgroundColor: 'rgba(255, 255, 255, 0.5)', // 50% transparency,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
 };
 
+// Login Box Style: Make the box more readable with transparency and shadow
 const loginBoxStyle = {
-padding: '40px',
-borderRadius: '12px',
-//backgroundColor: '#fff', // White box
-backgroundColor: 'rgba(255, 255, 255, 0.5)', // 50% transparency,
-boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', // Soft shadow
-maxWidth: '500px',
-kMaxLength: '650px',
-width: '100%',
-textAlign: 'center' as 'center',
-
+  padding: '40px',
+  borderRadius: '12px',
+  backgroundColor: 'rgba(255, 255, 255, 0.85)',  // Slightly more opaque background
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',  // Enhanced shadow
+  maxWidth: '500px',
+  width: '100%',
+  textAlign: 'center' as 'center',
 };
 
 export default LoginPage;

@@ -6,6 +6,7 @@ import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Footer from '../../components/Footer/footer';
 
 const MarketsPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -57,20 +58,20 @@ const MarketsPage = () => {
           hidden: { opacity: 0, y: 50 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
         }}
-        className="relative min-h-screen bg-gray-900 text-white flex flex-col items-center justify-start pt-8"
+        className="relative min-h-screen bg-blue-100 text-gray-900 flex flex-col items-center justify-start pt-8"
       >
-        <div className="relative z-10 w-full max-w-7xl p-8 bg-gradient-to-br from-gray-800 via-gray-900 to-black bg-opacity-90 rounded-lg shadow-lg mb-16 text-center">
-          <h1 className="text-5xl font-extrabold mb-4 text-white">Communities</h1>
-          <p className="text-lg text-gray-300 mb-8 px-4">
+        <div className="relative z-10 w-full max-w-7xl p-8 bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 bg-opacity-90 rounded-lg shadow-lg mb-16 text-center">
+          <h1 className="text-5xl font-extrabold mb-4 text-gray-900">Communities</h1>
+          <p className="text-lg text-gray-700 mb-8 px-4">
             Discover your ideal neighborhood. From vibrant cityscapes to serene suburbs, explore communities that match your lifestyle and preferences.
           </p>
-          <p className="text-md text-gray-400 mb-4 px-4">
+          <p className="text-md text-gray-600 mb-4 px-4">
             Use the widget below to search for properties and explore community details.
           </p>
         </div>
         <motion.div
           ref={pageRef}
-          className="relative z-10 w-full max-w-7xl bg-gradient-to-br from-gray-800 via-gray-900 to-black bg-opacity-90 rounded-lg shadow-lg p-8"
+          className="relative z-10 w-full max-w-7xl bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 bg-opacity-90 rounded-lg shadow-lg p-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
@@ -78,25 +79,11 @@ const MarketsPage = () => {
           {/* IDX Markets Widget */}
         </motion.div>
       </motion.div>
-      <footer className="w-full text-center py-4 text-gray-400 bg-gradient-to-r from-gray-800 to-black relative">
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-blue-500 to-transparent"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0.3 }}
-          transition={{ duration: 0.5 }}
-          style={{
-            height: '10px', // Thickness of the light effect
-            bottom: '0', // Position at the bottom
-            left: '0',
-            right: '0',
-          }}
-        ></motion.div>
-        <p>© 2024 Lourdes Mendoza. All Rights Reserved.</p>
-        <p className="text-xs">Real Estate IDX Powered by iHomefinder</p>
-      </footer>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };
 
 export default MarketsPage;
-
