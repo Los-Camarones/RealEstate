@@ -1,7 +1,7 @@
-'use client';
+'use client';  
 
 import React, { useState } from "react";
-import useAuth from '../../hooks/useAuth';  // Import useAuth hook
+import useAuth from '../../hooks/useAuth';  
 
 const updateUserSettings = async (data: any) => {
   // Replace with actual API call
@@ -11,10 +11,7 @@ const updateUserSettings = async (data: any) => {
 const SettingsPage: React.FC = () => {
   const auth = useAuth();  // Check if user is authenticated
 
-  if (!auth) {
-    return <div>Loading...</div>;  // Show loading spinner if not authenticated
-  }
-
+  // Declare hooks here to ensure they are always called
   const [username, setUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -22,9 +19,15 @@ const SettingsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  // Don't render the form until authentication is confirmed
+  if (!auth) {
+    return <div>Loading...</div>;  // Always return after hooks are declared
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Basic form validation
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -35,12 +38,14 @@ const SettingsPage: React.FC = () => {
       return;
     }
 
+    // Update user settings via API
     const response = await updateUserSettings({
       username,
       currentPassword,
       newPassword,
     });
 
+    // Handle success or error response
     if (response.success) {
       setSuccess(response.message);
       setError(null);
@@ -55,18 +60,21 @@ const SettingsPage: React.FC = () => {
       <div className="w-full max-w-lg bg-white p-8 shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Admin Settings</h1>
 
+        {/* Display error messages */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6">
             {error}
           </div>
         )}
 
+        {/* Display success message */}
         {success && (
           <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-6">
             {success}
           </div>
         )}
 
+        {/* Form for updating user settings */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="username" className="block text-gray-700 font-medium">My Username</label>
