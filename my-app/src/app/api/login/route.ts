@@ -11,8 +11,10 @@ export async function POST(request: Request) {
   const { username, password } = await request.json();
 
   try {
-    // Basic auth with iHomefinder API
+    // Create Basic Auth token
     const auth = Buffer.from(`${username}:${password}`).toString('base64');
+
+    // Send a request to iHomefinder API for authentication
     const response = await axios.get('https://www.idxhome.com/api/v1/client.json', {
       headers: {
         Authorization: `Basic ${auth}`,
@@ -21,18 +23,25 @@ export async function POST(request: Request) {
     });
 
     if (response.status === 200) {
-      const token = response.data.token; // Use the actual token key based on API response
+      // Ideally, iHomefinder should return a token. Fallback to the Base64 string (auth) if not provided
+      const token = response.data.token || auth; 
 
-      // Set the token as an HTTP-only cookie
-      const cookie = `token=${token}; HttpOnly; Secure; Path=/; Max-Age=3600`; // max-age in seconds
+      // Set the token as an HTTP-only cookie (ensure Secure in production)
+      const cookie = `token=${token}; HttpOnly; Secure; Path=/; Max-Age=3600`; // max-age = 1 hour
 
       const res = NextResponse.json({ success: true });
-      res.headers.set('Set-Cookie', cookie);
+      res.headers.set('Set-Cookie', cookie); // Set HTTP-only cookie
+
       return res;
     } else {
+      // Invalid credentials scenario
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
-  } catch (error) {
+  } catch (error: any) {
+    // Log the full error details for better debugging
+    console.error('Authentication error:', error.response?.data || error.message);
+
+    // Handle authentication failure
     return NextResponse.json({ error: 'Authentication failed' }, { status: 500 });
   }
 }
