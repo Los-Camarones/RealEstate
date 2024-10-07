@@ -24,7 +24,9 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Fetch all subscribers (with optional pagination/fields if needed)
+    //To do: find a way to show all subscribers
+    //pagination and fields can be passed as query parameters
+    // Fetch all subscribers (with optional pagination/fields if needed look at the API documentation)
     const response = await axios.get('https://www.idxhome.com/api/v1/client/subscribers.json?fields=*&limit=10', {
       headers: {
         Authorization: token,
