@@ -27,24 +27,28 @@ const LeadListPage: React.FC = () => {
         lastName: '',
         emailAddress: '',
     });
+    const [offset, setOffset] = useState(0);
+    const [totalLeads, setTotalLeads] = useState(0);
+
 
     // Fetch the list of subscribers on component mount if authenticated
     useEffect(() => {
         if (auth) {
-            fetchLeads();
+            fetchLeads(offset);
         }
     }, [auth]);
 
-    const fetchLeads = async () => {
+    const fetchLeads = async (offset: number) => {
         try {
             setLoading(true);
             setError(null);
 
-            const response = await axios.get('/api/leads', {
+            const response = await axios.get(`/api/leads?offset=${offset}`, {
                 withCredentials: true  // This ensures the cookie is sent with the request
             });
 
             setLeads(response.data.results || []);  // Assuming the response contains leads in 'results'
+            setTotalLeads(response.data.total || []);
             setLoading(false);
         } catch (error: any) {
             console.error('Error fetching leads', error.response?.data || error.message);
@@ -52,6 +56,7 @@ const LeadListPage: React.FC = () => {
             setLoading(false);
         }
     };
+
 
     const handleAddNewLead = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -63,7 +68,7 @@ const LeadListPage: React.FC = () => {
             });
 
             if (response.status === 201) {
-                fetchLeads();  // Refresh leads after adding
+                fetchLeads(offset);  // Refresh leads after adding
                 setShowForm(false);
             }
         } catch (error: any) {
@@ -78,7 +83,7 @@ const LeadListPage: React.FC = () => {
             await axios.delete(`/api/leads/${id}`, {  // Pass the ID in the URL path, not as a query parameter
                 withCredentials: true
             });
-            fetchLeads();  // Refresh leads after deletion
+            fetchLeads(offset);  // Refresh leads after deletion
         } catch (error: any) {
             console.error('Error deleting lead', error.response?.data || error.message);
             setError('Failed to delete the lead.');
@@ -93,6 +98,14 @@ const LeadListPage: React.FC = () => {
     if (loading) {
         return <div>Loading leads, please wait...</div>;
     }
+
+    const totalPages = Math.ceil(totalLeads / 10); 
+    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
+
+    const handlePageChange = (newOffset: number) => {
+        setOffset(newOffset);
+        console.log('new offset', offset);
+      };
 
     return (
         <div className="flex">
@@ -181,6 +194,13 @@ const LeadListPage: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
+                    <div>
+                          {pageNumbers.map((number) => (
+                            <button key={number} onClick={() => handlePageChange(number * 10)}>
+                              {number + 1}
+                            </button>
+                          ))}
+                        </div>
                 </div>
             </div>
         </div>
