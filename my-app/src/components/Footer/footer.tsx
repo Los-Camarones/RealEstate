@@ -1,7 +1,7 @@
-'use client';
-import React, { useState } from 'react';
+"use client";  // Ensures client-side rendering
 
-import './Footer.css'; //Import css file
+import React, { useState } from 'react';
+import './Footer.css'; // Import CSS file
 import ContactMe from "../../components/ContactMe/ContactMe";
 
 const Footer = () => {
@@ -13,7 +13,8 @@ const Footer = () => {
     message: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Explicit typing for handleChange
+  const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -33,7 +34,7 @@ const Footer = () => {
       {/* Contact Me form above the footer text */}
       <div className="contact-form-container">
         <ContactMe />
-        <h2>Submit a message to Lourdes</h2>
+        <h2>Submit a Message to Lourdes</h2>
         <form className="message-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <input
