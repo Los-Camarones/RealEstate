@@ -28,7 +28,6 @@ const LeadListPage: React.FC = () => {
         lastName: '',
         emailAddress: '',
     });
-    const [currentPage, setCurrentPage] = useState(1);
     const [offset, setCurrentOffset] = useState(0);
     const [totalLeads, setTotalLeads] = useState(0);
 
@@ -52,6 +51,7 @@ const LeadListPage: React.FC = () => {
             setLeads(response.data.results || []);  // Assuming the response contains leads in 'results'
             setTotalLeads(response.data.total || 0);
             setLoading(false);
+
         } catch (error: any) {
             console.error('Error fetching leads', error.response?.data || error.message);
             setError('Failed to fetch leads.');
@@ -104,13 +104,9 @@ const LeadListPage: React.FC = () => {
 
 
     const handlePageClick = (data: {selected: number}) => {
-        const selectedPage = data.selected + 1; //zero index so add one
-        console.log('current page', selectedPage);
-        setCurrentPage(selectedPage);
-        const currentOffset = (selectedPage-1)*10;
-        console.log('current offset', currentOffset);
-        setCurrentOffset(currentOffset);
-        fetchLeads(currentOffset);
+        
+        const newOffset = (data.selected)*10;
+        setCurrentOffset(newOffset);
     }
 
 
@@ -211,6 +207,7 @@ const LeadListPage: React.FC = () => {
     marginPagesDisplayed={2}
     pageRangeDisplayed={3}
     onPageChange={handlePageClick}
+    forcePage={offset / 10}
     containerClassName="flex space-x-2"          
     pageClassName="rounded-full bg-gray-200 px-3 py-1"  
     pageLinkClassName="text-gray-700 hover:text-blue-600"
