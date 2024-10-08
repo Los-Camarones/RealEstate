@@ -5,6 +5,7 @@ import Sidebar from '../../../components/Admin/Sidebar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';  // Ensure user is authenticated
+import ReactPaginate from 'react-paginate';
 
 const LeadListPage: React.FC = () => {
     const auth = useAuth();  // Check if the user is authenticated
@@ -27,7 +28,8 @@ const LeadListPage: React.FC = () => {
         lastName: '',
         emailAddress: '',
     });
-    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [offset, setCurrentOffset] = useState(0);
     const [totalLeads, setTotalLeads] = useState(0);
 
 
@@ -36,7 +38,7 @@ const LeadListPage: React.FC = () => {
         if (auth) {
             fetchLeads(offset);
         }
-    }, [auth]);
+    }, [auth, offset]);
 
     const fetchLeads = async (offset: number) => {
         try {
@@ -48,7 +50,7 @@ const LeadListPage: React.FC = () => {
             });
 
             setLeads(response.data.results || []);  // Assuming the response contains leads in 'results'
-            setTotalLeads(response.data.total || []);
+            setTotalLeads(response.data.total || 0);
             setLoading(false);
         } catch (error: any) {
             console.error('Error fetching leads', error.response?.data || error.message);
@@ -98,14 +100,20 @@ const LeadListPage: React.FC = () => {
     if (loading) {
         return <div>Loading leads, please wait...</div>;
     }
-
     const totalPages = Math.ceil(totalLeads / 10); 
-    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
 
-    const handlePageChange = (newOffset: number) => {
-        setOffset(newOffset);
-        console.log('new offset', offset);
-      };
+
+    const handlePageClick = (data: {selected: number}) => {
+        const selectedPage = data.selected + 1; //zero index so add one
+        console.log('current page', selectedPage);
+        setCurrentPage(selectedPage);
+        const currentOffset = (selectedPage-1)*10;
+        console.log('current offset', currentOffset);
+        setCurrentOffset(currentOffset);
+        fetchLeads(currentOffset);
+    }
+
+
 
     return (
         <div className="flex">
@@ -194,13 +202,24 @@ const LeadListPage: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
-                    <div>
-                          {pageNumbers.map((number) => (
-                            <button key={number} onClick={() => handlePageChange(number * 10)}>
-                              {number + 1}
-                            </button>
-                          ))}
-                        </div>
+                    <div className="flex justify-center mt-4">
+  <ReactPaginate
+    previousLabel={'Previous'}
+    nextLabel={'Next'}
+    breakLabel={'...'}
+    pageCount={totalPages}
+    marginPagesDisplayed={2}
+    pageRangeDisplayed={3}
+    onPageChange={handlePageClick}
+    containerClassName="flex space-x-2"          
+    pageClassName="rounded-full bg-gray-200 px-3 py-1"  
+    pageLinkClassName="text-gray-700 hover:text-blue-600"
+    previousClassName="rounded-full bg-blue-500 text-white px-3 py-1"
+    nextClassName="rounded-full bg-blue-500 text-white px-3 py-1"     
+    breakClassName="text-gray-500 px-3 py-1"
+    activeClassName="bg-blue-500 text-white"       
+  />
+</div>
                 </div>
             </div>
         </div>
