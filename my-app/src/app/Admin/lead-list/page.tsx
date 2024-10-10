@@ -5,6 +5,7 @@ import Sidebar from '../../../components/Admin/Sidebar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';  // Ensure user is authenticated
+import ReactPaginate from 'react-paginate';
 
 const LeadListPage: React.FC = () => {
     const auth = useAuth();  // Check if the user is authenticated
@@ -27,31 +28,37 @@ const LeadListPage: React.FC = () => {
         lastName: '',
         emailAddress: '',
     });
+    const [offset, setCurrentOffset] = useState(0);
+    const [totalLeads, setTotalLeads] = useState(0);
+
 
     // Fetch the list of subscribers on component mount if authenticated
     useEffect(() => {
         if (auth) {
-            fetchLeads();
+            fetchLeads(offset);
         }
-    }, [auth]);
+    }, [auth, offset]);
 
-    const fetchLeads = async () => {
+    const fetchLeads = async (offset: number) => {
         try {
             setLoading(true);
             setError(null);
 
-            const response = await axios.get('/api/leads', {
+            const response = await axios.get(`/api/leads?offset=${offset}`, {
                 withCredentials: true  // This ensures the cookie is sent with the request
             });
 
             setLeads(response.data.results || []);  // Assuming the response contains leads in 'results'
+            setTotalLeads(response.data.total || 0);
             setLoading(false);
+
         } catch (error: any) {
             console.error('Error fetching leads', error.response?.data || error.message);
             setError('Failed to fetch leads.');
             setLoading(false);
         }
     };
+
 
     const handleAddNewLead = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -63,7 +70,7 @@ const LeadListPage: React.FC = () => {
             });
 
             if (response.status === 201) {
-                fetchLeads();  // Refresh leads after adding
+                fetchLeads(offset);  // Refresh leads after adding
                 setShowForm(false);
             }
         } catch (error: any) {
@@ -78,7 +85,7 @@ const LeadListPage: React.FC = () => {
             await axios.delete(`/api/leads/${id}`, {  // Pass the ID in the URL path, not as a query parameter
                 withCredentials: true
             });
-            fetchLeads();  // Refresh leads after deletion
+            fetchLeads(offset);  // Refresh leads after deletion
         } catch (error: any) {
             console.error('Error deleting lead', error.response?.data || error.message);
             setError('Failed to delete the lead.');
@@ -93,6 +100,16 @@ const LeadListPage: React.FC = () => {
     if (loading) {
         return <div>Loading leads, please wait...</div>;
     }
+    const totalPages = Math.ceil(totalLeads / 10); 
+
+
+    const handlePageClick = (data: {selected: number}) => {
+        
+        const newOffset = (data.selected)*10;
+        setCurrentOffset(newOffset);
+    }
+
+
 
     return (
         <div className="flex">
@@ -181,6 +198,25 @@ const LeadListPage: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
+                    <div className="flex justify-center mt-4">
+  <ReactPaginate
+    previousLabel={'Previous'}
+    nextLabel={'Next'}
+    breakLabel={'...'}
+    pageCount={totalPages}
+    marginPagesDisplayed={2}
+    pageRangeDisplayed={3}
+    onPageChange={handlePageClick}
+    forcePage={offset / 10}
+    containerClassName="flex space-x-2"          
+    pageClassName="rounded-full bg-gray-200 px-3 py-1"  
+    pageLinkClassName="text-gray-700 hover:text-blue-600"
+    previousClassName="rounded-full bg-blue-500 text-white px-3 py-1"
+    nextClassName="rounded-full bg-blue-500 text-white px-3 py-1"     
+    breakClassName="text-gray-500 px-3 py-1"
+    activeClassName="bg-blue-500 text-white"       
+  />
+</div>
                 </div>
             </div>
         </div>
