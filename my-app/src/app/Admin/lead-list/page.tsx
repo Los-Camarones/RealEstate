@@ -92,6 +92,31 @@ const LeadListPage: React.FC = () => {
         }
     };
 
+    /**
+     * Filtering will only be by name of the subscriber
+     * @param name 
+     */
+    const handleFilteringLeads = async (name: string) => {
+        try {
+            if (name) {
+                const responseFirstName = await axios.get(`/api/leads?firstName=${name}`, {
+                    withCredentials: true  // This ensures the cookie is sent with the request
+                });
+
+                const responseLasttName = await axios.get(`/api/leads?lastName=${name}`, {
+                    withCredentials: true  // This ensures the cookie is sent with the request
+                });
+
+                if(responseFirstName) {
+                    
+                }
+
+            }
+
+        } catch (error: any)
+
+    }
+
     // If the user isn't authenticated, prevent rendering the leads
     if (!auth) {
         return <div>Loading...</div>;
