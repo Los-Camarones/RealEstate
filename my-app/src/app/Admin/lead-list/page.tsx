@@ -20,6 +20,7 @@ const LeadListPage: React.FC = () => {
     }
 
     const [leads, setLeads] = useState<Lead[]>([]);
+    const[displayedLeads, setDisplayedLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showForm, setShowForm] = useState(false);
@@ -28,28 +29,33 @@ const LeadListPage: React.FC = () => {
         lastName: '',
         emailAddress: '',
     });
+    const [name, setName] = useState<string>('');
     const [offset, setCurrentOffset] = useState(0);
     const [totalLeads, setTotalLeads] = useState(0);
+    const itemsPerPage = 10;
+
 
 
     // Fetch the list of subscribers on component mount if authenticated
     useEffect(() => {
         if (auth) {
-            fetchLeads(offset);
+            fetchLeads();
         }
-    }, [auth, offset]);
+    }, [auth]);
 
-    const fetchLeads = async (offset: number) => {
+    const fetchLeads = async () => {
         try {
             setLoading(true);
             setError(null);
 
-            const response = await axios.get(`/api/leads?offset=${offset}`, {
+            //harcoded limit at 500. If limit exceeds, better to implement pagination of subscriber leads, though, filtering will be not exist anymore
+            const response = await axios.get(`/api/leads?&limit=500`, {
                 withCredentials: true  // This ensures the cookie is sent with the request
             });
 
             setLeads(response.data.results || []);  // Assuming the response contains leads in 'results'
             setTotalLeads(response.data.total || 0);
+            setDisplayedLeads(response.data.results.slice(offset, offset + itemsPerPage)); // Set displayed leads
             setLoading(false);
 
         } catch (error: any) {
@@ -58,6 +64,12 @@ const LeadListPage: React.FC = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        // Update displayed leads when leads or offset changes
+        const end = offset + itemsPerPage;
+        setDisplayedLeads(leads.slice(offset, end));
+    }, [leads, offset]);
 
 
     const handleAddNewLead = async (e: React.FormEvent) => {
@@ -70,7 +82,7 @@ const LeadListPage: React.FC = () => {
             });
 
             if (response.status === 201) {
-                fetchLeads(offset);  // Refresh leads after adding
+                fetchLeads();  // Refresh leads after adding
                 setShowForm(false);
             }
         } catch (error: any) {
@@ -82,10 +94,12 @@ const LeadListPage: React.FC = () => {
     const handleDeleteLead = async (id: string) => {
         try {
             setError(null);
+            console.log('before calling api');
             await axios.delete(`/api/leads/${id}`, {  // Pass the ID in the URL path, not as a query parameter
                 withCredentials: true
             });
-            fetchLeads(offset);  // Refresh leads after deletion
+            console.log('after calling api');
+            fetchLeads();  // Refresh leads after deletion
         } catch (error: any) {
             console.error('Error deleting lead', error.response?.data || error.message);
             setError('Failed to delete the lead.');
@@ -99,21 +113,23 @@ const LeadListPage: React.FC = () => {
     const handleFilteringLeads = async (name: string) => {
         try {
             if (name) {
-                const responseFirstName = await axios.get(`/api/leads?firstName=${name}`, {
-                    withCredentials: true  // This ensures the cookie is sent with the request
-                });
 
-                const responseLasttName = await axios.get(`/api/leads?lastName=${name}`, {
-                    withCredentials: true  // This ensures the cookie is sent with the request
-                });
+                // Filter records that match either firstName or lastName
+                const filteredLeads = leads.filter((record: Lead) => 
+                record.firstName.toLowerCase().includes(name.toLowerCase()) ||
+                record.lastName.toLowerCase().includes(name.toLowerCase())
+              );
 
-                if(responseFirstName) {
-                    
+                // Update the leads state with the filtered results
+                setDisplayedLeads(filteredLeads);
+                //setTotalLeads(filteredLeads.length);
                 }
+            
 
-            }
-
-        } catch (error: any)
+        } catch (error: any) {
+            console.error('Error filtering leads', error.response?.data || error.message);
+            setError('Failed to filter leads');
+        }
 
     }
 
@@ -134,6 +150,18 @@ const LeadListPage: React.FC = () => {
         setCurrentOffset(newOffset);
     }
 
+    const handleFilterClick = (event: React.FormEvent) => {
+        event.preventDefault();
+        if(name === '') {
+            fetchLeads();
+        } else {
+            handleFilteringLeads(name);
+
+        }
+      };
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setName(event.target.value);
+      };
 
 
     return (
@@ -195,7 +223,15 @@ const LeadListPage: React.FC = () => {
                         </form>
                     )}
 
-                    {/* Lead List Table */}
+                    <form onSubmit={handleFilterClick}>
+                            <input
+                              type="text"
+                              value={name}
+                              onChange={handleNameChange}
+                              placeholder="Enter first or last name"
+                            />
+                            <button type="submit">Filter Leads</button>
+                          </form>
                     <table className="min-w-full table-auto mt-4">
                         <thead>
                             <tr className="bg-gray-200">
@@ -206,7 +242,7 @@ const LeadListPage: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {leads.map((lead) => (
+                            {displayedLeads.map((lead) => (
                                 <tr key={lead.id} className="border-t">
                                     <td className="px-4 py-2">{`${lead.firstName} ${lead.lastName}`}</td>
                                     <td className="px-4 py-2">{lead.emailAddress}</td>

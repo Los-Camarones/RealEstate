@@ -28,8 +28,18 @@ export async function GET(req: Request) {
     //pagination and fields can be passed as query parameters
     // Fetch all subscribers (with optional pagination/fields if needed look at the API documentation)
     const url = new URL(req.url);
-    const offset = url.searchParams.get('offset') || '0'; // Get 'offset' from query params, default to '0'
-    const API_URL = `https://www.idxhome.com/api/v1/client/subscribers.json?fields=*&offset=${offset}&limit=10`;   
+
+    const id = url.searchParams.get('id');
+    let API_URL: string;
+    if(id) {
+      API_URL = `https://www.idxhome.com/api/v1/client/subscriber/${id}.json`;
+    } else {
+      const offset = url.searchParams.get('offset') || '0'; // Get 'offset' from query params, default to '0'
+      const limit = url.searchParams.get('limit') || '10'; // limit is defaulted to 10, unless otherwise specified
+      const fields = url.searchParams.get('fields') || '*'; //fields to get specific data, otherwise get everything
+      API_URL = `https://www.idxhome.com/api/v1/client/subscribers.json?fields=${fields}&offset=${offset}&limit=${limit}`;   
+    }
+
     const response = await axios.get(API_URL, {
       headers: {
         Authorization: token,
@@ -79,6 +89,8 @@ export async function DELETE(req: Request) {
   const token = getAuthToken(req);
   const url = new URL(req.url);
   const id = url.pathname.split('/').pop();  // Get ID from URL path
+  console.log('in method');
+
 
   if (!token) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
@@ -87,7 +99,6 @@ export async function DELETE(req: Request) {
   if (!id) {
     return NextResponse.json({ error: 'Missing subscriber ID' }, { status: 400 });
   }
-
   try {
     // Delete the subscriber with the given ID
     await axios.delete(`https://www.idxhome.com/api/v1/client/subscriber/${id}.json`, {
