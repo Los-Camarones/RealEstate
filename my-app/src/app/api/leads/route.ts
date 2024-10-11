@@ -83,34 +83,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Failed to create subscriber' }, { status: 500 });
   }
 }
-
-// Handle DELETE requests (Delete Subscriber)
-export async function DELETE(req: Request) {
-  const token = getAuthToken(req);
-  const url = new URL(req.url);
-  const id = url.pathname.split('/').pop();  // Get ID from URL path
-  console.log('in method');
-
-
-  if (!token) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-  }
-
-  if (!id) {
-    return NextResponse.json({ error: 'Missing subscriber ID' }, { status: 400 });
-  }
-  try {
-    // Delete the subscriber with the given ID
-    await axios.delete(`https://www.idxhome.com/api/v1/client/subscriber/${id}.json`, {
-      headers: {
-        Authorization: token,
-        Accept: 'application/json',
-      },
-    });
-
-    return NextResponse.json(null, { status: 204 });
-  } catch (error: any) {
-    console.error('Error deleting subscriber:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to delete subscriber' }, { status: 500 });
-  }
-}
