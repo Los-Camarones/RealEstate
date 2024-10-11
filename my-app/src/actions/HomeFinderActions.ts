@@ -11,7 +11,7 @@
  */
 export async function getSubscriberCount() {
   //check if environment vars are present
-  if (!process.env.NEXT_PUBLIC_IHOMEFINDER_USERNAME || !process.env.NEXT_PUBLIC_IHOMEFINDER_PASSWORD) {
+  if (!process.env.IHOMEFINDER_USERNAME || !process.env.IHOMEFINDER_PASSWORD) {
     return { success: false, error: "Missing API credentials" };
   }
   try {
@@ -23,6 +23,7 @@ export async function getSubscriberCount() {
           Authorization: `Basic ${btoa(
             `${process.env.IHOMEFINDER_USERNAME}:${process.env.IHOMEFINDER_PASSWORD}`
           )}`,
+          "Cache-Control": "no-cache",
         },
       }
     );
