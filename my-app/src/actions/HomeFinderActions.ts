@@ -23,6 +23,7 @@ export async function getSubscriberCount() {
           Authorization: `Basic ${btoa(
             `${process.env.IHOMEFINDER_USERNAME}:${process.env.IHOMEFINDER_PASSWORD}`
           )}`,
+          "Cache-Control": "no-cache",
         },
       }
     );
