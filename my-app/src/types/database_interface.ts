@@ -10,13 +10,14 @@ type IUser = {
     email: string;
     phoneNumber: string;
   }
-  export interface IReview {
+  export interface ITestimonial {
     id: UUID,
     created_at: string,
     rating: number,
     comments: string,
     user_name: string,
     profile_picture: string
+    is_displayed: boolean
   };
 
   export interface IStatistic {
