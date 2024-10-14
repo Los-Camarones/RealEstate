@@ -4,6 +4,9 @@ declare global {
   interface Window {
     ihfKestrel?: {
       render: () => HTMLElement;
+      config?: {
+        activationToken?: string;
+      };
     };
   }
 }
