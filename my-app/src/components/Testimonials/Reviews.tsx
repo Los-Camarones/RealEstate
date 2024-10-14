@@ -1,3 +1,4 @@
+"use client";
 // components/ReviewCardList.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Reviews.module.css'; // Import your CSS module for styling
