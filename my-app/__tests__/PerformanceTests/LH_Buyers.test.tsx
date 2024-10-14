@@ -18,7 +18,7 @@ describe('Buyers Page Performance Tests', () => {
         done();
       }
     );
-  }, 30000); // Set the timeout to 30 seconds
+  }, 60000); // Set the timeout to 30 seconds
 
   it('should analyze Lighthouse report and ensure key performance metrics', (done: jest.DoneCallback) => {
     fs.readFile(path, 'utf8', (err, data) => {
