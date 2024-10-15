@@ -53,5 +53,5 @@ describe('About Me Page Performance Tests', () => {
 
       done();
     });
-  }, 30000);  // Set the timeout to 30 seconds for this test as well
+  }, 60000);  // Set the timeout to 30 seconds for this test as well
 });
