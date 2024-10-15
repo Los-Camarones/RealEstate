@@ -1,11 +1,4 @@
-//create a pre-approved page
-//lourdes wants to display 1-3 lenders that buyers can submit their info and connect 
 
-//information to be captured:
-//name
-//phone
-//email
-//how soon they are looking to buy 
 
 "use client";
 import React, {useState} from 'react';

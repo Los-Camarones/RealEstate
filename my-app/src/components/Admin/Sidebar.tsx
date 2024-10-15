@@ -20,7 +20,8 @@ const Sidebar: React.FC = () => {
     { name: "Settings", path: "/Admin/settings" },
     { name: "Reports", path: "/Admin/reports" },
     {name:"Leads List", path:"/Admin/lead-list"},  
-    {name: "Property Listings", path: "/Admin/property-listings"}
+    {name: "Property Listings", path: "/Admin/property-listings"},
+    {name: "Contact Requests", path: "/Admin/AdminContactRequests"}
   ];
 
   // The Logout button call the /api/logout endpoint
