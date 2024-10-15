@@ -26,8 +26,7 @@
     "baseUrl": ".",                
     "paths": {                      
       "@/*": ["./src/*"]
-    },
-    "types": ["node", "jest"],    // Jest types only in non-Cypress files
+    }
   },
   "include": [
     "next-env.d.ts",
