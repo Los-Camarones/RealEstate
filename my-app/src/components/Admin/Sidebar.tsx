@@ -34,15 +34,20 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-800 text-white w-64 p-5 flex flex-col justify-between">
-      <div>
+<div className="navbar-container" style={{ background: 'linear-gradient(to bottom, rgb(189, 238, 253), rgb(120, 184, 249), rgb(51, 130, 228))', opacity: 0.9, backdropFilter: 'blur(10px)', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', padding: '1rem' }}>
+  {/* Navbar content */}
+
+
+
+<div>
         <h1 className="text-2xl font-bold mb-10">Admin Panel</h1>
         <ul>
           {menuItems.map((item) => (
             <li key={item.name} className="mb-6">
               <a
                 href={item.path}
-                className="text-lg hover:bg-gray-700 rounded-lg px-3 py-2 block"
+                className="text-lg hover:bg-gray-200 rounded-lg px-3 py-2 block"
+
                 onClick={() => router.push(item.path)}
               >
                 {item.name}

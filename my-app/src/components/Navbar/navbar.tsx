@@ -100,20 +100,23 @@ function NavBar() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
+            <Link href="/Buyers">
             <button className={`buyers-button ${buttonStyle}`}>
               Buyers
             </button>
+            </Link>
 
+            
             {isDropdownOpen && (
               <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
-                <Link href="/Buyers/Residential" className={dropdownItemStyle}>
-                  Residential Buyers
+                <Link href="/property-search" className={dropdownItemStyle}>
+                  Search Property
                 </Link>
-                <Link href="/Buyers/Commercial" className={dropdownItemStyle}>
-                  Commercial Buyers
+                <Link href="/Sign-up" className={dropdownItemStyle}>
+                  Get Listing Updates
                 </Link>
-                <Link href="/Buyers/FirstTime" className={dropdownItemStyle}>
-                  First-Time Buyers
+                <Link href="/contact" className={dropdownItemStyle}>
+                 Ask me
                 </Link>
               </div>
             )}
