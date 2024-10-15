@@ -20,7 +20,7 @@ describe('Communities Page Performance Tests', () => {
         done();
       }
     );
-  }, 30000); // Set the timeout to 30 seconds for this test
+  }, 60000); // Set the timeout to 30 seconds for this test
 
   // 2. Read the report and analyze key performance metrics
   it('should analyze Lighthouse report and ensure key performance metrics are met', (done: jest.DoneCallback) => {

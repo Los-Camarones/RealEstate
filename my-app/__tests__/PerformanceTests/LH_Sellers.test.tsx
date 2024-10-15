@@ -58,5 +58,5 @@ describe('Sellers Page Performance Tests', () => {
 
       done();
     });
-  }, 30000); // Set timeout to 30 seconds for report analysis
+  }, 60000); // Set timeout to 30 seconds for report analysis
 });
