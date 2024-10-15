@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,14 +10,18 @@ function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  // Functions for dropdown handling
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
   };
 
   const closeDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen(false);
   };
-
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,10 +36,9 @@ function NavBar() {
     };
   }, []);
 
-
   return (
     <nav className="navbar-container bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4">
-      <div className=" mx-auto flex items-center">
+      <div className="mx-auto flex items-center">
         {/* Logo */}
         <Link href="/" passHref>
           <Image src="/logo_.png" alt="logo" width={150} height={150} priority />
@@ -46,10 +49,7 @@ function NavBar() {
 
         {/* Hamburger Icon for Mobile */}
         <div className="text-black block lg:hidden">
-          <button
-            onClick={toggleDropdown}
-            className="text-black focus:outline-none"
-          >
+          <button className="text-black focus:outline-none">
             <svg
               className="h-6 w-6 fill-current"
               viewBox="0 0 24 24"
@@ -74,64 +74,65 @@ function NavBar() {
         {/* Desktop Menu */}
         <div className="hidden lg:flex lg:items-center lg:w-auto">
           <Link href="/">
-            <button className={buttonStyle}>
-              Home
-            </button>
+            <button className={buttonStyle}>Home</button>
           </Link>
 
           <Link href="/property-search">
-            <button className={buttonStyle}>
-              Listings
-            </button>
+            <button className={buttonStyle}>Listings</button>
           </Link>
 
           <Link href="/Aboutme">
-            <button className={buttonStyle}>
-              About Me
-            </button>
+            <button className={buttonStyle}>About Me</button>
           </Link>
 
           <Link href="/Sellers">
-            <button className={buttonStyle}>
-              Sellers
-            </button>
+            <button className={buttonStyle}>Sellers</button>
           </Link>
 
-          <Link href=" /GetPreQualified">
-            <button className={buttonStyle}>
-            Get PreQualified
-            </button>
+          <Link href="/GetPreQualified">
+            <button className={buttonStyle}>Get PreQualified</button>
           </Link>
 
-          <Link href="/Buyers">
-            <button className={buttonStyle}>
+          {/* Buyers Dropdown with Hover */}
+          <div
+            className="relative"
+            ref={dropdownRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button className={`buyers-button ${buttonStyle}`}>
               Buyers
-              
             </button>
-          </Link>
+
+            {isDropdownOpen && (
+              <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
+                <Link href="/Buyers/Residential" className={dropdownItemStyle}>
+                  Residential Buyers
+                </Link>
+                <Link href="/Buyers/Commercial" className={dropdownItemStyle}>
+                  Commercial Buyers
+                </Link>
+                <Link href="/Buyers/FirstTime" className={dropdownItemStyle}>
+                  First-Time Buyers
+                </Link>
+              </div>
+            )}
+          </div>
 
           <Link href="/markets">
-            <button className={buttonStyle}>
-              Communities
-            </button>
+            <button className={buttonStyle}>Communities</button>
           </Link>
 
           <Link href="/valuation">
-            <button className={buttonStyle}>
-              What's My Home Worth?
-            </button>
+            <button className={buttonStyle}>What's My Home Worth?</button>
           </Link>
 
           <Link href="/contact">
-            <button className={buttonStyle}>
-              Contact
-            </button>
+            <button className={buttonStyle}>Contact</button>
           </Link>
 
           <Link href="/property-organizer">
-            <button className={buttonStyle}>
-              Sign in
-            </button>
+            <button className={buttonStyle}>Sign in</button>
           </Link>
         </div>
       </div>
@@ -140,59 +141,42 @@ function NavBar() {
       <div className={`lg:hidden ${isDropdownOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3">
           <Link href="/">
-            <button className={buttonStyle}>
-              Home
-            </button>
+            <button className={buttonStyle}>Home</button>
           </Link>
 
           <Link href="/property-search">
-            <button className={buttonStyle}>
-              Listings
-            </button>
+            <button className={buttonStyle}>Listings</button>
           </Link>
 
           <Link href="/Aboutme">
-            <button className={buttonStyle}>
-              About Me
-            </button>
+            <button className={buttonStyle}>About Me</button>
           </Link>
 
           <Link href="/Sellers">
-            <button className={buttonStyle}>
-              Sellers
-            </button>
+            <button className={buttonStyle}>Sellers</button>
           </Link>
 
           <Link href="/Buyers">
-            <button className={buttonStyle}>
+            <button
+              className={`${buttonStyle} buyers-button`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               Buyers
             </button>
           </Link>
 
           <Link href="/markets">
-            <button className={buttonStyle}>
-              Communities
-            </button>
-          </Link>
-
-          <Link href="/Properties">
-            <button className={buttonStyle}>
-              Properties
-            </button>
+            <button className={buttonStyle}>Communities</button>
           </Link>
 
           <Link href="/valuation">
-            <button className={buttonStyle}>
-              What's My Home Worth?
-            </button>
-          </Link>
-          
-          <Link href="/property-organizer">
-            <button className={buttonStyle}>
-              Sign in
-            </button>
+            <button className={buttonStyle}>What's My Home Worth?</button>
           </Link>
 
+          <Link href="/property-organizer">
+            <button className={buttonStyle}>Sign in</button>
+          </Link>
         </div>
       </div>
     </nav>

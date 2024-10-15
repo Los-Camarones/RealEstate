@@ -4,6 +4,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import NavBar from '../../components/Navbar/navbar';
+//import 
 import '../globals.css';
 
 const Buyers = () => {
@@ -19,12 +20,22 @@ const Buyers = () => {
 
       <div className="relative min-h-screen flex flex-col items-center justify-start text-black p-6 bg-gray-50">
         {/* Background Image with Overlay */}
-        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: "url('/bailey-anselme-Bkp3gLygyeA-unsplash.jpg')" }}></div>
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute inset-0 bg-cover bg-center bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 mb-6 opacity-70"></div>
+        <div className="absolute inset-0 bg-black opacity-15"></div>
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h1 className="text-5xl font-bold mb-8">Welcome to the Buyers Page</h1>
-          <p className="text-lg mb-4">Your guide to navigating the home buying process confidently.</p>
+          <p className="text-lg mb-4">Your guide to navigating the home buying process confidently ! </p>
+
+           {/* Button to Get Pre-Qualified */}
+          <div className="flex justify-center mt-6 mb-6"> {/* Added mb-8 for bottom margin */}
+            <a href="https://www.lourdesmendoza.com/GetPreQualified" target="_blank" rel="noopener noreferrer">
+              <button className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition duration-300">
+               Talk to a Loner to Get Pre-Qualified ! ! !
+              </button>
+            </a>
+          </div>
+
 
           {/* Steps to Buy a Home */}
           <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8">
@@ -146,18 +157,9 @@ const Buyers = () => {
             </div>
           </div>
 
-          <h3 className="text-3xl font-semibold mt-16 text-white">Stay Informed!</h3>
-          <p className="text-white">Subscribe to receive the latest updates and resources.</p>
-          <div className="mt-4 flex justify-center">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-2 border border-gray-300 rounded-l-lg outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300">
-              Subscribe
-            </button>
-          </div>
+         
+        
+         
         </div>
 
         <footer className="mt-16 text-center text-sm relative z-10">
