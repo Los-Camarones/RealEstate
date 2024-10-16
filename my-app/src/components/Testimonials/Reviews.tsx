@@ -41,7 +41,7 @@ const Reviews: React.FC = () => {
   return (
     <div>
     <header>
-      <h1 className={styles.header}>Reviews from clients</h1>
+      <h1 className={styles.header}>Testimonials</h1>
     </header>
     <div className={styles.reviewList}>
       {reviews.map((review, index) => (
