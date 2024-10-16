@@ -25,7 +25,7 @@ export async function GET(req: Request) {
 
   try {
     // Fetch property listings (you can add pagination or fields as needed)
-    const response = await axios.get('/client/listings.json', {
+    const response = await axios.get('https://www.idxhome.com/api/v1/client/listings.json', {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
   try {
     // Add a new property listing
-    const response = await axios.post(`https://www.idxhome.com/api/v1/client/listing/MjE2NDk4OTh8MA==.json`, body, {
+    const response = await axios.post(`https://www.idxhome.com/api/v1/client/listings.json`, body, {
       headers: {
         Authorization: token,
         Accept: 'application/json',

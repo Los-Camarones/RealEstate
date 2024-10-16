@@ -40,7 +40,7 @@ const PropertyListingsPage: React.FC = () => {
             setLoading(true);
             setError(null);
 
-            const response = await axios.get('/api/client/listings.json', {
+            const response = await axios.get('/api/listings', {
                 withCredentials: true // ensure cookie is sent with request
             });
 
