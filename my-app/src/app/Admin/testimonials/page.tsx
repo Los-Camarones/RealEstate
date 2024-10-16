@@ -1,5 +1,5 @@
 import React from 'react'
-import Reviews from '@/components/Testimonials/Reviews'
+import Reviews from '@/components/Testimonials/AdminTestimonials/AdminReviews'
 
 
 const page = () => {

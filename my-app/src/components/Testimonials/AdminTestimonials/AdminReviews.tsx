@@ -1,11 +1,11 @@
 "use client";
 // components/ReviewCardList.tsx
 import React, { useEffect, useState } from 'react';
-import styles from './Reviews.module.css'; // Import your CSS module for styling
+import styles from '../Reviews.module.css'; // Import your CSS module for styling
 import GoogleIcon from '@mui/icons-material/Google'; // Import Google Icon
-import { getTestimonials } from '../../actions/TestimonialsActions';
+import { getTestimonials } from '@/actions/TestimonialsActions';
 import { UUID } from 'crypto';
-import { ITestimonial } from '../../types/database_interface';
+import { ITestimonial } from '@/types/database_interface';
 
 
 
@@ -18,7 +18,7 @@ const Reviews: React.FC = () => {
     useEffect(() => {
       const fetchReviews = async () => {
         try {
-          const result = await getTestimonials(true);
+          const result = await getTestimonials(false);
 
           if(result.success) {
             setReviews(result.data ?? []);

@@ -5,13 +5,14 @@ import { ITestimonial } from "@/types/database_interface";
 
 /**
  * Fetches testimonials from Supabase.
+ * homepage_testimonials: boolean if a testimonial is displayed on homepage
  *
  * @returns A Promise that resolves to an object containing:
  *   - `success`: A boolean indicating whether the fetch was successful.
  *   - `data`: An array of testimonial objects if successful, or `undefined` if an error occurred.
  *   - `error`: An error message if the fetch failed.
  */
-export async function getTestimonials() {
+export async function getTestimonials(homepage_testimonials: boolean) {
 
     try {
         const supabase = createSupabaseServerClient();
@@ -19,14 +20,16 @@ export async function getTestimonials() {
         const { data, error } = await supabase
         .from('Testimonials')
         .select()
-      
-    
+        .eq('is_displayed', homepage_testimonials ? true : null);
+
+
         if (error) {
           console.error('Error fetching user information:', error?.message);
           return {success: false, error: 'Error retrieving testimonials.' };
         }
         else{
-            return{success: true, data: data}
+          return{success: true, data: data}
+
         }
     
         // Ensure the data conforms to the CustomUser interface
