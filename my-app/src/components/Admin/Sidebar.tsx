@@ -21,9 +21,17 @@ const Sidebar: React.FC = () => {
     { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
     {name:"Leads List", path:"/Admin/lead-list"},  
     {name: "Property Listings", path: "/Admin/property-listings"},
+<<<<<<< HEAD
     {name: "Contact Requests", path: "/Admin/contact-requests"},
     {name: "Property Details", path: "/Admin/property-details"},
     {name: "Valuation requests", path: "/Admin/valuation-requests"},
+=======
+<<<<<<< HEAD
+    {name: "Property Details", path: "/Admin/property-details"}
+=======
+    {name: "Market Trends", path : "/Admin/Market"}
+>>>>>>> 9fc89ec (finished dp 225 and two child issues of DP 161)
+>>>>>>> 0d6952c (finished dp 225 and two child issues of DP 161)
   ];
 
   // The Logout button call the /api/logout endpoint
