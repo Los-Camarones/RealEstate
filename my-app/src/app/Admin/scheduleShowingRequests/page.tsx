@@ -1,3 +1,5 @@
+//page 
+
 "use client";
 import "../../globals.css";
 import NavBar from "../../../components/Navbar/navbar";
@@ -7,12 +9,10 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth"; // Ensure user is authenticated
 import ReactPaginate from "react-paginate";
 
-
-
-const LeadListPage: React.FC = () => {
+const RequestListPage: React.FC = () => {
   const auth = useAuth(); // Check if the user is authenticated
 
-  interface Lead {
+  interface Request {
     id: string;
     firstName: string;
     lastName: string;
@@ -21,193 +21,192 @@ const LeadListPage: React.FC = () => {
     pipelineStage?: string;
   }
 
-  //complete array of leads pulled from ihomefinder
-  const [leads, setLeads] = useState<Lead[]>([]);
+  // Complete array of requests pulled from ihomefinder
+  const [requests, setRequests] = useState<Request[]>([]);
 
-  //array of filtered leads
-  const [filteredLeads, setFilteredLeads] = useState<Lead[]>([]);
+  // Array of filtered requests
+  const [filteredRequests, setFilteredRequests] = useState<Request[]>([]);
 
-  //array of leads that are displayed for current page
-  const [displayedLeads, setDisplayedLeads] = useState<Lead[]>([]);
+  // Array of requests that are displayed for the current page
+  const [displayedRequests, setDisplayedRequests] = useState<Request[]>([]);
 
-  //isFiltered boolean flag to indicate if filtering has occured
+  // IsFiltered boolean flag to indicate if filtering has occurred
   const [isFiltered, setIsFiltered] = useState<boolean>(false);
 
-  //loading boolean flag to indicate loading the fetch of data
+  // Loading boolean flag to indicate loading the fetch of data
   const [loading, setLoading] = useState(true);
 
-  //string showing errors 
+  // String showing errors 
   const [error, setError] = useState<string | null>(null);
 
-  //boolean flag to show forms
+  // Boolean flag to show forms
   const [showForm, setShowForm] = useState(false);
 
-  //obkect to represent a new lead
-  const [newLead, setNewLead] = useState({
+  // Object to represent a new request
+  const [newRequest, setNewRequest] = useState({
     firstName: "",
     lastName: "",
     emailAddress: "",
   });
 
-  //string to filter a lead by its name
+  // String to filter a request by its name
   const [name, setName] = useState<string>("");
 
-  //offset is a integer that represents the current index of an array of leads
+  // Offset is an integer that represents the current index of an array of requests
   const [offset, setCurrentOffset] = useState(0);
 
-  //number to represent the amount of pages to DISPLAY of leads. dynamic
+  // Number to represent the amount of pages to DISPLAY of requests. Dynamic
   const [displayPages, setDisplayPages] = useState(0);
 
-  //number to represent the total pages we need for all the leads
+  // Number to represent the total pages we need for all the requests
   const [totalPages, setTotalPages] = useState(0);
 
-  //number of items to display per page
+  // Number of items to display per page
   const itemsPerPage = 10;
 
-  // Fetch the list of subscribers on component mount if authenticated
+  // Fetch the list of requests on component mount if authenticated
   useEffect(() => {
     if (auth) {
-      fetchLeads();
+      fetchRequests();
     }
   }, [auth]);
 
   /**
-   * Fetches leads for authorized users
-   * sets the leads
-   * sets the amount of total leads
-   * sets which leads will be displayed for current page
-   * sets the total amount of pages based on leads length
+   * Fetches requests for authorized users
+   * sets the requests
+   * sets the amount of total requests
+   * sets which requests will be displayed for current page
+   * sets the total amount of pages based on requests length
    */
-  const fetchLeads = async () => {
+  const fetchRequests = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      //harcoded limit at 500. If limit exceeds, better to implement pagination of subscriber leads, though, filtering will be not exist anymore
-      const response = await axios.get(`/api/leads?&limit=500`, {
+      // Hardcoded limit at 500. If limit exceeds, better to implement pagination of subscriber requests, though, filtering will not exist anymore
+      const response = await axios.get(`/api/requests?&limit=500`, {
         withCredentials: true, // This ensures the cookie is sent with the request
       });
 
-      //set the leads
-      setLeads(response.data.results || []); // Assuming the response contains leads in 'results'
+      // Set the requests
+      setRequests(response.data.results || []); // Assuming the response contains requests in 'results'
 
-
-      //set leads to display on current page
-      setDisplayedLeads(
+      // Set requests to display on current page
+      setDisplayedRequests(
         response.data.results.slice(offset, offset + itemsPerPage)
       );
 
-      //set the total amount of pages based on total number of leads
+      // Set the total amount of pages based on the total number of requests
       setTotalPages(Math.ceil(response.data.total / 10));
 
-      //set the display pages
+      // Set the display pages
       setDisplayPages(Math.ceil(response.data.total / 10));
 
       setLoading(false);
     } catch (error: any) {
       console.error(
-        "Error fetching leads",
+        "Error fetching requests",
         error.response?.data || error.message
       );
-      setError("Failed to fetch leads.");
+      setError("Failed to fetch requests.");
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    // Update displayed leads when leads, filteredLeads, offset, or isFiltered is changed
+    // Update displayed requests when requests, filteredRequests, offset, or isFiltered is changed
     const end = offset + itemsPerPage;
     if (isFiltered) {
-      setDisplayedLeads(filteredLeads.slice(offset, end));
+      setDisplayedRequests(filteredRequests.slice(offset, end));
     } else {
-      setDisplayedLeads(leads.slice(offset, end));
+      setDisplayedRequests(requests.slice(offset, end));
     }
-  }, [leads, offset, isFiltered]);
+  }, [requests, offset, isFiltered]);
 
-  const handleAddNewLead = async (e: React.FormEvent) => {
+  const handleAddNewRequest = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       setError(null);
-      const response = await axios.post("/api/leads", newLead, {
+      const response = await axios.post("/api/requests", newRequest, {
         withCredentials: true,
       });
 
       if (response.status === 201) {
-        fetchLeads(); // Refresh leads after adding
+        fetchRequests(); // Refresh requests after adding
         setShowForm(false);
       }
     } catch (error: any) {
       console.error(
-        "Error creating lead",
+        "Error creating request",
         error.response?.data || error.message
       );
-      setError("Failed to create a new lead.");
+      setError("Failed to create a new request.");
     }
   };
 
-  const handleDeleteLead = async (id: string) => {
+  const handleDeleteRequest = async (id: string) => {
     try {
       setError(null);
       console.log("before calling api");
-      await axios.delete(`/api/leads/${id}`, {
+      await axios.delete(`/api/requests/${id}`, {
         // Pass the ID in the URL path, not as a query parameter
         withCredentials: true,
       });
       console.log("after calling api");
-      fetchLeads(); // Refresh leads after deletion
+      fetchRequests(); // Refresh requests after deletion
     } catch (error: any) {
       console.error(
-        "Error deleting lead",
+        "Error deleting request",
         error.response?.data || error.message
       );
-      setError("Failed to delete the lead.");
+      setError("Failed to delete the request.");
     }
   };
 
   /**
    * Filtering will only be by name of the subscriber based on first or last name
-   * Filters leads by name
-   * updates the displayed leads
-   * sets the total filtered leads by the length
-   * sets our array of filtered leads
+   * Filters requests by name
+   * updates the displayed requests
+   * sets the total filtered requests by the length
+   * sets our array of filtered requests
    * @param name
    */
-  const handleFilteringLeads = async (name: string) => {
+  const handleFilteringRequests = async (name: string) => {
     try {
       if (name) {
         // Filter our data points such that the parameter is in first or last name
-        const filteredLeads = leads.filter(
-          (record: Lead) =>
+        const filteredRequests = requests.filter(
+          (record: Request) =>
             record.firstName.toLowerCase().includes(name.toLowerCase()) ||
             record.lastName.toLowerCase().includes(name.toLowerCase())
         );
 
         // Update what is displayed based on parameter
-        setDisplayedLeads(filteredLeads.slice(offset, offset + itemsPerPage)); // Set displayed leads
+        setDisplayedRequests(filteredRequests.slice(offset, offset + itemsPerPage)); // Set displayed requests
 
-        //update our array of filtered leads
-        setFilteredLeads(filteredLeads);
+        // Update our array of filtered requests
+        setFilteredRequests(filteredRequests);
 
-        //update the pages we have to display
-        setDisplayPages(Math.ceil(filteredLeads.length / 10));
+        // Update the pages we have to display
+        setDisplayPages(Math.ceil(filteredRequests.length / 10));
       }
     } catch (error: any) {
       console.error(
-        "Error filtering leads",
+        "Error filtering requests",
         error.response?.data || error.message
       );
-      setError("Failed to filter leads");
+      setError("Failed to filter requests");
     }
   };
 
-  // If the user isn't authenticated, prevent rendering the leads
+  // If the user isn't authenticated, prevent rendering the requests
   if (!auth) {
     return <div>Loading...</div>;
   }
 
   if (loading) {
-    return <div>Loading leads, please wait...</div>;
+    return <div>Loading requests, please wait...</div>;
   }
 
   const handlePageClick = (data: { selected: number }) => {
@@ -218,34 +217,33 @@ const LeadListPage: React.FC = () => {
   /**
    * Handles logic when the filter input is changed
    * Sets the isFiltered to appropriate value
-   * resets currentOffset to 0
-   * updates the displayed leads 
+   * Resets currentOffset to 0
+   * Updates the displayed requests 
    * 
    * @param name 
    */
   const handleFilterChange = (name: string) => {
     if (name.trim() === "") {
-      
-    //filtering is false because no input is given
+      // Filtering is false because no input is given
       setIsFiltered(false);
 
-      //set index to zero
+      // Set index to zero
       setCurrentOffset(0);
 
-      //update our display leads based on our original FETCH data
-      setDisplayedLeads(leads.slice(offset, offset + itemsPerPage)); 
+      // Update our display requests based on our original FETCH data
+      setDisplayedRequests(requests.slice(offset, offset + itemsPerPage)); 
 
-      //resets the amount of pages
+      // Resets the amount of pages
       setDisplayPages(totalPages);
     } else {
-      //set is filtered to true
+      // Set is filtered to true
       setIsFiltered(true);
 
-      //set index to zero
+      // Set index to zero
       setCurrentOffset(0);
 
-      //if user enters a name to filter, we have to update which leads are shown
-      handleFilteringLeads(name);
+      // If user enters a name to filter, we have to update which requests are shown
+      handleFilteringRequests(name);
     }
   };
 
@@ -255,11 +253,11 @@ const LeadListPage: React.FC = () => {
       <div className="flex-grow">
         <NavBar />
         <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">Lead List</h1>
+          <h1 className="text-2xl font-bold mb-4">Request List</h1>
 
           {error && <div className="text-red-500 mb-4">{error}</div>}
 
-          {/* Add New Lead Button */}
+          {/* Add New Request Button */}
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded"
             onClick={() => setShowForm(!showForm)}
@@ -271,16 +269,16 @@ const LeadListPage: React.FC = () => {
           {/* Add New Lead Form */}
           {showForm && (
             <form
-              onSubmit={handleAddNewLead}
+              onSubmit={handleAddNewRequest}
               className="mt-4 bg-gray-200 p-4 rounded"
             >
               <div className="mb-2">
                 <label className="block text-gray-700">First Name:</label>
                 <input
                   type="text"
-                  value={newLead.firstName}
+                  value={newRequest.firstName}
                   onChange={(e) =>
-                    setNewLead({ ...newLead, firstName: e.target.value })
+                    setNewRequest({ ...newRequest, firstName: e.target.value })
                   }
                   className="w-full px-2 py-1 border rounded"
                   required
@@ -291,9 +289,9 @@ const LeadListPage: React.FC = () => {
                 <label className="block text-gray-700">Last Name:</label>
                 <input
                   type="text"
-                  value={newLead.lastName}
+                  value={newRequest.lastName}
                   onChange={(e) =>
-                    setNewLead({ ...newLead, lastName: e.target.value })
+                    setNewRequest({ ...newRequest, lastName: e.target.value })
                   }
                   className="w-full px-2 py-1 border rounded"
                   required
@@ -304,9 +302,9 @@ const LeadListPage: React.FC = () => {
                 <label className="block text-gray-700">Email Address:</label>
                 <input
                   type="email"
-                  value={newLead.emailAddress}
+                  value={newRequest.emailAddress}
                   onChange={(e) =>
-                    setNewLead({ ...newLead, emailAddress: e.target.value })
+                    setNewRequest({ ...newRequest, emailAddress: e.target.value })
                   }
                   className="w-full px-2 py-1 border rounded"
                   required
@@ -346,15 +344,15 @@ const LeadListPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {displayedLeads.map((lead) => (
-                <tr key={lead.id} className="border-t">
-                  <td className="px-4 py-2">{`${lead.firstName} ${lead.lastName}`}</td>
-                  <td className="px-4 py-2">{lead.emailAddress}</td>
-                  <td className="px-4 py-2">{lead.phone || "N/A"}</td>
+              {displayedRequests.map((request) => (
+                <tr key={request.id} className="border-t">
+                  <td className="px-4 py-2">{`${request.firstName} ${request.lastName}`}</td>
+                  <td className="px-4 py-2">{request.emailAddress}</td>
+                  <td className="px-4 py-2">{request.phone || "N/A"}</td>
                   <td className="px-4 py-2">
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => handleDeleteLead(lead.id)}
+                      onClick={() => handleDeleteRequest(request.id)}
                     >
                       Delete
                     </button>
@@ -390,4 +388,5 @@ const LeadListPage: React.FC = () => {
   );
 };
 
-export default LeadListPage;
+
+export default RequestListPage;

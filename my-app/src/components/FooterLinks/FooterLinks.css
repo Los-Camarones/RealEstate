@@ -1,0 +1,44 @@
+/* Grid container for the categories */
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 20px;
+    padding: 20px
+}
+
+/* Each category block */
+.category {
+    text-align: left;
+}
+
+.categoryTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.linkList {
+    list-style: none;
+    padding: 0;
+}
+
+.linkItem {
+    margin: 5px 0;
+}
+
+.link {
+    color: #0070f3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+/* Stack categories vertically on small screens */
+@media (max-width: 768px)
+{
+.gridContainer {
+    grid-template-columns: 1fr;
+}
+}

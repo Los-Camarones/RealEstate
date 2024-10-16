@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
 const headerStyle = {
   width: '100%',
   backgroundColor: '#fff',  // Optional background color for better visibility
-  padding: '8px 0',
+  padding: '0px 0',
 };
 
 // Main Style: Full-height, center content
