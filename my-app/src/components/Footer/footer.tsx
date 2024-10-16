@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import './Footer.css'; // Import CSS file
 import ContactMe from "../../components/ContactMe/ContactMe";
 import FooterLinks from "@/components/FooterLinks/FooterLinks";
-import {UIStrings} from "lighthouse/flow-report/src/i18n/ui-strings";
-import categories = UIStrings.categories;
+// import {UIStrings} from "lighthouse/flow-report/src/i18n/ui-strings";
+// import categories = UIStrings.categories;
 
 const categories = [
   {
