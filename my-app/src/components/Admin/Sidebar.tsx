@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
     { name: "Dashboard", path: "/Admin/dashboard" },
     { name: "Users", path: "/Admin/users" },
     { name: "Settings", path: "/Admin/settings" },
-    { name: "Reports", path: "/Admin/reports" },
+    { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
     {name:"Leads List", path:"/Admin/lead-list"},  
     {name: "Property Listings", path: "/Admin/property-listings"}
   ];
