@@ -1,65 +1,121 @@
 "use client";
 // components/ReviewCardList.tsx
 import React, { useEffect, useState } from 'react';
-import styles from '../Reviews.module.css'; // Import your CSS module for styling
-import GoogleIcon from '@mui/icons-material/Google'; // Import Google Icon
-import { getTestimonials } from '@/actions/TestimonialsActions';
-import { UUID } from 'crypto';
+import styles from '../Reviews.module.css';
+import GoogleIcon from '@mui/icons-material/Google';
+import { getTestimonials, addTestimonial } from '@/actions/TestimonialsActions';
+//deleteTestimonial, updateTestimonial, 
 import { ITestimonial } from '@/types/database_interface';
 
-
-
 const Reviews: React.FC = () => {
-
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
   const [error, setError] = useState<string>();
+  const [selectedReview, setSelectedReview] = useState<ITestimonial | null>(null);
 
-    //fetch user information from supabase
-    useEffect(() => {
-      const fetchReviews = async () => {
-        try {
-          const result = await getTestimonials(false);
+  const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
+    created_at: '',
+    rating: 5,
+    comments: '',
+    user_name: '',
+    profile_picture: '',
+    is_displayed: true
+  });
 
-          if(result.success) {
-            setReviews(result.data ?? []);
-          }
-          else {
-            setError(result.error);
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } 
-      };
-  
-      fetchReviews();
-    }, []);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const result = await getTestimonials(false);
+        if (result.success) {
+          setReviews(result.data ?? []);
+        } else {
+          setError(result.error);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchReviews();
+  }, []);
+
+  const handleSelectReview = (review: ITestimonial) => {
+    setSelectedReview(review);
+  };
+
+  const handleDeleteClick = async (id?: string) => {
+    //await deleteTestimonial(id);
+    setReviews(reviews.filter(review => review.id !== id));
+    setSelectedReview(null); // Close sidebar after deletion
+  };
+
+  const handleUpdateReview = async () => {
+    if (selectedReview) {
+      // const updatedReview = await updateTestimonial(selectedReview);
+      // setReviews(reviews.map(r => (r.id === selectedReview.id ? updatedReview : r)));
+      setSelectedReview(null); // Close sidebar after update
+    }
+  };
+
+  const handleAddReview = async () => {
+    const addedReview = await addTestimonial(newTestimonial);
+    //setReviews([...reviews, addedReview]);
+    setNewTestimonial({
+      created_at: '',
+      rating: 5,
+      comments: '',
+      user_name: '',
+      profile_picture: '',
+      is_displayed: true
+    });
+  };
 
   const renderStars = (stars: number) => {
     return Array.from({ length: stars }, (_, i) => (
       <span key={i} className={styles.star}>⭐</span>
     ));
   };
+
   return (
-    <div>
-    <header>
-      <h1 className={styles.header}>Testimonials</h1>
-    </header>
-    <div className={styles.reviewList}>
-      {reviews.map((review, index) => (
-        <div key={index} className={styles.card}>
-          <a href="https://www.google.com/search?q=lourdes+mendoza+sacramento&sca_esv=253929064fe52cf4&sca_upv=1&source=hp&ei=0mvzZtuaJOmxur8PxqDh-A4&iflsig=AL9hbdgAAAAAZvN54sQz_RSY9vy0t2JsVBrbvNNLg7s-&ved=0ahUKEwjby_j__NyIAxXpmO4BHUZQGO8Q4dUDCA8&uact=5&oq=lourdes+mendoza+sacramento&gs_lp=Egdnd3Mtd2l6Ihpsb3VyZGVzIG1lbmRvemEgc2FjcmFtZW50bzICECYyCBAAGIAEGKIEMggQABiABBiiBDIIEAAYgAQYogQyCBAAGIAEGKIEMggQABiABBiiBEjaIlAAWPkgcAB4AJABAJgBeaABlRCqAQQyNC4yuAEDyAEA-AEBmAIaoAK8EMICERAuGIAEGLEDGNEDGIMBGMcBwgIOEC4YgAQYsQMY0QMYxwHCAg4QABiABBixAxiDARiKBcICCxAuGIAEGLEDGIMBwgIOEC4YgAQYsQMYgwEYigXCAggQABiABBixA8ICBRAAGIAEwgIIEC4YgAQYsQPCAgUQLhiABMICCBAuGIAEGNQCwgILEAAYgAQYsQMYgwHCAg4QLhiABBjHARiOBRivAcICDRAuGIAEGMcBGAoYrwHCAgcQLhiABBgKwgILEC4YgAQYxwEYrwHCAgYQABgWGB7CAgsQABiABBiGAxiKBZgDAJIHBDIzLjOgB_WMAg&sclient=gws-wiz#lrd=0x809adb0ffbbe1a79:0x418e5ad19fe8b657,1,,,," target="_blank" rel="noopener noreferrer">
-          <img src={review.profile_picture}  className={styles.userPicture} />
-          <div className={styles.stars}>{review.rating} {renderStars(review.rating)}</div>
-          <div className={styles.date}>{review.created_at}</div>
-          <div className={styles.review}>{review.comments}</div>
-          <div className={styles.name}>- {review.user_name}</div>
-          <div className={styles.googleIcon}>
-            <GoogleIcon />
+    
+    <div className={styles.container}>
+      <header className={styles.header}>Manage Your Testimonials</header>
+
+      <button className = {styles.button} onClick={() => setSelectedReview({ ...newTestimonial })}>Add a Testimonial</button>
+
+      <div className={styles.reviewList}>
+        {reviews.map((review) => (
+          <div key={review.id} className={styles.card} onClick={() => handleSelectReview(review)}>
+            <img src={review.profile_picture} className={styles.userPicture} />
+            <div className={styles.stars}>{review.rating} {renderStars(review.rating)}</div>
+            <div className={styles.date}>{review.created_at}</div>
+            <div className={styles.review}>{review.comments}</div>
+            <div className={styles.name}>- {review.user_name}</div>
+            <div className={styles.googleIcon}><GoogleIcon /></div>
           </div>
-          </a>
+        ))}
+      </div>
+
+      {selectedReview && (
+        <div className={styles.sidebar}>
+          <h3>{selectedReview.id ? "Edit Testimonial" : "Add Testimonial"}</h3>
+          <input
+            type="text"
+            placeholder="Comments"
+            value={selectedReview.comments}
+            onChange={(e) => setSelectedReview({ ...selectedReview, comments: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Rating"
+            value={selectedReview.rating}
+            onChange={(e) => setSelectedReview({ ...selectedReview, rating: Number(e.target.value) })}
+          />
+          <button onClick={selectedReview.id ? handleUpdateReview : handleAddReview}>
+            {selectedReview.id ? "Save" : "Add"}
+          </button>
+          {selectedReview.id && <button onClick={() => handleDeleteClick(selectedReview.id)}>Delete</button>}
+          <button onClick={() => setSelectedReview(null)}>Close</button>
         </div>
-      ))}
-    </div>
+      )}
     </div>
   );
 };
