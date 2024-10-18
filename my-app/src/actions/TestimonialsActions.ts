@@ -65,7 +65,7 @@ export async function addTestimonial(testimonial: ITestimonial) {
     const { data, error } = await supabase
     .from('Testimonials')
     .insert([
-      { created_at: testimonial.created_at || Date.now(), // may change
+      { created_at: testimonial.created_at , 
          rating: testimonial.rating,
          comments: testimonial.comments,
          user_name: testimonial.user_name,
