@@ -5,7 +5,7 @@ import { ITestimonial } from "@/types/database_interface";
 
 /**
  * Fetches testimonials from Supabase.
- * homepage_testimonials: boolean if a testimonial is displayed on homepage
+ * homepage_testimonials: boolean to display only homepage testimonials
  *
  * @returns A Promise that resolves to an object containing:
  *   - `success`: A boolean indicating whether the fetch was successful.
@@ -16,11 +16,22 @@ export async function getTestimonials(homepage_testimonials: boolean) {
 
     try {
         const supabase = createSupabaseServerClient();
-    
-        const { data, error } = await supabase
-        .from('Testimonials')
-        .select()
-        .eq('is_displayed', homepage_testimonials ? true : null);
+
+        let result;
+        if(homepage_testimonials) {
+           result = await supabase
+          .from('Testimonials')
+          .select()
+          .eq('is_displayed', homepage_testimonials ? true : null);
+        } else {
+           result = await supabase
+          .from('Testimonials')
+          .select()
+        }
+
+        const data = result.data;
+        const error = result.error;
+
 
 
         if (error) {
@@ -54,7 +65,7 @@ export async function addTestimonial(testimonial: ITestimonial) {
     const { data, error } = await supabase
     .from('Testimonials')
     .insert([
-      { created_at: testimonial.created_at || Date.now(), // may change
+      { created_at: testimonial.created_at , 
          rating: testimonial.rating,
          comments: testimonial.comments,
          user_name: testimonial.user_name,

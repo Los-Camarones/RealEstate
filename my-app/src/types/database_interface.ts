@@ -11,12 +11,12 @@ type IUser = {
     phoneNumber: string;
   }
   export interface ITestimonial {
-    id: UUID,
+    id?: UUID,
     created_at: string,
     rating: number,
     comments: string,
     user_name: string,
-    profile_picture: string
+    profile_picture: string,
     is_displayed: boolean
   };
 
