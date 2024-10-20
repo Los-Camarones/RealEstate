@@ -10,40 +10,56 @@ import { ITestimonial } from "@/types/database_interface";
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
   const [error, setError] = useState<string>();
+  const [success, setSuccess] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ITestimonial | null>(
     null
   );
 
+  const blank_url_profile_pic = "https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/sign/testimonials_images/blank_profile_icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZXN0aW1vbmlhbHNfaW1hZ2VzL2JsYW5rX3Byb2ZpbGVfaWNvbi5wbmciLCJpYXQiOjE3MjczMDc0NDcsImV4cCI6MTg1MzQ1MTQ0N30.-qlz-sDf4SA7nBM6NUQiC2-katb6pKZJN5xiFW5kzx0&t=2024-09-25T23%3A37%3A27.799Z"
   const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
     created_at: "",
     rating: 5,
     comments: "",
     user_name: "",
-    profile_picture: "",
+    profile_picture: blank_url_profile_pic,
     is_displayed: true,
   });
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const result = await getTestimonials(false);
-        if (result.success) {
-          setReviews(result.data ?? []);
-        } else {
-          setError(result.error);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const [newProfilePic, setNewProfilePic] = useState<string>();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        setSelectedReview((selectedReview) => {
+          if (selectedReview) {
+            return {
+              ...selectedReview,
+              profile_picture: url, // Ensure this is correctly set
+            };
+          }
+          // If prevReview is null, return an initial structure
+          return {
+            created_at: "",
+            rating: 5,
+            comments: "",
+            user_name: "",
+            profile_picture: "",
+            is_displayed: true,
+          }; // Cast it as ITestimonial
+        });
       }
-    };
-    fetchReviews();
-  }, []);
+    }
+  };
+
 
   const handleSelectReview = (review: ITestimonial) => {
     setSelectedReview(review);
   };
 
-  const handleDeleteClick = async (id?: string) => {
+  const handleDeleteReview = async (id?: string) => {
     //await deleteTestimonial(id);
     setReviews(reviews.filter((review) => review.id !== id));
     setSelectedReview(null); // Close sidebar after deletion
@@ -58,8 +74,34 @@ const Reviews: React.FC = () => {
   };
 
   const handleAddReview = async () => {
-    const addedReview = await addTestimonial(newTestimonial);
-    setReviews([...reviews, newTestimonial]);
+  
+    //if a date, username, and rating exists
+    if (selectedReview?.created_at && selectedReview.user_name && selectedReview.rating) {
+      //const newDate = convertDateFormat(selectedReview.created_at);
+
+      // console.log(newDate);
+      // setNewTestimonial((prevTestimonial) => ({
+      //   ...prevTestimonial,  //save our previous attributes attributes
+      //   created_at: newDate, 
+      // }));
+
+      //add review on supabase
+      const response = await addTestimonial(selectedReview);
+
+      if (response.success && response.data) {
+        console.log("Successfully added testimonial!");
+        setSuccess(true);
+        //refresh our reviews
+       setReviews([...reviews, response.data[0]]);
+      } else {
+        console.log("failed ", response.error);
+        setError(response.error);
+        setSuccess(false);
+      }
+    }
+
+
+    //set the new testimonial to blank for additional input
     setNewTestimonial({
       created_at: "",
       rating: 5,
@@ -78,12 +120,29 @@ const Reviews: React.FC = () => {
     ));
   };
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const result = await getTestimonials(false);
+        if (result.success) {
+          setReviews(result.data ?? []);
+        } else {
+          setError(result.error);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchReviews();
+  }, [setReviews]);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>Manage Your Testimonials</header>
-
+      {error && <h1>{error}</h1>}
       <button
         className={styles.button}
+        //everytime you click on "add testimonial" , a blank new Testimonial is set as your selected Review
         onClick={() => setSelectedReview({ ...newTestimonial })}
       >
         Add a Testimonial
@@ -119,6 +178,7 @@ const Reviews: React.FC = () => {
             type="text"
             placeholder="John Smith"
             value={selectedReview.user_name}
+            required
             onChange={(e) =>
               setSelectedReview({
                 ...selectedReview,
@@ -126,51 +186,52 @@ const Reviews: React.FC = () => {
               })
             }
           />
-<label>Profile Picture (optional)</label>
-<input
-  type="file"
-  accept="image/*" // Only allows image files
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setSelectedReview({ ...selectedReview, profile_picture: event.target?.result as string });
-      };
-      reader.readAsDataURL(file); // Convert image to base64 URL for preview
-    }
-  }}
-/>
+          <label>Profile Picture (optional)</label>
+
+          {newProfilePic ? (<img src={newProfilePic} alt="" />) : (<img src={selectedReview.profile_picture} alt="" />)}
+
+          <div>
+            {isEditing ? (
+              <input type="file" onChange={handleProfilePicChange} />
+            ) : (
+              <button className={styles.button} onClick={() => setIsEditing(true)}>Change Profile Picture</button>
+            )}
+          </div>
+
+
           <label>Testimonial </label>
-          <span
-            contentEditable
-            suppressContentEditableWarning
+          <textarea
+            value={selectedReview.comments || ""}
+            onChange={(e) => {
+              setSelectedReview({
+                ...selectedReview,
+                comments: e.target.value,
+              });
+            }}
+            placeholder="Lourdes is Amazing!"
             style={{
-              display: "inline-block",
+              display: "block",
               minWidth: "200px",
-              minHeight: "30px",
+              minHeight: "300px",
               padding: "5px",
               border: "1px solid #000000",
               backgroundColor: "#ffffff",
               borderRadius: "4px",
-              color: selectedReview.comments ? "inherit" : "#aaa", // Placeholder color
+              color: selectedReview.comments ? "inherit" : "#aaa",
+              overflow: "hidden",
+              resize: "none", // Prevent resizing with the mouse
             }}
-            onInput={(e) => {
-              const target = e.target as HTMLSpanElement;
-              setSelectedReview({
-                ...selectedReview,
-                comments: target.innerText,
-              });
-            }}
-          >
-            {selectedReview.comments || "ex: Lourdes is amazing!"}
-          </span>
+            rows={1
+            }
+          />
+
 
           <label>Rating 1-5 </label>
           <input
             type="number"
             min={1}
             max={5}
+            required
             placeholder="Rating"
             value={selectedReview.rating}
             onChange={(e) =>
@@ -185,6 +246,7 @@ const Reviews: React.FC = () => {
 
           <input
             type="date"
+            required
             placeholder="Date YYYY-MM-DD"
             value={
               selectedReview.created_at
@@ -198,13 +260,28 @@ const Reviews: React.FC = () => {
               })
             }
           />
+
+          <label id="displayBox">Display on homepage?</label>
+          <input
+            id="displayBox"
+            type="checkbox"
+            checked={selectedReview.is_displayed}
+            required
+            onChange={(e) =>
+              setSelectedReview({
+                ...selectedReview,
+                is_displayed: e.target.checked,
+              })
+            }
+          />
+
           <button
             onClick={selectedReview.id ? handleUpdateReview : handleAddReview}
           >
             {selectedReview.id ? "Save" : "Add"}
           </button>
           {selectedReview.id && (
-            <button onClick={() => handleDeleteClick(selectedReview.id)}>
+            <button onClick={() => handleDeleteReview(selectedReview.id)}>
               Delete
             </button>
           )}
