@@ -1,23 +1,24 @@
+"use client";
 // components/ReviewCardList.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Reviews.module.css'; // Import your CSS module for styling
 import GoogleIcon from '@mui/icons-material/Google'; // Import Google Icon
 import { getTestimonials } from '../../actions/TestimonialsActions';
 import { UUID } from 'crypto';
-import { IReview } from '../../types/database_interface';
+import { ITestimonial } from '../../types/database_interface';
 
 
 
 const Reviews: React.FC = () => {
 
-  const [reviews, setReviews] = useState<IReview[]>([]);
+  const [reviews, setReviews] = useState<ITestimonial[]>([]);
   const [error, setError] = useState<string>();
 
     //fetch user information from supabase
     useEffect(() => {
       const fetchReviews = async () => {
         try {
-          const result = await getTestimonials();
+          const result = await getTestimonials(true);
 
           if(result.success) {
             setReviews(result.data ?? []);
