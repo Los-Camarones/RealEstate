@@ -89,3 +89,43 @@ export async function addTestimonial(testimonial: ITestimonial) {
   }
 
 }
+
+/**
+ * Update a testimonial
+ */
+
+
+export async function updateTestimonial(testimonial: ITestimonial) {
+
+  try {
+    const supabase = createSupabaseServerClient();
+
+    //update value in supabase 
+    const { data, error } = await supabase
+    .from('Testimonials')
+    .update(
+      { 
+      created_at: testimonial.created_at , 
+      rating: testimonial.rating,
+      comments: testimonial.comments,
+      user_name: testimonial.user_name,
+      profile_picture: testimonial.profile_picture,
+      is_displayed: testimonial.is_displayed
+      })
+    .eq('id', testimonial.id) //assure that you are updating a testimonial by its ID
+    .select() //return the data by selecting it 
+
+    if (error) {
+      console.error('Error updating testimonial: ', error?.message);
+      return {success: false, error: 'Error updating testimonial.' };
+    }
+    else{
+        return{success: true, data: data}
+    }
+
+  } catch (error) {
+    console.error('Unexpected error updating user information:', error);
+    return {success: false, error: 'An unexpected error occurred.' };
+  }
+
+}

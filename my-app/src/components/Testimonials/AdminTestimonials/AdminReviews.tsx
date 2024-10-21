@@ -3,9 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../Reviews.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
-import { getTestimonials, addTestimonial } from "@/actions/TestimonialsActions";
+import { getTestimonials, addTestimonial, updateTestimonial } from "@/actions/TestimonialsActions";
 //deleteTestimonial, updateTestimonial,
 import { ITestimonial } from "@/types/database_interface";
+import { uploadProfilePicture } from "@/actions/BucketActions";
 
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
@@ -33,6 +34,7 @@ const Reviews: React.FC = () => {
       const file = e.target.files[0];
       if (file) {
         const url = URL.createObjectURL(file);
+        setNewProfilePic(url);
         setSelectedReview((selectedReview) => {
           if (selectedReview) {
             return {
@@ -67,7 +69,27 @@ const Reviews: React.FC = () => {
 
   const handleUpdateReview = async () => {
     if (selectedReview) {
-      // const updatedReview = await updateTestimonial(selectedReview);
+
+      const response = await updateTestimonial(selectedReview);
+
+      if (response.success && response.data) {
+        setSuccess(true);
+
+        // Update the review in the array
+        setReviews((prevReviews) => 
+
+        //loop through each review to map a function
+        prevReviews.map((review) => 
+          
+          //if the id matches the id updated review, update our array with new value. else just keep same review
+          review.id === response.data[0].id ? response.data[0] : review
+        )
+      );      
+    } else {
+        console.log("failed ", response.error);
+        setError(response.error);
+        setSuccess(false);
+      }
       // setReviews(reviews.map(r => (r.id === selectedReview.id ? updatedReview : r)));
       setSelectedReview(null); // Close sidebar after update
     }
@@ -77,13 +99,19 @@ const Reviews: React.FC = () => {
   
     //if a date, username, and rating exists
     if (selectedReview?.created_at && selectedReview.user_name && selectedReview.rating) {
-      //const newDate = convertDateFormat(selectedReview.created_at);
 
-      // console.log(newDate);
-      // setNewTestimonial((prevTestimonial) => ({
-      //   ...prevTestimonial,  //save our previous attributes attributes
-      //   created_at: newDate, 
-      // }));
+      //check if the user added a new profile pic 
+      if(newProfilePic) {
+        //add to supabase bucket
+        const response = await uploadProfilePicture(newProfilePic);
+        
+        if(response.success) {
+          console.log("uploaded profile pic successfully!");
+          console.log(response.data);
+        } else {
+          console.log(response.error);
+        }
+      }
 
       //add review on supabase
       const response = await addTestimonial(selectedReview);
@@ -229,8 +257,8 @@ const Reviews: React.FC = () => {
           <label>Rating 1-5 </label>
           <input
             type="number"
-            min={1}
-            max={5}
+            min="1"
+            max="5"
             required
             placeholder="Rating"
             value={selectedReview.rating}
