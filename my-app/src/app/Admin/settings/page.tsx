@@ -5,6 +5,7 @@ import Sidebar from '../../../components/Admin/Sidebar';
 import React, { useState } from "react";
 import useAuth from '../../hooks/useAuth';  
 
+
 const updateUserSettings = async (data: any) => {
   // Replace with actual API call
   return { success: true, message: "Settings updated successfully!" };

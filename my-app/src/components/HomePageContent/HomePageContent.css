@@ -36,18 +36,46 @@
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  font-family: 'Roboto', sans-serif; /* Use a modern font */
 }
 
 .about-me-text p {
   font-size: 1rem;
   color: #333;
-  font-family: system-ui;
+  font-family: 'Roboto', sans-serif; /* Use a modern font */
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 p {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif; /* Use a modern font */
   font-size: 1.1em;
   line-height: 1.6;
   max-width: 800px;
-  text-align:justify;
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+.expand-bar {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-family: 'Roboto', sans-serif; /* Use a modern font */
+  font-size: 1.1em;
+}
+
+.expand-bar:hover {
+  background-color: #e0e0e0;
+  color: #299FDD;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.expand-bar:active {
+  background-color: #d0d0d0;
+  color: #1a7bbd;
+  transform: scale(0.95); /* Slightly shrink on click */
 }

@@ -3,6 +3,18 @@
 import React, { useState } from 'react';
 import './Footer.css'; // Import CSS file
 import ContactMe from "../../components/ContactMe/ContactMe";
+import FooterLinks from "@/components/FooterLinks/FooterLinks";
+// import {UIStrings} from "lighthouse/flow-report/src/i18n/ui-strings";
+// import categories = UIStrings.categories;
+
+const categories = [
+  {
+    title: 'Privacy',
+    links: [
+      { label: 'Privacy Policy', href: '/idx?path=/property-organizer/&section=policy'},
+    ],
+  },
+];
 
 const Footer = () => {
   const [formData, setFormData] = useState({
@@ -88,6 +100,9 @@ const Footer = () => {
         </form>
       </div>
 
+      <div>
+        <FooterLinks categories={categories}/>
+      </div>
       <div className="footer-content">
         <p className="footer-text-left">©Copyright 2024. Real Estate.</p>
         <a href="https://www.metrolist.com/">
