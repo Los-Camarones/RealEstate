@@ -18,8 +18,7 @@ const Reviews: React.FC = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ITestimonial | null>();
 
-  const blank_url_profile_pic =
-    "https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/sign/testimonials_images/blank_profile_icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZXN0aW1vbmlhbHNfaW1hZ2VzL2JsYW5rX3Byb2ZpbGVfaWNvbi5wbmciLCJpYXQiOjE3MjczMDc0NDcsImV4cCI6MTg1MzQ1MTQ0N30.-qlz-sDf4SA7nBM6NUQiC2-katb6pKZJN5xiFW5kzx0&t=2024-09-25T23%3A37%3A27.799Z";
+  const blank_url_profile_pic ="https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/public/testimonials_images/default_pfp.jpg"
   const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
     created_at: "",
     rating: 5,
@@ -58,7 +57,6 @@ const Reviews: React.FC = () => {
             profile_picture: "",
             is_displayed: true,
           };
-          ``;
         });
       }
     }
@@ -157,6 +155,10 @@ const Reviews: React.FC = () => {
     }
   };
 
+  /**
+   * Handles the click for when the admin wants to submit a review to supabase
+   * @returns 
+   */
   const handleAddReview = async () => {
 
     //if a date, username, and rating exists
@@ -240,6 +242,11 @@ const Reviews: React.FC = () => {
     ));
   };
 
+  /**
+   * Function to convert image file to base64 format
+   * @param file image of file type
+   * @returns 
+   */
   function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -300,6 +307,9 @@ const Reviews: React.FC = () => {
             <div className={styles.stars}>
               {review.rating} {renderStars(review.rating)}
             </div>
+
+            {/*If card is not displayed on home page it will be gray */}
+            {!review.is_displayed && (<div className={styles.cardOverLay}></div> )}
             <div className={styles.date}>{review.created_at}</div>
             <div className={styles.review}>{review.comments}</div>
             <div className={styles.name}>- {review.user_name}</div>
