@@ -10,6 +10,7 @@ const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold 
 const NavBar: React.FC = () => {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = useState(false);
   const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false); // Track when the widget is displayed instead of Sign In button
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Track mobile menu open state
 
   // Function to toggle the Sign In popup
   const toggleSignInPopup = () => {
@@ -20,6 +21,11 @@ const NavBar: React.FC = () => {
   const closeSignInPopupAndShowWidget = () => {
     setIsSignInPopupOpen(false);
     setIsWidgetDisplayed(true); // Mark the widget to display in place of the button
+  };
+
+  // Function to toggle the mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -33,6 +39,19 @@ const NavBar: React.FC = () => {
 
           {/* Spacer */}
           <div className="flex-grow"></div>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden">
+            <button
+              onClick={toggleMobileMenu}
+              className="text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              aria-label="Open Menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex lg:items-center lg:w-auto">
@@ -80,6 +99,47 @@ const NavBar: React.FC = () => {
             )}
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden bg-blue-300 w-full py-4 px-2 absolute left-0 top-full z-40">
+            <Link href="/">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Home</button>
+            </Link>
+            <Link href="/property-search">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Listings</button>
+            </Link>
+            <Link href="/Aboutme">
+              <button className={buttonStyle + " block w-full text-left py-2"}>About Me</button>
+            </Link>
+            <Link href="/Sellers">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Sellers</button>
+            </Link>
+            <Link href="/GetPreQualified">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Get PreQualified</button>
+            </Link>
+            <Link href="/markets">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Communities</button>
+            </Link>
+            <Link href="/valuation">
+              <button className={buttonStyle + " block w-full text-left py-2"}>What's My Home Worth?</button>
+            </Link>
+            <Link href="/contact">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Contact</button>
+            </Link>
+
+            {/* Mobile Sign In Button */}
+            {isWidgetDisplayed ? (
+              <div className="login-widget relative z-50">
+                <PropertyOrganizerLogin /> {/* Render the plugin in place of the button */}
+              </div>
+            ) : (
+              <button className={buttonStyle + " block w-full text-left py-2"} onClick={toggleSignInPopup}>
+                Sign In
+              </button>
+            )}
+          </div>
+        )}
       </nav>
 
       {/* Sign In Popup Modal */}
@@ -112,3 +172,4 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
+
