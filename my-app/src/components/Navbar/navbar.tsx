@@ -1,189 +1,114 @@
-"use client";
-import React, { useState, useEffect, useRef } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import PropertyOrganizerLogin from '../PropertyOrganizerLogin/PropertyOrganizerLogin'; // Import your login component
 
 const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
-const dropdownItemStyle = "block px-4 py-2 text-black hover:bg-gray-100";
 
-function NavBar() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+const NavBar: React.FC = () => {
+  const [isSignInPopupOpen, setIsSignInPopupOpen] = useState(false);
+  const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false); // Track when the widget is displayed instead of Sign In button
 
-  // Functions for dropdown handling
-  const handleMouseEnter = () => {
-    setIsDropdownOpen(true);
+  // Function to toggle the Sign In popup
+  const toggleSignInPopup = () => {
+    setIsSignInPopupOpen(!isSignInPopupOpen);
   };
 
-  const handleMouseLeave = () => {
-    setIsDropdownOpen(false);
+  // Function to close the Sign In popup and replace the Sign In button with the widget content
+  const closeSignInPopupAndShowWidget = () => {
+    setIsSignInPopupOpen(false);
+    setIsWidgetDisplayed(true); // Mark the widget to display in place of the button
   };
-
-  const closeDropdown = () => {
-    setIsDropdownOpen(false);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        closeDropdown();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
-    <nav className="navbar-container bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4">
-      <div className="mx-auto flex items-center">
-        {/* Logo */}
-        <Link href="/" passHref>
-          <Image src="/logo_.png" alt="logo" width={150} height={150} priority />
-        </Link>
-
-        {/* Spacer */}
-        <div className="flex-grow"></div>
-
-        {/* Hamburger Icon for Mobile */}
-        <div className="text-black block lg:hidden">
-          <button className="text-black focus:outline-none">
-            <svg
-              className="h-6 w-6 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                className={isDropdownOpen ? 'hidden' : 'block'}
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z"
-              />
-              <path
-                className={isDropdownOpen ? 'block' : 'hidden'}
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M4.293 6.293a1 1 0 011.414 0l6.293 6.293 6.293-6.293a1 1 0 111.414 1.414l-7 7a1 1 0 01-1.414 0l-7-7a1 1 0 010-1.414 1 1 0 010 0z"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex lg:items-center lg:w-auto">
-          <Link href="/">
-            <button className={buttonStyle}>Home</button>
+    <>
+      <nav className="navbar-container bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 relative z-50">
+        <div className="mx-auto flex items-center px-4 lg:px-8">
+          {/* Logo */}
+          <Link href="/" passHref>
+            <Image src="/logo_.png" alt="logo" width={120} height={120} className="cursor-pointer" priority />
           </Link>
 
-          <Link href="/property-search">
-            <button className={buttonStyle}>Listings</button>
-          </Link>
+          {/* Spacer */}
+          <div className="flex-grow"></div>
 
-          <Link href="/Aboutme">
-            <button className={buttonStyle}>About Me</button>
-          </Link>
-
-          <Link href="/Sellers">
-            <button className={buttonStyle}>Sellers</button>
-          </Link>
-
-          <Link href="/GetPreQualified">
-            <button className={buttonStyle}>Get PreQualified</button>
-          </Link>
-
-          {/* Buyers Dropdown with Hover */}
-          <div
-            className="relative"
-            ref={dropdownRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link href="/Buyers">
-            <button className={`buyers-button ${buttonStyle}`}>
-              Buyers
-            </button>
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex lg:items-center lg:w-auto">
+            <Link href="/">
+              <button className={buttonStyle}>Home</button>
             </Link>
 
-            
-            {isDropdownOpen && (
-              <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
-                <Link href="/property-search" className={dropdownItemStyle}>
-                  Search Property
-                </Link>
-                <Link href="/Sign-up" className={dropdownItemStyle}>
-                  Get Listing Updates
-                </Link>
-                <Link href="/contact" className={dropdownItemStyle}>
-                 Ask me
-                </Link>
+            <Link href="/property-search">
+              <button className={buttonStyle}>Listings</button>
+            </Link>
+
+            <Link href="/Aboutme">
+              <button className={buttonStyle}>About Me</button>
+            </Link>
+
+            <Link href="/Sellers">
+              <button className={buttonStyle}>Sellers</button>
+            </Link>
+
+            <Link href="/GetPreQualified">
+              <button className={buttonStyle}>Get PreQualified</button>
+            </Link>
+
+            <Link href="/markets">
+              <button className={buttonStyle}>Communities</button>
+            </Link>
+
+            <Link href="/valuation">
+              <button className={buttonStyle}>What's My Home Worth?</button>
+            </Link>
+
+            <Link href="/contact">
+              <button className={buttonStyle}>Contact</button>
+            </Link>
+
+            {/* Display the Sign In button OR the plugin content */}
+            {isWidgetDisplayed ? (
+              <div className="login-widget relative z-50">
+                <PropertyOrganizerLogin /> {/* Render the plugin in place of the button */}
               </div>
+            ) : (
+              <button className={buttonStyle} onClick={toggleSignInPopup}>
+                Sign In
+              </button>
             )}
           </div>
-
-          <Link href="/markets">
-            <button className={buttonStyle}>Communities</button>
-          </Link>
-
-          <Link href="/valuation">
-            <button className={buttonStyle}>What's My Home Worth?</button>
-          </Link>
-
-          <Link href="/contact">
-            <button className={buttonStyle}>Contact</button>
-          </Link>
-
-          <Link href="/property-organizer">
-            <button className={buttonStyle}>Sign in</button>
-          </Link>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
-      <div className={`lg:hidden ${isDropdownOpen ? 'block' : 'hidden'}`}>
-        <div className="px-2 pt-2 pb-3">
-          <Link href="/">
-            <button className={buttonStyle}>Home</button>
-          </Link>
-
-          <Link href="/property-search">
-            <button className={buttonStyle}>Listings</button>
-          </Link>
-
-          <Link href="/Aboutme">
-            <button className={buttonStyle}>About Me</button>
-          </Link>
-
-          <Link href="/Sellers">
-            <button className={buttonStyle}>Sellers</button>
-          </Link>
-
-          <Link href="/Buyers">
+      {/* Sign In Popup Modal */}
+      {isSignInPopupOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-md mx-auto max-h-full overflow-y-auto">
+            {/* Close Button (X) */}
             <button
-              className={`${buttonStyle} buyers-button`}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              className="absolute top-2 right-2 text-gray-600 text-xl"
+              onClick={closeSignInPopupAndShowWidget} // Clicking X triggers widget replacement
             >
-              Buyers
+              &times;
             </button>
-          </Link>
 
-          <Link href="/markets">
-            <button className={buttonStyle}>Communities</button>
-          </Link>
+            {/* Property Organizer Login */}
+            <PropertyOrganizerLogin />
 
-          <Link href="/valuation">
-            <button className={buttonStyle}>What's My Home Worth?</button>
-          </Link>
-
-          <Link href="/property-organizer">
-            <button className={buttonStyle}>Sign in</button>
-          </Link>
+            {/* Cancel Button */}
+            <button
+              className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full"
+              onClick={closeSignInPopupAndShowWidget} // Triggers widget replacement as well
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </>
   );
-}
+};
 
 export default NavBar;
