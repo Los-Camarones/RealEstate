@@ -3,19 +3,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../Reviews.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
-import { getTestimonials, addTestimonial } from "@/actions/TestimonialsActions";
+import {
+  getTestimonials,
+  addTestimonial,
+  updateTestimonial,
+} from "@/actions/TestimonialsActions";
 //deleteTestimonial, updateTestimonial,
 import { ITestimonial } from "@/types/database_interface";
+import { getPublicURL, uploadProfilePicture } from "@/actions/BucketActions";
 
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
-  const [selectedReview, setSelectedReview] = useState<ITestimonial | null>(
-    null
-  );
+  const [selectedReview, setSelectedReview] = useState<ITestimonial | null>();
 
-  const blank_url_profile_pic = "https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/sign/testimonials_images/blank_profile_icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZXN0aW1vbmlhbHNfaW1hZ2VzL2JsYW5rX3Byb2ZpbGVfaWNvbi5wbmciLCJpYXQiOjE3MjczMDc0NDcsImV4cCI6MTg1MzQ1MTQ0N30.-qlz-sDf4SA7nBM6NUQiC2-katb6pKZJN5xiFW5kzx0&t=2024-09-25T23%3A37%3A27.799Z"
+  const blank_url_profile_pic =
+    "https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/sign/testimonials_images/blank_profile_icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZXN0aW1vbmlhbHNfaW1hZ2VzL2JsYW5rX3Byb2ZpbGVfaWNvbi5wbmciLCJpYXQiOjE3MjczMDc0NDcsImV4cCI6MTg1MzQ1MTQ0N30.-qlz-sDf4SA7nBM6NUQiC2-katb6pKZJN5xiFW5kzx0&t=2024-09-25T23%3A37%3A27.799Z";
   const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
     created_at: "",
     rating: 5,
@@ -25,19 +29,24 @@ const Reviews: React.FC = () => {
     is_displayed: true,
   });
 
-  const [newProfilePic, setNewProfilePic] = useState<string>();
+  const [newProfilePic, setNewProfilePic] = useState<string | null>();
+  const [file, setFile] = useState<File>();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
+      setFile(file);
       if (file) {
+        setFile(file);
+
         const url = URL.createObjectURL(file);
+        setNewProfilePic(url);
         setSelectedReview((selectedReview) => {
           if (selectedReview) {
             return {
               ...selectedReview,
-              profile_picture: url, // Ensure this is correctly set
+              profile_picture: url,
             };
           }
           // If prevReview is null, return an initial structure
@@ -48,7 +57,8 @@ const Reviews: React.FC = () => {
             user_name: "",
             profile_picture: "",
             is_displayed: true,
-          }; // Cast it as ITestimonial
+          };
+          ``;
         });
       }
     }
@@ -65,34 +75,151 @@ const Reviews: React.FC = () => {
     setSelectedReview(null); // Close sidebar after deletion
   };
 
+  /**
+   * Activated when clicked on 'save' review
+   * If there is a new profile picture, it uploads new one and sets it
+   * Sets any new attributes if they were updated
+   * @returns 
+   */
   const handleUpdateReview = async () => {
     if (selectedReview) {
-      // const updatedReview = await updateTestimonial(selectedReview);
+
+      //create temporary variable to hold our selected review
+      let updatedReview: ITestimonial = { ...selectedReview};
+
+      //handle change if profile picture was changed
+      if(newProfilePic && file) {
+
+        //convert the file to base64
+        const fileBase64 = await fileToBase64(file);
+
+        //upload to supabase
+        const response = await uploadProfilePicture(selectedReview.user_name, fileBase64);
+
+        if (response.success && response.data?.path) {
+          console.log("uploaded profile pic successfully!");
+
+          //grab the image name after uploading on supabase
+          const new_image_name = response.data?.path;
+
+          //fetch the url of the image that is store on the bucket of supabase
+          const responseUrl = await getPublicURL(new_image_name);
+
+          if (responseUrl.success && responseUrl.data) {
+
+            //grab the public url
+            const publicURL = responseUrl.data.publicUrl;
+
+            // Update the state with the new profile picture URL
+            updatedReview = {
+              ...selectedReview,  // Spread the current state
+              profile_picture: publicURL,  // Update the profile picture
+            };
+          
+            // Set state to updated review
+            setSelectedReview(updatedReview);
+
+          } else {
+            console.log(responseUrl.error);
+            setError(responseUrl.error);
+          }
+        } else {
+          console.log("uploaded picture failed");
+          console.log(response.error);
+          setError(response.error);
+
+          //return so you dont add this testimonial until they fix uploading picture issue
+          return;
+
+        }
+      }
+      const response = await updateTestimonial(updatedReview);
+
+      if (response.success && response.data) {
+        setSuccess(true);
+
+        // Update the review in the array
+        setReviews((prevReviews) =>
+          //loop through each review to map a function
+          prevReviews.map((review) =>
+            //if the id matches the id updated review, update our array with new value. else just keep same review
+            review.id === response.data[0].id ? response.data[0] : review
+          )
+        );
+      } else {
+        console.log("failed ", response.error);
+        setError(response.error);
+        setSuccess(false);
+      }
       // setReviews(reviews.map(r => (r.id === selectedReview.id ? updatedReview : r)));
       setSelectedReview(null); // Close sidebar after update
+      setNewProfilePic(null);
     }
   };
 
   const handleAddReview = async () => {
-  
+
     //if a date, username, and rating exists
-    if (selectedReview?.created_at && selectedReview.user_name && selectedReview.rating) {
-      //const newDate = convertDateFormat(selectedReview.created_at);
+    if (selectedReview?.created_at &&selectedReview.user_name &&selectedReview.rating) {
 
-      // console.log(newDate);
-      // setNewTestimonial((prevTestimonial) => ({
-      //   ...prevTestimonial,  //save our previous attributes attributes
-      //   created_at: newDate, 
-      // }));
+      //create temporary variable to hold our selected review
+      let updatedReview: ITestimonial = { ...selectedReview};;
 
+      //check if the user added a new profile pic
+      if (newProfilePic && file) {
+
+        //add to supabase bucket
+        const fileBase64 = await fileToBase64(file);
+        const response = await uploadProfilePicture(selectedReview.user_name, fileBase64);
+
+        if (response.success && response.data?.path) {
+          console.log("uploaded profile pic successfully!");
+
+          //grab the image name after uploading on supabase
+          const new_image_name = response.data?.path;
+
+          //fetch the url of the image that is store on the bucket of supabase
+          const responseUrl = await getPublicURL(new_image_name);
+
+          if (responseUrl.success && responseUrl.data) {
+            //grab the public url
+            const publicURL = responseUrl.data.publicUrl;
+
+            // Update the state with the new profile picture URL
+            updatedReview = {
+              ...selectedReview,  // Spread the current state
+              profile_picture: publicURL,  // Update the profile picture
+            };
+          
+            // Set state to updated review
+            setSelectedReview(updatedReview);
+
+          } else {
+            console.log(responseUrl.error);
+          }
+        } else {
+          console.log("uploaded picture failed");
+          console.log(response.error);
+
+          //return so you dont add this testimonial until they fix uploading picture issue
+          return;
+
+        }
+      }
+      console.log("printing testimonial before adding" ,updatedReview);
       //add review on supabase
-      const response = await addTestimonial(selectedReview);
+      const response = await addTestimonial(updatedReview);
 
       if (response.success && response.data) {
         console.log("Successfully added testimonial!");
         setSuccess(true);
+
         //refresh our reviews
-       setReviews([...reviews, response.data[0]]);
+        setReviews([...reviews, response.data[0]]);
+
+        //set our selectedReview to null
+        setSelectedReview(null);
+
       } else {
         console.log("failed ", response.error);
         setError(response.error);
@@ -101,15 +228,8 @@ const Reviews: React.FC = () => {
     }
 
 
-    //set the new testimonial to blank for additional input
-    setNewTestimonial({
-      created_at: "",
-      rating: 5,
-      comments: "",
-      user_name: "",
-      profile_picture: "",
-      is_displayed: true,
-    });
+    setSelectedReview(null); // Close sidebar after update
+    setNewProfilePic(null);
   };
 
   const renderStars = (stars: number) => {
@@ -119,6 +239,27 @@ const Reviews: React.FC = () => {
       </span>
     ));
   };
+
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file); // Read the file as a base64 encoded string
+
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          const base64String = reader.result.split(",")[1]; // Extract the base64 part
+          resolve(base64String); // Resolve with the base64 string
+        } else {
+          reject("File could not be read as a string");
+        }
+      };
+
+      reader.onerror = () => {
+        reject("Error reading file");
+      };
+    });
+  }
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -188,16 +329,24 @@ const Reviews: React.FC = () => {
           />
           <label>Profile Picture (optional)</label>
 
-          {newProfilePic ? (<img src={newProfilePic} alt="" />) : (<img src={selectedReview.profile_picture} alt="" />)}
+          {newProfilePic ? (
+            <img src={newProfilePic} alt="" />
+          ) : (
+            <img src={selectedReview.profile_picture} alt="" />
+          )}
 
           <div>
             {isEditing ? (
               <input type="file" onChange={handleProfilePicChange} />
             ) : (
-              <button className={styles.button} onClick={() => setIsEditing(true)}>Change Profile Picture</button>
+              <button
+                className={styles.button}
+                onClick={() => setIsEditing(true)}
+              >
+                Change Profile Picture
+              </button>
             )}
           </div>
-
 
           <label>Testimonial </label>
           <textarea
@@ -221,16 +370,14 @@ const Reviews: React.FC = () => {
               overflow: "hidden",
               resize: "none", // Prevent resizing with the mouse
             }}
-            rows={1
-            }
+            rows={1}
           />
-
 
           <label>Rating 1-5 </label>
           <input
             type="number"
-            min={1}
-            max={5}
+            min="1"
+            max="5"
             required
             placeholder="Rating"
             value={selectedReview.rating}
@@ -285,7 +432,15 @@ const Reviews: React.FC = () => {
               Delete
             </button>
           )}
-          <button onClick={() => setSelectedReview(null)}>Close</button>
+      <button
+        onClick={() => {
+          setSelectedReview(null);
+          setNewProfilePic(null);
+        }}
+      >
+        Close
+      </button>
+
         </div>
       )}
     </div>
