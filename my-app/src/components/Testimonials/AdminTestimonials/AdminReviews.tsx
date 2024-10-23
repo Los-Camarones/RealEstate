@@ -165,7 +165,7 @@ const AdminReviews: React.FC = () => {
     if (selectedReview?.created_at &&selectedReview.user_name &&selectedReview.rating) {
 
       //create temporary variable to hold our selected review
-      let updatedReview: ITestimonial = { ...selectedReview};;
+      let updatedReview: ITestimonial = { ...selectedReview};
 
       //check if the user added a new profile pic
       if (newProfilePic && file) {
