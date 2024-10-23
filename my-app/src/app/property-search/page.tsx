@@ -57,7 +57,7 @@ const PropertySearchPage = () => {
           content="{listingPhotoHeight}"
         />
       </Head>
-      <NavBar />
+      
       <main>
         <div style={{ padding: '20px' }}>
           {/* Placeholder for the property search widget */}
