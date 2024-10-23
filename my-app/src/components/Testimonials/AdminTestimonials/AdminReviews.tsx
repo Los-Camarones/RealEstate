@@ -12,7 +12,7 @@ import {
 import { ITestimonial } from "@/types/database_interface";
 import { getPublicURL, uploadProfilePicture } from "@/actions/BucketActions";
 
-const Reviews: React.FC = () => {
+const AdminReviews: React.FC = () => {
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<boolean>(false);
@@ -457,4 +457,4 @@ const Reviews: React.FC = () => {
   );
 };
 
-export default Reviews;
+export default AdminReviews;

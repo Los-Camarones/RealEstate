@@ -11,7 +11,7 @@ import SocialMediaLinks from '../components/SocialMedia/socialmedia';
 import Footer from '../components/Footer/footer';
 import exp from 'constants';
 import Reviews1 from '../components/Testimonials/Reviews';
-
+import UserTestimonialForm from '@/components/Testimonials/UserTestimonialForm/UserTestimonialForm';
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 
 
