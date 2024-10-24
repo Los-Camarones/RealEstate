@@ -14,7 +14,7 @@ import { getPublicURL, uploadProfilePicture } from "@/actions/BucketActions";
 
 const AdminReviews: React.FC = () => {
   const [reviews, setReviews] = useState<ITestimonial[]>([]);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string | null>();
   const [success, setSuccess] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ITestimonial | null>();
 
@@ -25,7 +25,7 @@ const AdminReviews: React.FC = () => {
     comments: "",
     user_name: "",
     profile_picture: blank_url_profile_pic,
-    is_displayed: true,
+    is_displayed: false,
   });
 
   const [newProfilePic, setNewProfilePic] = useState<string | null>();
@@ -67,9 +67,17 @@ const AdminReviews: React.FC = () => {
     setSelectedReview(review);
   };
 
-  const handleDeleteReview = async (id?: string) => {
-    //await deleteTestimonial(id);
-    setReviews(reviews.filter((review) => review.id !== id));
+  /**
+   * TODO: 
+   * Activated when clicked on "delete"
+   * Calls Supabase to delete the selected review based on its UUID 
+   * Updates the reviews on the client side
+   * @param id 
+   */
+  const handleDeleteReview = async (id: string) => {
+    //get id of selected review
+    //await deleteTestimonial(id); //create this back-end function in /actionsTestimonials.ts
+    //update the current reviews on the client side
     setSelectedReview(null); // Close sidebar after deletion
   };
 
@@ -80,7 +88,7 @@ const AdminReviews: React.FC = () => {
    * @returns 
    */
   const handleUpdateReview = async () => {
-    if (selectedReview) {
+    if (selectedReview?.created_at &&selectedReview.user_name &&selectedReview.rating) {
 
       //create temporary variable to hold our selected review
       let updatedReview: ITestimonial = { ...selectedReview};
@@ -144,19 +152,28 @@ const AdminReviews: React.FC = () => {
             review.id === response.data[0].id ? response.data[0] : review
           )
         );
+
+        setError(null);
+
       } else {
         console.log("failed ", response.error);
         setError(response.error);
         setSuccess(false);
+        return;
       }
-      // setReviews(reviews.map(r => (r.id === selectedReview.id ? updatedReview : r)));
       setSelectedReview(null); // Close sidebar after update
       setNewProfilePic(null);
+    } else {
+      //comments, username, or rating wasn't provided
+      setError("Missing input. Please fill out name, date, and the rating.")
     }
   };
 
   /**
-   * Handles the click for when the admin wants to submit a review to supabase
+   * Activated when clicked on "add" testimonial
+   * If there was a profile picture, handles converting to base64 and uploading to supabase
+   * Uploads the testimonial/review with current attributes to supabase
+   * Updates the reviews array on the client side
    * @returns 
    */
   const handleAddReview = async () => {
@@ -224,11 +241,17 @@ const AdminReviews: React.FC = () => {
         //set our selectedReview to null
         setSelectedReview(null);
 
+        //set error to null if there was one 
+        setError(null);
+
       } else {
         console.log("failed ", response.error);
         setError(response.error);
         setSuccess(false);
       }
+    } else {
+      //comments, username, or rating wasn't provided
+      setError("Missing input. Please fill out name, date, and the rating.")
     }
 
 
@@ -287,9 +310,9 @@ const AdminReviews: React.FC = () => {
   }, [setReviews]);
 
   return (
-    <div className={styles.container}>
+    <div>
+    <div className={styles.headerAdminContainer}>
       <header className={styles.header}>Manage Your Testimonials</header>
-      {error && <h1>{error}</h1>}
       <button
         className={styles.button}
         //everytime you click on "add testimonial" , a blank new Testimonial is set as your selected Review
@@ -297,6 +320,8 @@ const AdminReviews: React.FC = () => {
       >
         Add a Testimonial
       </button>
+      </div>
+
 
       <div className={styles.reviewList}>
         {reviews.map((review) => (
@@ -325,7 +350,6 @@ const AdminReviews: React.FC = () => {
       {selectedReview && (
         <div className={styles.sidebar}>
           <h3>{selectedReview.id ? "Edit Testimonial" : "Add Testimonial"}</h3>
-          {error && <p className={styles.errorMessage}>{error}</p>}
           <label>First and Last Name</label>
           <input
             type="text"
@@ -433,6 +457,7 @@ const AdminReviews: React.FC = () => {
               })
             }
           />
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
           <button
             onClick={selectedReview.id ? handleUpdateReview : handleAddReview}
@@ -440,7 +465,7 @@ const AdminReviews: React.FC = () => {
             {selectedReview.id ? "Save" : "Add"}
           </button>
           {selectedReview.id && (
-            <button onClick={() => handleDeleteReview(selectedReview.id)}>
+            <button onClick={() => handleDeleteReview}>
               Delete
             </button>
           )}

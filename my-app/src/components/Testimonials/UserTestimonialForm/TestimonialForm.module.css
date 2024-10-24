@@ -54,3 +54,26 @@
 .submitButton:hover {
   background-color: #0056b3;
 }
+
+.successMessage {
+  color: #28a745; /* Green color */
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Error message styles */
+.errorMessage {
+  color: #dc3545; /* Red color */
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
