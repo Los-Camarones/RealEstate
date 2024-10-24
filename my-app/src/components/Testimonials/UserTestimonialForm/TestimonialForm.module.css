@@ -1,0 +1,79 @@
+/* Styling for the testimonial form */
+
+.formContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  font-size: 2.5rem;
+  color: #333; /* Dark text color */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inputGroup input,
+.inputGroup select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.submitButton {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+.successMessage {
+  color: #28a745; /* Green color */
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Error message styles */
+.errorMessage {
+  color: #dc3545; /* Red color */
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
