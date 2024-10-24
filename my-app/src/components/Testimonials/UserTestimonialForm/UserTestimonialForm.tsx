@@ -18,7 +18,7 @@ const UserTestimonialForm = () => {
   const [newProfilePic, setNewProfilePic] = useState<string | null>();
   const [file, setFile] = useState<File>();
   const [isEditing, setIsEditing] = useState(false);
-  const[success, setSuccess] = useState<boolean>(true);
+  const[formSubmitted, setFormSubmitted] = useState<boolean>(false);
   const[error, setError] = useState<string | null>();
 
 
@@ -97,13 +97,13 @@ const UserTestimonialForm = () => {
 
           } else {
             console.log(responseUrl.error);
-
+            setError(responseUrl.error);
             return;
 
           }
         } else{
           console.log(response.error);
-
+          setError(response.error);
           //return to make them fix their issue and so it doens't submit
           return;
         }
@@ -115,7 +115,7 @@ const UserTestimonialForm = () => {
         
     if (response.success && response.data) {
       console.log("Successfully added testimonial!");
-      //setSuccess(true);
+      setFormSubmitted(true);
     
       //set our selectedReview to null
       setNewTestimonial({    
@@ -129,7 +129,7 @@ const UserTestimonialForm = () => {
     } else {
       console.log("failed ", response.error);
       setError(response.error);
-      setSuccess(false);
+      setFormSubmitted(false);
     }
   }
 };
@@ -155,110 +155,113 @@ const UserTestimonialForm = () => {
         };
   
         reader.onerror = () => {
+          setError("Error reading file");
           reject("Error reading file");
         };
       });
     }
 
-  return (
-    <div className={styles.container}>
-      <header className={styles.header}>Create a Testimonial</header>
-      <form onSubmit={handleSubmitTestimonial} className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label>Name:</label>
-          <input
-            type="text"
-            onChange={(e) => {
-              setNewTestimonial({
-                ...newTestimonial,
-                user_name: e.target.value,
-              });
-            }}
-            required
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label>Date:</label>
-          <input
-            type="date"
-            onChange={(e) => {
-              setNewTestimonial({
-                ...newTestimonial,
-                created_at: e.target.value,
-              });
-            }}
-            required
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label>Rating (1-5):</label>
-          <select
-            onChange={(e) => {
-              setNewTestimonial({
-                ...newTestimonial,
-                rating: Number(e.target.value),
-              });
-            }}            required
-            className={styles.input}
-          >
-            <option value="">Select Rating</option>
-            {[1, 2, 3, 4, 5].map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <label>Testimonial </label>
-          <textarea
-            onChange={(e) => {
-              setNewTestimonial({
-                ...newTestimonial,
-                comments: e.target.value,
-              });
-            }}
-            placeholder="Lourdes is Amazing!"
-            style={{
-              display: "block",
-              minWidth: "100px",
-              minHeight: "100px",
-              padding: "5px",
-              border: "1px solid #000000",
-              backgroundColor: "#ffffff",
-              borderRadius: "4px",
-              color: newTestimonial.comments ? "inherit" : "#aaa",
-              overflow: "hidden",
-              resize: "none", // Prevent resizing with the mouse
-            }}
-            rows={1}
-          />
-
-        
-
-        
-
-        <div className={styles.inputGroup}>
-          <label>Picture (optional):</label>
-          
-          {newProfilePic ? (
-            <img src={newProfilePic} alt="" />
-          ) : (
-            <img src={newTestimonial.profile_picture} alt="" />
-          )}
-          <input type="file" accept="image/*" onChange={handleProfilePicChange} />
-        </div>
-
-        <button type="submit" className={styles.submitButton}>
-          Submit
-        </button>
-      </form>
-    </div>
-  );
-};
-
+    return (
+      <div className={styles.container}>
+        {!formSubmitted ? (
+          <>
+            <header className={styles.header}>Create a Testimonial</header>
+            {error && <p className={styles.errorMessage}>{error}</p>}
+            <form onSubmit={handleSubmitTestimonial} className={styles.form}>
+              <div className={styles.inputGroup}>
+                <label>Name:</label>
+                <input
+                  type="text"
+                  onChange={(e) =>
+                    setNewTestimonial({
+                      ...newTestimonial,
+                      user_name: e.target.value,
+                    })
+                  }
+                  required
+                  className={styles.input}
+                />
+              </div>
+  
+              <div className={styles.inputGroup}>
+                <label>Date:</label>
+                <input
+                  type="date"
+                  onChange={(e) =>
+                    setNewTestimonial({
+                      ...newTestimonial,
+                      created_at: e.target.value,
+                    })
+                  }
+                  required
+                  className={styles.input}
+                />
+              </div>
+  
+              <div className={styles.inputGroup}>
+                <label>Rating (1-5):</label>
+                <select
+                  onChange={(e) =>
+                    setNewTestimonial({
+                      ...newTestimonial,
+                      rating: Number(e.target.value),
+                    })
+                  }
+                  required
+                  className={styles.input}
+                >
+                  <option value="">Select Rating</option>
+                  {[1, 2, 3, 4, 5].map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
+  
+              <label>Testimonial</label>
+              <textarea
+                onChange={(e) =>
+                  setNewTestimonial({
+                    ...newTestimonial,
+                    comments: e.target.value,
+                  })
+                }
+                placeholder="Lourdes is Amazing!"
+                style={{
+                  display: 'block',
+                  minWidth: '100px',
+                  minHeight: '100px',
+                  padding: '5px',
+                  border: '1px solid #000000',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '4px',
+                  color: newTestimonial.comments ? 'inherit' : '#aaa',
+                  overflow: 'hidden',
+                  resize: 'none', // Prevent resizing with the mouse
+                }}
+                rows={1}
+              />
+  
+              <div className={styles.inputGroup}>
+                <label>Picture (optional):</label>
+                {newProfilePic ? (
+                  <img src={newProfilePic} alt="Profile" />
+                ) : (
+                  <img src={newTestimonial.profile_picture} alt="Profile" />
+                )}
+                <input type="file" accept="image/*" onChange={handleProfilePicChange} />
+              </div>
+  
+              <button type="submit" className={styles.submitButton}>
+                Submit
+              </button>
+            </form>
+          </>
+        ) : (
+          <p className={styles.successMessage}>Thank you for submitting the form!</p>
+        )}
+      </div>
+    );
+  };
 export default UserTestimonialForm;

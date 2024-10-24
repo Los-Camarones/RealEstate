@@ -198,10 +198,12 @@ const AdminReviews: React.FC = () => {
 
           } else {
             console.log(responseUrl.error);
+            setError(responseUrl.error);
           }
         } else {
           console.log("uploaded picture failed");
           console.log(response.error);
+          setError(response.error);
 
           //return so you dont add this testimonial until they fix uploading picture issue
           return;
@@ -323,7 +325,7 @@ const AdminReviews: React.FC = () => {
       {selectedReview && (
         <div className={styles.sidebar}>
           <h3>{selectedReview.id ? "Edit Testimonial" : "Add Testimonial"}</h3>
-
+          {error && <p className={styles.errorMessage}>{error}</p>}
           <label>First and Last Name</label>
           <input
             type="text"
