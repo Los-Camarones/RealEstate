@@ -1,10 +1,9 @@
 "use client";
-// components/ReviewCardList.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Reviews.module.css'; // Import your CSS module for styling
 import GoogleIcon from '@mui/icons-material/Google'; // Import Google Icon
 import { getTestimonials } from '../../actions/TestimonialsActions';
-import { UUID } from 'crypto';
+import Link from 'next/link'
 import { ITestimonial } from '../../types/database_interface';
 
 
@@ -43,7 +42,9 @@ const Reviews: React.FC = () => {
     <div>
     <header className={styles.headerContainer}>
       <h1 className={styles.header}>Testimonials</h1>
+      <Link href="/property-organizer">
       <button className={styles.addReviewButton}>Add your testimonial</button>
+      </Link>
     </header>
     <div className={styles.reviewList}>
       {reviews.map((review, index) => (

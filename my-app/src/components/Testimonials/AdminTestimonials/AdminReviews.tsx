@@ -312,15 +312,15 @@ const AdminReviews: React.FC = () => {
   return (
     <div>
     <div className={styles.headerAdminContainer}>
-      <header className={styles.header}>Manage Your Testimonials</header>
-      <button
-        className={styles.button}
+    <button
         //everytime you click on "add testimonial" , a blank new Testimonial is set as your selected Review
         onClick={() => setSelectedReview({ ...newTestimonial })}
       >
         Add a Testimonial
       </button>
-      </div>
+      <header className={styles.headerText}>Manage Your Testimonials</header>
+      
+    </div>
 
 
       <div className={styles.reviewList}>
