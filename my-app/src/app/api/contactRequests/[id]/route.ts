@@ -15,33 +15,34 @@ function getAuthToken(req: Request): string | null {
   return token ? `Basic ${token}` : null;  // Return token with Basic auth prefix
 }
 
-// Handle DELETE requests (Delete Valuation Request) based on dynamic id in URL
-export async function DELETE(req: Request) {
+// Handle GET requests (Fetch specific Listing Report Signup Request by ID)
+export async function GET(req: Request) {
   const token = getAuthToken(req);
   const url = new URL(req.url);
-  const valuationRequestId = url.pathname.split('/').pop();  // Get valuationRequestId from URL path
+  const id = url.pathname.split('/').pop();  // Get the ID from URL path
 
   if (!token) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  if (!valuationRequestId) {
-    return NextResponse.json({ error: 'Missing valuation request ID' }, { status: 400 });
+  if (!id) {
+    return NextResponse.json({ error: 'Missing contact request ID' }, { status: 400 });
   }
 
   try {
-    // Delete the valuation request with the given ID
-    console.log(`https://www.idxhome.com/api/v1/client/valuationRequest/${valuationRequestId}.json`);
-    await axios.delete(`https://www.idxhome.com/api/v1/client/valuationRequest/${valuationRequestId}.json`, {
+    // Fetch the specific listing report signup request with the given ID
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/contactRequest/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
       },
     });
 
-    return NextResponse.json(null, { status: 204 });
+    return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {
-    console.error('Error deleting valuation request:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to delete valuation request' }, { status: 500 });
+    console.error('Error fetching listing report signup request:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch listing report signup request' }, { status: 500 });
   }
 }
+
+// Optionally, you can also add DELETE method similar to how you did for leads
