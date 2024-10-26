@@ -3,6 +3,7 @@
 import React, { useState, CSSProperties } from 'react';
 import NavBar from "../../components/Navbar/navbar";
 import "../globals.css";
+import Footer from '@/components/Footer/footer';
 
 const styles: { 
   container: CSSProperties; 
@@ -101,6 +102,7 @@ const Referrals: React.FC = () => {
           </a>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };
