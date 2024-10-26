@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 
     if (id) {
       // Fetch specific listing report signup request by ID
-      API_URL = `https://www.idxhome.com/api/v1/client/valuationRequest/{valuationRequestId}.json`;
+      API_URL = `https://www.idxhome.com/api/v1/client/contactRequest/{contactRequestId}.json`;
     } else {
       // Fetch all listing report signup requests with optional pagination/fields
       const offset = url.searchParams.get('offset') || '0'; // Default offset to '0'
@@ -39,7 +39,7 @@ export async function GET(req: Request) {
       const fields = url.searchParams.get('fields') || '*'; // Default to all fields
 
       // Construct the API URL with pagination and fields
-      API_URL = `https://www.idxhome.com/api/v1/client/valuationRequests.json?fields=${fields}&offset=${offset}&limit=${limit}`;
+      API_URL = `https://www.idxhome.com/api/v1/client/contactRequests.json?fields=${fields}&offset=${offset}&limit=${limit}`;
     }
 
     const response = await axios.get(API_URL, {
@@ -51,8 +51,8 @@ export async function GET(req: Request) {
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    console.error('Error fetching valuation requests:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch valuation requests' }, { status: 500 });
+    console.error('Error fetching contact requests:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch contact requests' }, { status: 500 });
   }
 }
 
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
   try {
     // Add a new listing report signup request
-    const response = await axios.post(`https://www.idxhome.com/api/v1/client/valuationRequests.json`, {
+    const response = await axios.post(`https://www.idxhome.com/api/v1/client/contactRequests.json`, {
       emailAddress: body.emailAddress,
       firstName: body.firstName,
       lastName: body.lastName,
@@ -85,8 +85,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response.data, { status: 201 });
   } catch (error: any) {
-    console.error('Error creating valuation request:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to create valuation request' }, { status: 500 });
+    console.error('Error creating contact request:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to create contact request' }, { status: 500 });
   }
 }
 

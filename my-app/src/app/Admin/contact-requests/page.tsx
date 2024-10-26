@@ -35,9 +35,9 @@ const ContactRequestsPage: React.FC = () => {
     createdOn: string;
   }
 
-  const [valuationRequests, setValuationRequests] = useState<ValuationRequest[]>([]);
-  const [displayedValuationRequests, setDisplayedValuationRequests] = useState<ValuationRequest[]>([]);
-  const [selectedRequest, setSelectedRequest] = useState<ValuationRequest | null>(null);
+  const [contactRequests, setContactRequests] = useState<ContactRequest[]>([]);
+  const [displayedContactRequests, setDisplayedContactRequests] = useState<ContactRequest[]>([]);
+  const [selectedRequest, setSelectedRequest] = useState<ContactRequest | null>(null);
   const [subscriberDetails, setSubscriberDetails] = useState<Subscriber | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading,setLoading] = useState(true);
@@ -51,7 +51,7 @@ const [totalPages, setTotalPages] = useState(0);
 //fetch valuation requests
 
 useEffect(() => {
-  if(auth) fetchValuationRequests(offset);
+  if(auth) fetchContactRequests(offset);
 
 }, [auth, offset]);
 
@@ -60,28 +60,28 @@ useEffect(() => {
  * @param {number} offset 
  */
 
-const fetchValuationRequests = async (offset: number) => {
+const fetchContactRequests = async (offset: number) => {
   try {
     setError(null);
     setLoading(true);
 
     //fetch data dynamically 
-    const response = await axios.get(`/api/valuationRequests?limit=${itemsPerPage}&offset=${offset}`, {
+    const response = await axios.get(`/api/contactRequests?limit=${itemsPerPage}&offset=${offset}`, {
       withCredentials: true,
     });
 
     const requests = response.data.results;
     const totalItems = response.data.total;
     
-    setValuationRequests(requests);
+    setContactRequests(requests);
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
 
-    setDisplayedValuationRequests(requests);
+    setDisplayedContactRequests(requests);
 
     setLoading(false);
   } catch (error: any) {
-    console.error('error fetching valuation requests:', error);
-    setError('failed to fetch valuation requests');
+    console.error('error fetching contact requests:', error);
+    setError('failed to fetch contact requests');
     setLoading(false);
 
   }
@@ -91,7 +91,7 @@ const fetchValuationRequests = async (offset: number) => {
 const fetchRequestDetails = async (id: string) => {
   try{
     setDetailsLoading(true);
-    const response = await axios.get(`/api/valuationRequests/${id}`);
+    const response = await axios.get(`/api/contactRequests/${id}`);
     setSelectedRequest(response.data);
     setDetailsLoading(false);
   } catch (error:any){
@@ -133,15 +133,15 @@ return (
     <div className="flex-grow">
       <NavBar />
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Valuation Report Requests</h1>
+        <h1 className="text-2xl font-bold mb-4">Contact Report Requests</h1>
 
         {error && <div className="text-red-500 mb-4">{error}</div>}
 
         {/* valuation requests */}
         <div>
-          {displayedValuationRequests.map((request) => (
+          {displayedContactRequests.map((request) => (
             <div key={request.links[0].href} className="mb-4 p-4 border rounded">
-              <p>Signup Request ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
+              <p>Contact Request ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                 onClick={() => fetchRequestDetails(request.links[0].href.split('/').pop()?.split('.')[0] || '')}
@@ -194,11 +194,11 @@ return (
               </button>
             )}
 
-            <h3 className="text-lg font-bold mt-4">Listing Report</h3>
-            {selectedRequest.valuationRequest?.links?.[0]?.href && (
+            <h3 className="text-lg font-bold mt-4">Contact request Report</h3>
+            {selectedRequest.contactRequest?.links?.[0]?.href && (
               <p>
-                <a href={selectedRequest.valuationRequest.links[0].href}>
-                  View Listing Report Details
+                <a href={selectedRequest.contactRequest.links[0].href}>
+                  View Contact Request Report Details
                 </a>
               </p>
             )}
@@ -224,5 +224,5 @@ return (
 
 };
 
-export default ValuationRequestsPage;
+export default ContactRequestsPage;
 

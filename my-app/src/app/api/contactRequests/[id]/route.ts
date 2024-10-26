@@ -26,12 +26,12 @@ export async function GET(req: Request) {
   }
 
   if (!id) {
-    return NextResponse.json({ error: 'Missing valuation request ID' }, { status: 400 });
+    return NextResponse.json({ error: 'Missing contact request ID' }, { status: 400 });
   }
 
   try {
     // Fetch the specific listing report signup request with the given ID
-    const response = await axios.get(`https://www.idxhome.com/api/v1/client/valuationRequest/${id}.json`, {
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/contactRequest/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -40,10 +40,9 @@ export async function GET(req: Request) {
 
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {
-    console.error('Error fetching valuation report request:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch valuation report request' }, { status: 500 });
+    console.error('Error fetching listing report signup request:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch listing report signup request' }, { status: 500 });
   }
 }
 
-
-
+// Optionally, you can also add DELETE method similar to how you did for leads

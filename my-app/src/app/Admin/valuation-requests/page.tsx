@@ -141,7 +141,7 @@ return (
         <div>
           {displayedValuationRequests.map((request) => (
             <div key={request.links[0].href} className="mb-4 p-4 border rounded">
-              <p>Signup Request ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
+              <p>Valuation Request ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                 onClick={() => fetchRequestDetails(request.links[0].href.split('/').pop()?.split('.')[0] || '')}
