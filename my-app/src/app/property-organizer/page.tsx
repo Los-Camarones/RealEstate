@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
+import Footer from '@/components/Footer/footer';
 import UserTestimonialForm from '@/components/Testimonials/UserTestimonialForm/UserTestimonialForm';
 
 const PropertyOrganizerPage = () => {
@@ -50,6 +51,7 @@ const PropertyOrganizerPage = () => {
         </div>
         <UserTestimonialForm></UserTestimonialForm>
       </main>
+      <Footer />
     </>
   );
 };

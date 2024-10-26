@@ -6,6 +6,7 @@ import '../globals.css';
 import Head from 'next/head';
 import styles from './contact.module.css'
 import Link from 'next/link';
+import Footer from '@/components/Footer/footer';
 
 const ContactPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -58,6 +59,7 @@ const ContactPage = () => {
           <div ref={pageRef} />
         </div>
       </main>
+      <Footer />
     </>
   );
 };
