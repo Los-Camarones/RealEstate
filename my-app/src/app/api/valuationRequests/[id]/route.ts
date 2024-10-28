@@ -15,28 +15,35 @@ function getAuthToken(req: Request): string | null {
   return token ? `Basic ${token}` : null;  // Return token with Basic auth prefix
 }
 
-// Handle GET requests to fetch valuation requests
+// Handle GET requests (Fetch specific Listing Report Signup Request by ID)
 export async function GET(req: Request) {
   const token = getAuthToken(req);
-  
+  const url = new URL(req.url);
+  const id = url.pathname.split('/').pop();  // Get the ID from URL path
+
   if (!token) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
+  if (!id) {
+    return NextResponse.json({ error: 'Missing valuation request ID' }, { status: 400 });
+  }
+
   try {
-    // Fetch valuation requests
-    const response = await axios.get('https://www.idxhome.com/api/v1/client/valuationRequests.json', {
+    // Fetch the specific listing report signup request with the given ID
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/valuationRequest/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
       },
     });
 
-    // Return the valuation requests data as JSON
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {
-    console.error('Error fetching valuation requests:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch valuation requests' }, { status: 500 });
+    console.error('Error fetching valuation report request:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch valuation report request' }, { status: 500 });
   }
 }
+
+
 

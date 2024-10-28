@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useAuth from '../../hooks/useAuth'; // Adjust the import path as necessary
+import useAuth from '../../hooks/useAuth'; 
 import "../../globals.css";
 import NavBar from '../../../components/Navbar/navbar';
 import Sidebar from '../../../components/Admin/Sidebar';

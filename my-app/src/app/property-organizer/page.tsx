@@ -4,6 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
+import Footer from '@/components/Footer/footer';
+import UserTestimonialForm from '@/components/Testimonials/UserTestimonialForm/UserTestimonialForm';
 
 const PropertyOrganizerPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -47,7 +49,9 @@ const PropertyOrganizerPage = () => {
           {/* Placeholder for the IDX Property Organizer widget */}
           <div ref={pageRef} />
         </div>
+        <UserTestimonialForm></UserTestimonialForm>
       </main>
+      <Footer />
     </>
   );
 };

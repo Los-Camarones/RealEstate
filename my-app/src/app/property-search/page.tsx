@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
+import Footer from '../../components/Footer/footer'; 
 
 const PropertySearchPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -57,13 +58,14 @@ const PropertySearchPage = () => {
           content="{listingPhotoHeight}"
         />
       </Head>
-      
+      <NavBar/>
       <main>
         <div style={{ padding: '20px' }}>
           {/* Placeholder for the property search widget */}
           <div ref={pageRef} />
         </div>
       </main>
+        <Footer/>
     </>
   );
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import '../globals.css';
 import Head from 'next/head';
-
+import Footer from '@/components/Footer/footer';
 const FeaturedListingsPage = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -48,6 +48,7 @@ const FeaturedListingsPage = () => {
           <div ref={pageRef} />
         </div>
       </main>
+      <Footer /> 
     </>
   );
 };

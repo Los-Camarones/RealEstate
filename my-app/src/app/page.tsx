@@ -10,6 +10,7 @@ import Reviews1 from '../components/Testimonials/Reviews';
 import PhotoGallery from '../components/PhotoGallery/PhotoGallery';
 import CarouselComponent from '../components/CarouselComponent/CarouselComponent'; // Importing the new carousel component
 import ServiceList from '@/components/ServiceList/ServiceList';
+import QuickSearchWidget from '@/components/QuickSearchwidget.tsx/OuickSearchwidget';
 
 const Page: React.FC = () => {
   return (
@@ -22,8 +23,8 @@ const Page: React.FC = () => {
         {/* Carousel */}
         <CarouselComponent /> {/* Using the new isolated CarouselComponent */}
 
-        {/* Search component */}
-        <SearchHomes />
+        {/* Quick Search Widget */}   
+        <QuickSearchWidget />
 
         {/* About Lourdes Section */}
         <HomePageContent />

@@ -4,8 +4,8 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import NavBar from '../../components/Navbar/navbar';
-//import 
 import '../globals.css';
+import Footer from '@/components/Footer/footer';
 
 const Buyers = () => {
   const router = useRouter();
@@ -156,18 +156,11 @@ const Buyers = () => {
               </p>
             </div>
           </div>
-
-         
-        
-         
         </div>
-
-        <footer className="mt-16 text-center text-sm relative z-10">
-          <p className="text-white">© 2024 Lourdes Mendoza. All Rights Reserved.</p>
-          <p className="mt-4 text-white">Information sourced from <a href="https://www.nerdwallet.com/article/mortgages/tips-for-first-time-home-buyers" className="text-blue-500 hover:underline">NerdWallet</a>.</p>
-        </footer>
       </div>
+      <Footer />
     </>
+    
   );
 };
 
