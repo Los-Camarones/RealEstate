@@ -89,7 +89,7 @@ const NavBar: React.FC = () => {
                   <Link href="/property-search" className={dropdownItemStyle}>
                     Search Property
                   </Link>
-                  <Link href="/Sign-up" className={dropdownItemStyle}>
+                  <Link href="/property-organizer" className={dropdownItemStyle}>
                     Get Listing Updates
                   </Link>
                   <Link href="/contact" className={dropdownItemStyle}>
