@@ -1,7 +1,6 @@
 'use client';  
 import '../../globals.css'; 
 import NavBar from '../../../components/Navbar/navbar';
-import Sidebar from '../../../components/Admin/Sidebar';
 import React, { useState } from "react";
 import useAuth from '../../hooks/useAuth';  
 
@@ -61,8 +60,6 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <NavBar />
-      <div className="flex flex-1">
-        <Sidebar />
         <div className="flex-1 flex items-center justify-center">
           <div className="w-full max-w-lg bg-white p-8 shadow-lg rounded-lg">
             <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Admin Settings</h1>
@@ -141,7 +138,6 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

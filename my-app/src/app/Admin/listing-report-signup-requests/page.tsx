@@ -4,7 +4,6 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth'; 
 import "../../globals.css";
 import NavBar from '../../../components/Navbar/navbar';
-import Sidebar from '../../../components/Admin/Sidebar';
 import ReactPaginate from 'react-paginate';
 
 const ListingReportSignupRequestsPage: React.FC = () => {
@@ -124,8 +123,6 @@ const ListingReportSignupRequestsPage: React.FC = () => {
   }
 
   return (
-    <div className="flex">
-      <Sidebar />
       <div className="flex-grow">
         <NavBar />
         <div className="p-4">
@@ -215,7 +212,6 @@ const ListingReportSignupRequestsPage: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 
