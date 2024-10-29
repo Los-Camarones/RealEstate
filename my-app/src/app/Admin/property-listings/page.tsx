@@ -7,14 +7,42 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';  
 import ReactPaginate from "react-paginate";
 
+
+
 interface Property {
     id: string;
-    address: string;
-    price: string;
-    bedrooms: number;
-    bathrooms: number;
-    squareFeet: number;
+    boardId: number;
+    listingNumber: string;
+  address: {
+    internalDisplay: string,
+    externalDisplay: string,
+    houseNumber: string,
+    streetName: string,
+    unitNumber: string,
+    city: string,
+    state: string,
+    postalCode: string
+  };
+  bedrooms: number;
+  fullBathrooms: number;
+  partialBathrooms: number;
+  squareFeet: number;
+  description: string;
+  listingAgent: string;
+  listPrice: number;
+  board:{links: { href: string} [];};
+ virtualTour: {links: { href: string} [];};
+ propertyType: {links: { href: string} [];};
+status: string;
+photos: {links: { href: string} [];};
+links: { href: string}[];
 }
+
+interface PropertyType {
+    value: string;
+    label: string;
+}
+
 
 const PropertyListingsPage: React.FC = () => {
     const auth = useAuth();  // Check if the user is authenticated
@@ -23,10 +51,18 @@ const PropertyListingsPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // State for form visibility and new property input
+    const [showForm, setShowForm] = useState(false);
+    const [newProperty, setNewProperty] = useState<Property[]>([]);
+
+
     // Pagination state
     const [offset, setOffset] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const itemsPerPage = 10; // Number of items to display per page
+    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState<Property | null>(null);
+    const [propertyTypeDetails, setPropertyTypeDetails] = useState<PropertyType| null>(null);
 
     // Fetch list of properties on component mount if authenticated
     useEffect(() => {
@@ -70,6 +106,55 @@ const PropertyListingsPage: React.FC = () => {
         setOffset(newOffset);
     };
 
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/listings', newProperty, {
+                withCredentials: true
+            });
+            setProperties([response.data, ...properties]); // Add new property to state
+            setShowForm(false); // Hide the form after submission
+            setNewProperty({ id: '', address: '', price: '', bedrooms: 0, bathrooms: 0, squareFeet: 0 });
+        } catch (error: any) {
+            console.error('Error adding property', error.response?.data || error.message);
+            setError('Failed to add property.');
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setNewProperty({
+            ...newProperty,
+            [name]: value
+        });
+    };
+
+    const fetchRequestDetails = async (id: string) => {
+        try{
+          setDetailsLoading(true);
+          const response = await axios.get(`/api/listings/${id}`);
+          setSelectedRequest(response.data);
+          setDetailsLoading(false);
+        } catch (error:any){
+          console.error('error fetching request details:', error.response?.data || error.message );
+          setError('failed to fetch request details');
+          setDetailsLoading(false);
+        }
+      };
+
+       // Fetch subscriber details using the new API route
+ const fetchPropertyTypeDetails = async (id: string) => {
+    try {
+      const response = await axios.get(`/api/listings/${id}`, {
+        withCredentials: true, // Ensure authentication credentials are sent with the request
+      });
+      setPropertyTypeDetails(response.data); // Store the subscriber data
+    } catch (error: any) {
+      console.error('Error fetching property type details:', error);
+      setError('Failed to fetch property type details.');
+    }
+  };
+
     // If the user isn't authenticated, prevent rendering the listings
     if (!auth) {
         return <div>Loading...</div>;
@@ -89,25 +174,45 @@ const PropertyListingsPage: React.FC = () => {
 
                     {error && <div className="text-red-500 mb-4">{error}</div>}
 
+
+     
+     {/* Display subscriber details if available */}
+     {propertyTypeDetails && (
+        <div className="mt-8 p-4 border rounded bg-gray-100">
+            <h2 className="text-xl font-bold mb-4">Property Type Details</h2>
+            <p>Value: {propertyTypeDetails.value}</p>
+            <p>Label: {propertyTypeDetails.label}</p>
+        </div>
+        )}
+
+
                     {/* Table of Property Listings */}
                     <table className="min-w-full table-auto mt-4">
                         <thead>
                             <tr className="bg-gray-200">
+                            <th className="px-4 py-2">Listing Number</th>
                                 <th className="px-4 py-2">Address</th>
-                                <th className="px-4 py-2">Price</th>
                                 <th className="px-4 py-2">Bedrooms</th>
-                                <th className="px-4 py-2">Bathrooms</th>
+                                <th className="px-4 py-2">Full Bathrooms</th>
+                                <th className="px-4 py-2">Partial Bathrooms</th>
                                 <th className="px-4 py-2">Square Feet</th>
+                                <th className="px-4 py-2">Description</th>
+                                <th className="px-4 py-2">List Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {displayedProperties.map((property) => (
-                                <tr key={property.id} className="border-t">
-                                    <td className="px-4 py-2">{property.address}</td>
-                                    <td className="px-4 py-2">{property.price}</td>
+                        {displayedProperties.map((property, index) => (
+                                <tr key={`${property.id}-${index}`} className="border-t">
+                                    <td className="px-4 py-2">{property.listingNumber}</td>
+                                    <td className="px-4 py-2">
+                                        {`${property.address.houseNumber} ${property.address.streetName} ${
+                    property.address.unitNumber ? `#${property.address.unitNumber}` : ""}, ${property.address.city}, ${property.address.state} ${property.address.postalCode}`} </td>
                                     <td className="px-4 py-2">{property.bedrooms}</td>
-                                    <td className="px-4 py-2">{property.bathrooms}</td>
+                                    <td className="px-4 py-2">{property.fullBathrooms}</td>
+                                    <td className="px-4 py-2">{property.partialBathrooms}</td>
                                     <td className="px-4 py-2">{property.squareFeet}</td>
+                                    <td className="px-4 py-2">{property.description}</td>
+                                    <td className="px-4 py-2">{property.listPrice}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -133,6 +238,7 @@ const PropertyListingsPage: React.FC = () => {
                         />
                     </div>
                 </div>
+                   
             </div>
         </div>
     );

@@ -12,8 +12,22 @@ interface Listing {
   id: number;
   title: string;
   price: string;
-  address: string;
+  address: {
+    houseNumber: string,
+    streetName: string,
+    unitNumber: string,
+    city: string,
+    state: string,
+    postalCode: string
+  };
+  bedrooms: number;
+  fullBathrooms: number;
+  partialBathrooms: number;
+  squareFeet: number;
   description: string;
+  listingAgent: string;
+  listPrice: number;
+
 }
 
 const PropertyDetails: React.FC = () => {
@@ -22,12 +36,12 @@ const PropertyDetails: React.FC = () => {
     const [displayedProperties, setDisplayedProperties] = useState<Listing[]>([]);  // Properties to be displayed on current page
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const [detailsLoading, setDetailsLoading] = useState(false);
     // Pagination state
     const [offset, setOffset] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const itemsPerPage = 10; // Number of items to display per page
-
+    const [selectedRequest, setSelectedRequest] = useState<Listing | null>(null);
     // Fetch list of properties on component mount if authenticated
     useEffect(() => {
         if (auth) {
@@ -40,7 +54,7 @@ const PropertyDetails: React.FC = () => {
             setLoading(true);
             setError(null);
 
-            const response = await axios.get('/client/listing/{listingId}.json', {
+            const response = await axios.get('api/listings', {
                 withCredentials: true // ensure cookie is sent with request
             });
 
@@ -69,6 +83,19 @@ const PropertyDetails: React.FC = () => {
         const newOffset = data.selected * itemsPerPage;
         setOffset(newOffset);
     };
+
+    const fetchRequestDetails = async (id: string) => {
+        try{
+          setDetailsLoading(true);
+          const response = await axios.get(`/api/listings/${id}`);
+          setSelectedRequest(response.data);
+          setDetailsLoading(false);
+        } catch (error:any){
+          console.error('error fetching request details:', error.response?.data || error.message );
+          setError('failed to fetch request details');
+          setDetailsLoading(false);
+        }
+      };
 
     // If the user isn't authenticated, prevent rendering the listings
     if (!auth) {

@@ -18,15 +18,14 @@ const Sidebar: React.FC = () => {
     { name: "Dashboard", path: "/Admin/dashboard" },
     { name: "Users", path: "/Admin/users" },
     { name: "Settings", path: "/Admin/settings" },
-    { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
+    { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
     {name:"Leads List", path:"/Admin/lead-list"},  
     {name: "Property Listings", path: "/Admin/property-listings"},
     {name: "Testimonials" , path: "/Admin/testimonials"},
     {name: "Contact Requests", path: "/Admin/contact-requests"},
-    {name: "Property Details", path: "/Admin/property-details"},
     {name: "Valuation requests", path: "/Admin/valuation-requests"},
     {name: "Listing Report Signup Requests", path: "/Admin/listing-report-signup-requests"},
-    {name: "Property Details", path: "/Admin/property-details"},
+    {name: "Email Update Signup Request", path: "/Admin/email-updates"},
     {name: "Market Trends", path : "/Admin/Market"}
 
   ];
