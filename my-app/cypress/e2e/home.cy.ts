@@ -9,11 +9,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 /*
 * Describe block for "Contact Me" button functionality
-* FAILS, times out 
+
 */ 
 describe('"Contact Me" Button Scrolls to Form', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('https://www.lourdesmendoza.com');
     cy.wait(2000);  // Add extra wait time to ensure page hydration
   });
 
@@ -33,42 +33,126 @@ describe('"Contact Me" Button Scrolls to Form', () => {
 
 
 /*
- * Tests the 3 city listings buttons:
- */
-describe('City Navigation Tests', () => {
+ * Tests the search
+*/
+describe('Search Component Tests', () => {
   beforeEach(() => {
-    // Visit the main page before each test
-    cy.visit('http://localhost:3000');
-    cy.wait(1000); // Ensure the page is fully loaded
+      // Visit the main page before each test
+      cy.visit('https://www.lourdesmendoza.com');
   });
 
-  it('should navigate to the Sacramento listing report', () => {
-    // Ensure the button is visible and clickable before clicking
-    cy.get(':nth-child(1) > a')
-      .should('have.attr', 'href', 'https://www.lourdesmendoza.com//listing-report?id=2816179') // Check the href attribute
-      .click({ force: true });
-    // Verify if the URL includes the Sacramento listing
-    cy.url().should('include', 'https://www.lourdesmendoza.com/listing-report?id=2816179');
-  });
+  it('should search for an address and navigate to the valuation page', () => {
+      // Step 1: Locate the search input field and type in the address
+      cy.get('.search-input')
+          .should('be.visible') // Ensure the search input is visible
+          .type('3999 apple street, sacramento CA 95838');
 
-  it('should navigate to the Yuba City listing report', () => {
-    // Ensure the button is visible and clickable before clicking
-    cy.get(':nth-child(2) > a')
-      .should('have.attr', 'href', 'https://www.lourdesmendoza.com//listing-report?id=2816182') // Check the href attribute
-      .click({ force: true });
-    // Verify if the URL includes the Yuba City listing
-    cy.url().should('include', 'https://www.lourdesmendoza.com/listing-report?id=2816182');
-  });
+      // Step 2: Click the search button
+      cy.get('.search-input + button') // Assuming the search button is immediately next to the input field
+          .should('be.visible')
+          .click({ force: true });
 
-  it('should navigate to the Elk Grove listing report', () => {
-    // Ensure the button is visible and clickable before clicking
-    cy.get(':nth-child(3) > a')
-      .should('have.attr', 'href', 'https://www.lourdesmendoza.com//listing-report?id=2814737') // Check the href attribute
-      .click({ force: true });
-    // Verify if the URL includes the Elk Grove listing
-    cy.url().should('include', 'https://www.lourdesmendoza.com/listing-report?id=2814737');
+      // Step 3: Verify that the user is navigated to the expected valuation page
+      cy.url().should('include', '/valuation');
   });
 });
+
+
+
+
+
+/*
+Test the expand button
+*/
+describe('Expand and Hide About Me Section', () => {
+  beforeEach(() => {
+      // Visit the main page before each test
+      cy.visit('https://www.lourdesmendoza.com');
+      cy.wait(1000); // Wait for the page to fully load
+  });
+
+  it('should expand and verify the About Me content, then hide it', () => {
+      // Step 1: Click to expand the About Me section
+      cy.get('.expand-bar')
+          .scrollIntoView()
+          .click({ force: true });
+
+      // Step 2: Verify that the About Me content is visible
+      cy.get('.about-me-text > p').should('be.visible');
+
+      // Step 3: Click again to hide the About Me section
+      cy.get('.expand-bar')
+          .scrollIntoView()
+          .click({ force: true });
+  });
+});
+
+
+
+
+/*
+* Testing the 4 options in the middle
+*/
+
+describe('Button Navigation Tests', () => {
+  beforeEach(() => {
+    // Visit the main page before each test
+    cy.visit('https://www.lourdesmendoza.com');
+  });
+
+  it('should navigate to the "What My Home Worth" page when the first button is clicked', () => {
+    // Click the first button and verify it navigates to the correct URL
+    cy.get(':nth-child(1) > .image-link > .circular-image')
+      .click({ force: true });
+    cy.url().should('include', '/WhatMyHomeWorth');
+
+    // Verify if the URL returns a status code of 200
+    cy.request('https://www.lourdesmendoza.com/WhatMyHomeWorth').then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+
+  it('should navigate to the "Sellers" page when the third button is clicked', () => {
+    // Click the third button and verify it navigates to the correct URL
+    cy.get(':nth-child(3) > .image-link > .circular-image')
+      .click({ force: true });
+    cy.url().should('include', '/Sellers');
+
+    // Verify if the URL returns a status code of 200
+    cy.request('https://www.lourdesmendoza.com/Sellers').then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+
+  it('should navigate to the "Sellers" page when the fourth button is clicked', () => {
+    // Click the fourth button and verify it navigates to the correct URL
+    cy.get(':nth-child(4) > .image-link > .circular-image')
+      .click({ force: true });
+    cy.url().should('include', '/Sellers');
+
+    // Verify if the URL returns a status code of 200
+    cy.request('https://www.lourdesmendoza.com/Sellers').then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+
+  it('should navigate to the "Listings" page when the second button is clicked', () => {
+    // Click the second button and verify it navigates to the correct URL
+    cy.get(':nth-child(2) > .image-link > .circular-image')
+      .click({ force: true });
+    cy.url().should('include', '/listings');
+
+    // Verify if the URL returns a status code of 200
+    cy.request({
+      url: 'https://www.lourdesmendoza.com/listings',
+      failOnStatusCode: false, // This prevents the test from failing on non-200 responses
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+});
+
+
 
 
 
@@ -85,7 +169,7 @@ describe('Form Submission with mailto', () => {
   beforeEach(() => {
     // Wait for the page to load completely
     cy.intercept('GET', '**').as('pageLoad');
-    cy.visit('http://localhost:3000');
+    cy.visit('https://www.lourdesmendoza.com');
     cy.wait('@pageLoad');
     cy.wait(2000);  // Add extra wait time to ensure page hydration
   });
