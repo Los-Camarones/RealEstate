@@ -70,7 +70,7 @@ export async function POST(req: Request) {
 
   try {
     // Add a new subscriber
-    const response = await axios.post(`https://www.idxhome.com/api/v1/client/subscribers.json?emailAddress=${body.emailAddress}&firstName=${body.firstName}&lastName=${body.lastName}`, {}, {
+    const response = await axios.post(`https://www.idxhome.com/api/v1/client/scheduleShowingRequests.json?emailAddress=${body.emailAddress}&firstName=${body.firstName}&lastName=${body.lastName}`, {}, {
       headers: {
         Authorization: token,
         Accept: 'application/json',

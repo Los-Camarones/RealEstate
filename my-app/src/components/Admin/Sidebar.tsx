@@ -31,7 +31,9 @@ const Sidebar: React.FC = () => {
         { name: "Contact Requests", path: "/Admin/contact-requests" },
         { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
-        { name: "More Info Requests", path: "/Admin/more-info-requests"}
+        { name: "More Info Requests", path: "/Admin/more-info-requests"},
+        { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
       ],
     },
     {
@@ -39,7 +41,6 @@ const Sidebar: React.FC = () => {
       icon: <FaBuilding />,
       items: [
         { name: "Property Listings", path: "/Admin/property-listings" },
-        { name: "Property Details", path: "/Admin/property-details" },
       ],
     },
     {

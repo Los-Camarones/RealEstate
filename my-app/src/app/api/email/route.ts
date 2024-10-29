@@ -32,12 +32,12 @@ export async function GET(req: Request) {
     const id = url.searchParams.get('id');
     let API_URL: string;
     if(id) {
-      API_URL = `https://www.idxhome.com/api/v1/client/listing/{listingId}.json`;
+      API_URL = `https://www.idxhome.com/api/v1/client/emailUpdateSignupRequest/{emailUpdateSignupRequestId}.json`;
     } else {
       const offset = url.searchParams.get('offset') || '0'; // Get 'offset' from query params, default to '0'
       const limit = url.searchParams.get('limit') || '10'; // limit is defaulted to 10, unless otherwise specified
       const fields = url.searchParams.get('fields') || '*'; //fields to get specific data, otherwise get everything
-      API_URL = `https://www.idxhome.com/api/v1/client/listings.json?fields=${fields}&offset=${offset}&limit=${limit}`;   
+      API_URL = `https://www.idxhome.com/api/v1/client/emailUpdateSignupRequests.json?fields=${fields}&offset=${offset}&limit=${limit}`;   
     }
 
     const response = await axios.get(API_URL, {
@@ -49,8 +49,8 @@ export async function GET(req: Request) {
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    console.error('Error fetching listings:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch listings' }, { status: 500 });
+    console.error('Error fetching subscribers:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch subscribers' }, { status: 500 });
   }
 }
 
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
 
   try {
     // Add a new subscriber
-    const response = await axios.post(`https://www.idxhome.com/api/v1/client/listings.json`, {}, {
+    const response = await axios.post(`https://www.idxhome.com/api/v1/client/emailUpdateSignupRequests.json`, {}, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response.data, { status: 201 });
   } catch (error: any) {
-    console.error('Error creating listings:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to create listing' }, { status: 500 });
+    console.error('Error creating subscriber:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to create subscriber' }, { status: 500 });
   }
 }
