@@ -251,47 +251,7 @@ View Email Update Sign-up Request Details
             
   </div>
 )}
-
-   
-
-    
-
-                      {/* Modal for Adding New Email Signup Request */}
-                      {isModalOpen && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                                <h2 className="text-lg font-bold mb-4">Add New Email Sign-up Request</h2>
-                                <form onSubmit={handleFormSubmit}>
-                                    <label className="block mb-2">
-                                        Email:
-                                        <input
-                                            type="email"
-                                            value={newEmail}
-                                            onChange={(e) => setNewEmail(e.target.value)}
-                                            required
-                                            className="w-full p-2 border rounded mt-2"
-                                        />
-                                    </label>
-                                    <div className="flex justify-end mt-4">
-                                        <button
-                                            type="button"
-                                            onClick={handleCloseModal}
-                                            className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="bg-blue-500 text-white px-4 py-2 rounded"
-                                        >
-                                            Add
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                       
-                    )} 
+ 
                 </div>
             </div>
         </div>

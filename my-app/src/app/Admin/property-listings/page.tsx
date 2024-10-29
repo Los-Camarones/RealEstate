@@ -105,6 +105,7 @@ const PropertyListingsPage: React.FC = () => {
         setOffset(newOffset);
     };
 
+    {/*
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -118,7 +119,7 @@ const PropertyListingsPage: React.FC = () => {
             console.error('Error adding property', error.response?.data || error.message);
             setError('Failed to add property.');
         }
-    };
+    }; */}
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

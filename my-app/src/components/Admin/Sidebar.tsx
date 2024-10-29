@@ -9,29 +9,63 @@ import useAuth from "../../app/hooks/useAuth"; // Import your existing auth hook
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
+  const auth = useAuth(); // Get authentication status
 
-  const menuItems = [
-    // Pages need to be created for these paths
-    // The paths are just placeholders for now
-    // The paths should be updated to the actual paths of the pages
-    // that will be created for the admin panel
-    { name: "Dashboard", path: "/Admin/dashboard" },
-    { name: "Users", path: "/Admin/users" },
-    { name: "Settings", path: "/Admin/settings" },
-    { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
-    {name:"Leads List", path:"/Admin/lead-list"},  
-    {name: "Property Listings", path: "/Admin/property-listings"},
-    {name: "Testimonials" , path: "/Admin/testimonials"},
-    {name: "Contact Requests", path: "/Admin/contact-requests"},
-    {name: "Property Details", path: "/Admin/property-details"},
-    {name: "Valuation requests", path: "/Admin/valuation-requests"},
-    {name: "Listing Report Signup Requests", path: "/Admin/listing-report-signup-requests"},
-    {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"},
-    {name: "Market Trends", path : "/Admin/Market"}
+  const { openDropdown, toggleDropdown } = useSidebarContext();
 
+  const menuCategories = [
+    {
+      category: "Dashboard",
+      icon: <FaHome />,
+      items: [{ name: "Dashboard", path: "/Admin/dashboard" }],
+    },
+    {
+      category: "Leads/Subscribers",
+      icon: <FaUsers />,
+      items: [{ name: "Leads List", path: "/Admin/lead-list" }],
+    },
+    {
+      category: "Client Interactions",
+      icon: <FaClipboardList />,
+      items: [
+        { name: "Contact Requests", path: "/Admin/contact-requests" },
+        { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
+        { name: "Valuation Requests", path: "/Admin/valuation-requests" },
+        { name: "More Info Requests", path: "/Admin/more-info-requests"},
+        { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
+      ],
+    },
+    {
+      category: "Properties",
+      icon: <FaBuilding />,
+      items: [
+        { name: "Property Listings", path: "/Admin/property-listings" },
+      ],
+    },
+    {
+      category: "Reports",
+      icon: <FaChartLine />,
+      items: [
+        { name: "Listing Report Signup Requests", path: "/Admin/listing-report-signup-requests" },
+        { name: "Market Trends", path: "/Admin/Market" },
+      ],
+    },
+    {
+      category: "Content Management",
+      icon: <FaTasks />,
+      items: [
+        { name: "Testimonials", path: "/Admin/testimonials" },
+        { name: "Home Page Content Management", path: "/Admin/content-management" }
+      ],
+    },
+    {
+      category: "Settings",
+      icon: <FaCog />,
+      items: [{ name: "Settings", path: "/Admin/settings" }],
+    },
   ];
 
-  // The Logout button call the /api/logout endpoint
   const handleLogout = async () => {
     try {
       await axios.post("/api/logout");

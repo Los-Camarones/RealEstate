@@ -208,34 +208,7 @@ const RequestListPage: React.FC = () => {
    * sets our array of filtered requests
    * @param name
    */
-  const handleFilteringRequests = async (name: string) => {
-    try {
-      if (name) {
-        // Filter our data points such that the parameter is in first or last name
-        const filteredRequests = requests.filter(
-          (record: Request) =>
-            
-            record.firstName.toLowerCase().includes(name.toLowerCase()) ||
-            record.lastName.toLowerCase().includes(name.toLowerCase())
-        );
 
-        // Update what is displayed based on parameter
-        setDisplayedRequests(filteredRequests.slice(offset, offset + itemsPerPage)); // Set displayed requests
-
-        // Update our array of filtered requests
-        setFilteredRequests(filteredRequests);
-
-        // Update the pages we have to display
-        setDisplayPages(Math.ceil(filteredRequests.length / 10));
-      }
-    } catch (error: any) {
-      console.error(
-        "Error filtering requests",
-        error.response?.data || error.message
-      );
-      setError("Failed to filter requests");
-    }
-  };
 
   // If the user isn't authenticated, prevent rendering the requests
   if (!auth) {
@@ -280,7 +253,7 @@ const RequestListPage: React.FC = () => {
       setCurrentOffset(0);
 
       // If user enters a name to filter, we have to update which requests are shown
-      handleFilteringRequests(name);
+     {/* handleFilteringRequests(name); */}
     }
   };
 
