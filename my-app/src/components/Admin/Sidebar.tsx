@@ -1,12 +1,16 @@
-"use client";
-import React from "react";
+'use client';
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { FaHome, FaUsers, FaCog, FaClipboardList, FaListAlt, FaChartLine, FaCommentDots, FaBuilding } from 'react-icons/fa';
+import { FaHome, FaUsers, FaCog, FaClipboardList, FaChartLine, FaCommentDots, FaBuilding, FaTasks } from 'react-icons/fa';
+import { MdSupervisorAccount } from 'react-icons/md';
 import { useSidebarContext } from "../../app/context/SidebarContext";
+import useAuth from "../../app/hooks/useAuth"; // Import your existing auth hook
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
+  const auth = useAuth(); // Get authentication status
+
   const { openDropdown, toggleDropdown } = useSidebarContext();
 
   const menuCategories = [
@@ -15,13 +19,10 @@ const Sidebar: React.FC = () => {
       icon: <FaHome />,
       items: [{ name: "Dashboard", path: "/Admin/dashboard" }],
     },
-
     {
       category: "Leads/Subscribers",
       icon: <FaUsers />,
-      items: [
-        { name: "Leads List", path: "/Admin/lead-list" },
-      ],
+      items: [{ name: "Leads List", path: "/Admin/lead-list" }],
     },
     {
       category: "Client Interactions",
@@ -49,9 +50,12 @@ const Sidebar: React.FC = () => {
       ],
     },
     {
-      category: "Testimonials",
-      icon: <FaCommentDots />,
-      items: [{ name: "Testimonials", path: "/Admin/testimonials" }],
+      category: "Content Management",
+      icon: <FaTasks />,
+      items: [
+        { name: "Testimonials", path: "/Admin/testimonials" },
+        { name: "Home Page Content Management", path: "/Admin/content-management" }
+      ],
     },
     {
       category: "Settings",
@@ -63,11 +67,16 @@ const Sidebar: React.FC = () => {
   const handleLogout = async () => {
     try {
       await axios.post("/api/logout");
-      router.push("/sign-in");
+      router.push("/Sign-in");
     } catch (err) {
       console.error("Error during logout", err);
     }
   };
+
+  // Render loading indicator if auth check is still pending
+  if (!auth) {
+    return null;
+  }
 
   return (
     <div className="navbar-container" style={{ /* styling */ }}>

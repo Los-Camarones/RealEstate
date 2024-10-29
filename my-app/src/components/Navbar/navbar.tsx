@@ -30,7 +30,7 @@ const NavBar: React.FC = () => {
 
   return (
     <>
-      <nav className="navbar-container bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 relative z-50">
+      <nav className="navbar-container bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 relative z-50">
         <div className="mx-auto flex items-center px-4 lg:px-8">
           {/* Logo */}
           <Link href="/" passHref>

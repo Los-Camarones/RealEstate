@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import "../../globals.css";
 import NavBar from "@/components/Navbar/navbar";
-import Sidebar from "@/components/Admin/Sidebar";
 import {
   getTextContentBySection,
   updateTextContent,
@@ -220,7 +219,6 @@ const ContentManagementPage: React.FC = () => {
     <div className="flex-grow">
       <NavBar />
       <div className="flex">
-        <Sidebar />
         <div className="p-6 flex-grow">
           <h1 className="text-5xl font-bold mb-5">Content Management</h1>
 
