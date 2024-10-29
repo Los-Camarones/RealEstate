@@ -2,7 +2,6 @@
 "use client";
 import "../../globals.css";
 import NavBar from "../../../components/Navbar/navbar";
-import Sidebar from "../../../components/Admin/Sidebar";
 import useAuth from "../../hooks/useAuth"; // Ensure user is authenticated
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from 'react';

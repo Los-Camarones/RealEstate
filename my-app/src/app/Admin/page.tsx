@@ -2,7 +2,6 @@
 import '../globals.css'; 
 import React from 'react';
 import NavBar from '../../components/Navbar/navbar';
-import Sidebar from '../../components/Admin/Sidebar';
 import LineChart from '@/components/Dashboard/LineChart/LineChart';
 import useAuth from '../hooks/useAuth';
 import { useRouter } from 'next/navigation';
@@ -20,8 +19,6 @@ const AdminDashboard: React.FC = () => {
     <>
       <NavBar />
       <div className="flex">
-        {/* Sidebar */}
-        <Sidebar />
 
         {/* Main content area */}
         <div className="flex-1 p-10 bg-gray-100 h-screen">

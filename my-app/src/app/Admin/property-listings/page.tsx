@@ -1,7 +1,6 @@
 'use client';
 import '../../globals.css'; 
 import NavBar from '../../../components/Navbar/navbar';
-import Sidebar from '../../../components/Admin/Sidebar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';  
@@ -165,8 +164,6 @@ const PropertyListingsPage: React.FC = () => {
     }
 
     return (
-        <div className="flex">
-            <Sidebar />
             <div className="flex-grow">
                 <NavBar />
                 <div className="p-4">
@@ -240,7 +237,6 @@ const PropertyListingsPage: React.FC = () => {
                 </div>
                    
             </div>
-        </div>
     );
 };
 
