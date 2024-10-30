@@ -4,6 +4,8 @@ import React from 'react';
 import PropertyOrganizerLogin from '../../components/PropertyOrganizerLogin/PropertyOrganizerLogin';
 import NavBar from '../../components/Navbar/navbar';
 import Head from 'next/head';
+import '../globals.css'; 
+
 
 const PropertyOrganizerPage: React.FC = () => {
   return (
@@ -17,7 +19,7 @@ const PropertyOrganizerPage: React.FC = () => {
       </Head>
       <NavBar />
       <main>
-        <div style={{ padding: '20px' }}>
+        <div style={{ paddingLeft: '200px', paddingRight:'200px' }}>
           <PropertyOrganizerLogin />
         </div>
       </main>

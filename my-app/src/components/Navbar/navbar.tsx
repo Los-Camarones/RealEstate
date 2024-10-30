@@ -13,16 +13,20 @@ const NavBar: React.FC = () => {
   const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
+  const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
+
 
   // Toggle the Sign In popup
   const toggleSignInPopup = () => {
-    setIsSignInPopupOpen(!isSignInPopupOpen);
+    setIsSignInPopupOpen(true);
+    setIsWidgetDisplayed(true);
+
   };
 
   // Close Sign In popup and show widget
   const closeSignInPopupAndShowWidget = () => {
     setIsSignInPopupOpen(false);
-    setIsWidgetDisplayed(true);
+    setIsWidgetDisplayed(false);
   };
 
   // Toggle the mobile menu
@@ -37,6 +41,15 @@ const NavBar: React.FC = () => {
 
   const handleMouseLeave = () => {
     setIsDropdownOpen(false);
+  };
+
+  //handle mouse enter for sign in button
+  const handleMouseEnterSignIn = () => {
+    setIsDropdownOpenSignIn(true);
+  };
+
+  const handleMouseLeaveSignIn = () => {
+    setIsDropdownOpenSignIn(false);
   };
 
   return (
@@ -120,15 +133,38 @@ const NavBar: React.FC = () => {
             </Link>
 
             {/* Sign In button OR plugin content */}
+            <div>
             {isWidgetDisplayed ? (
               <div className="login-widget relative z-50">
-                <PropertyOrganizerLogin />
+                 {/* <PropertyOrganizerLogin /> */}
               </div>
             ) : (
+
+              // Show if a user isn't signed in
+              <div className="relative"
+              onMouseEnter={handleMouseEnterSignIn}
+              onMouseLeave={handleMouseLeaveSignIn}>
+                
+              {/* Show the Sign in button */}
               <button className={buttonStyle} onClick={toggleSignInPopup}>
                 Sign In
               </button>
+
+              {/* When the user hovers, show drop down options */}
+              {isDropdownOpenSignIn && (
+                <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
+                <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
+                  User Login
+                </button>
+                <Link href="/Sign-in" className={dropdownItemStyle}>
+                  Admin Login
+                </Link>
+              </div>
+
+              )}
+              </div>
             )}
+            </div>
           </div>
         </div>
 

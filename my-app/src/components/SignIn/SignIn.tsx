@@ -9,6 +9,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import styles from './SignIn.module.css'
 
 const SignIn: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -64,13 +66,18 @@ const SignIn: React.FC = () => {
             placeholder="Enter your password"
           />
         </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="login-button"
-        >
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        <div className={styles.buttonContainer}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="login-button"
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+          <Link href="/">
+            <button className="cancel-button">Cancel</button>
+          </Link>
+        </div>
       </form>
       {error && (
         <p className="error-text">{error}</p>
