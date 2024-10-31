@@ -56,7 +56,8 @@ const Sidebar: React.FC = () => {
       icon: <FaTasks />,
       items: [
         { name: "Testimonials", path: "/Admin/testimonials" },
-        { name: "Home Page Content Management", path: "/Admin/content-management" }
+        { name: "Bio & Contacts", path: "/Admin/information" },
+        { name: "Website Pictures", path: "/Admin/images" }
       ],
     },
     {
