@@ -1,0 +1,160 @@
+.headerAdminContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .headerText {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .addButton {
+    background-color: #007bff; /* Blue background */
+    color: #fff;               /* White text */
+    padding: 10px 20px;        /* Padding for size */
+    border: none;              /* No border */
+    border-radius: 5px;        /* Slightly rounded corners */
+    font-size: 16px;           /* Font size */
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .reviewList {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    padding: 0 16px;
+  }
+  
+  @media (min-width: 768px) {
+    .reviewList {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .reviewList {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .card {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Softer, transparent black outline */
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .userPicture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .stars {
+    font-size: 16px;
+    color: gold;
+    margin-top: 4px;
+  }
+  
+  .date {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .reviewContent {
+    margin-top: 10px;
+    font-size: 14px;
+    color: black;
+    line-height: 1.6;
+  }
+  
+  .googleIcon {
+    font-size: 24px;
+    color: #4285F4; /* Google blue */
+    align-self: flex-end;
+  }
+  
+  .sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .sidebar h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .sidebar input[type="text"],
+  .sidebar input[type="date"],
+  .sidebar input[type="number"],
+  .sidebar textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .sidebar input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .sidebar button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+  }
+  
+  .sidebar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .sidebar button:last-of-type {
+    background-color: #dc3545; /* Red for the delete button */
+  }
+  
+  .sidebar button:last-of-type:hover {
+    background-color: #c82333;
+  }
+  

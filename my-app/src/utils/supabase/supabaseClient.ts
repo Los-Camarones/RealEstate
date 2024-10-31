@@ -1,13 +1,17 @@
-/**
- * Creates client istance that can be used in both server-side and client-side environments
- */
-'use client'
+// src/utils/supabase/supabaseClient.ts
 
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js';
 
-export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+// Get environment variables for Supabase
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+// Check for missing environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Supabase environment variables are missing');
 }
+
+// Create a Supabase client instance and export it as the default export
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export default supabase;

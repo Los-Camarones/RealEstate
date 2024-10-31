@@ -1,10 +1,19 @@
-/**
- * ImageManagementActions.ts
- * Functions for managing images in Supabase
- */
-
 'use server';
 import { createSupabaseServerClient } from "../utils/supabase/supabaseServer";
+
+/**
+ * Logs response details for debugging.
+ * @param data - Data returned from Supabase.
+ * @param error - Error returned from Supabase, if any.
+ * @param operation - Description of the operation being performed.
+ */
+function logResponseDetails(data: any, error: any, operation: string) {
+  if (error) {
+    console.error(`Error during ${operation}:`, error.message);
+  } else {
+    console.log(`Success during ${operation}:`, data);
+  }
+}
 
 /**
  * Fetches all images for a given section from the images table.
@@ -18,8 +27,10 @@ export async function getImageContentBySection(section: string) {
       .select("*")
       .eq("section", section);
 
+    // Log the response details
+    logResponseDetails(data, error, "getImageContentBySection");
+
     if (error) {
-      console.error("Error fetching images:", error.message);
       return { success: false, error: "Error fetching images." };
     }
 
@@ -33,48 +44,66 @@ export async function getImageContentBySection(section: string) {
 /**
  * Uploads a new image to the website_pictures bucket and updates the image URL
  * for the specified page and section in the images table.
- * @param file - The image file to upload.
+ * @param filePath - The file path in the bucket.
  * @param section - The section where the image will be used.
  * @param page - The page associated with the image.
+ * @param imageUrl - The base64 encoded image data.
  */
-export async function uploadImageAndUpdateURL(file: File, section: string, page: string) {
+export async function uploadImageAndUpdateURL(filePath: string, section: string, page: string, imageUrl: string) {
   try {
     const supabase = createSupabaseServerClient();
 
-    // Define a unique file path in the bucket based on page and section
-    const filePath = `${page}/${section}/${file.name}`;
-    
-    // Upload the image file to the bucket
+    // Log initial input data
+    console.log("Starting upload process...");
+    console.log("filePath:", filePath);
+    console.log("section:", section);
+    console.log("page:", page);
+
+    // Check if the bucket connection is valid
+    const { data: bucketData, error: bucketError } = await supabase.storage.from("website_pictures").list();
+    logResponseDetails(bucketData, bucketError, "Bucket Connection Check");
+
+    if (bucketError) {
+      return { success: false, error: "Error connecting to storage bucket." };
+    }
+
+    // Attempt to upload the image to the bucket
+    console.log("Attempting to upload the image...");
     const { error: uploadError } = await supabase.storage
       .from("website_pictures")
-      .upload(filePath, file, { upsert: true }); // `upsert` to overwrite any existing file with the same name
+      .upload(filePath, imageUrl, { upsert: true });
+    logResponseDetails(null, uploadError, "Image Upload");
 
     if (uploadError) {
-      console.error("Error uploading image:", uploadError.message);
-      return { success: false, error: "Error uploading image." };
+      return { success: false, error: "Error uploading image to bucket." };
     }
 
     // Generate a signed URL for the image with a 10-year expiration
+    console.log("Generating signed URL...");
     const { data: urlData, error: urlError } = await supabase.storage
       .from("website_pictures")
       .createSignedUrl(filePath, 10 * 365 * 24 * 60 * 60); // 10 years in seconds
+    logResponseDetails(urlData, urlError, "Signed URL Generation");
 
     if (urlError) {
-      console.error("Error generating signed URL:", urlError.message);
       return { success: false, error: "Error generating signed URL." };
     }
 
-    const imageUrl = urlData.signedUrl;
+    const generatedImageUrl = urlData?.signedUrl || null;
+    if (!generatedImageUrl) {
+      return { success: false, error: "Failed to generate a valid signed URL." };
+    }
 
     // Update the image_url in the images table for the specific page and section
+    console.log("Updating database with generated URL...");
     const { data, error: updateError } = await supabase
       .from("images")
-      .update({ image_url: imageUrl })
+      .update({ image_url: generatedImageUrl })
       .eq("page", page)
       .eq("section", section);
+    logResponseDetails(data, updateError, "Database Update");
 
     if (updateError) {
-      console.error("Error updating image URL:", updateError.message);
       return { success: false, error: "Error updating image URL in database." };
     }
 
@@ -98,9 +127,9 @@ export async function deleteImageContent(id: number, filePath: string) {
     const { error: deleteError } = await supabase.storage
       .from("website_pictures")
       .remove([filePath]);
+    logResponseDetails(null, deleteError, "Image Deletion from Bucket");
 
     if (deleteError) {
-      console.error("Error deleting image from storage:", deleteError.message);
       return { success: false, error: "Error deleting image from storage." };
     }
 
@@ -109,9 +138,9 @@ export async function deleteImageContent(id: number, filePath: string) {
       .from("images")
       .delete()
       .eq("id", id);
+    logResponseDetails(data, dbError, "Image Metadata Deletion from Database");
 
     if (dbError) {
-      console.error("Error deleting image metadata:", dbError.message);
       return { success: false, error: "Error deleting image metadata from database." };
     }
 
