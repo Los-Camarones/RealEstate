@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import styles from "../Reviews.module.css";
+import styles from "./admin.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import {
   getTestimonials,
@@ -97,10 +97,10 @@ const AdminReviews: React.FC = () => {
   return (
     <div>
       <div className={styles.headerAdminContainer}>
-        <button onClick={() => setSelectedReview({ ...blankTestimonial })}>
+        <header className={styles.headerText}>Manage Your Testimonials</header>
+        <button className={styles.addButton} onClick={() => setSelectedReview({ ...blankTestimonial })}>
           Add a Testimonial
         </button>
-        <header className={styles.headerText}>Manage Your Testimonials</header>
       </div>
 
       <div className={styles.reviewList}>
