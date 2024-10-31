@@ -24,6 +24,7 @@ const Sidebar: React.FC = () => {
       icon: <FaUsers />,
       items: [{ name: "Leads List", path: "/Admin/lead-list" }],
     },
+    
     {
       category: "Client Interactions",
       icon: <FaClipboardList />,
@@ -33,7 +34,9 @@ const Sidebar: React.FC = () => {
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
         { name: "More Info Requests", path: "/Admin/more-info-requests"},
         {name: "Market Sign up Request", path :"/Admin/marketReportSignupRequest" },
-        {name: "Open Home Report Signup Requests", path :"/Admin/openHomeReportSignupRequests" }
+        {name: "Open Home Report Signup Requests", path :"/Admin/openHomeReportSignupRequests" },
+        { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
       ],
     },
     {
