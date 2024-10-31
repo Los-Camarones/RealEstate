@@ -57,7 +57,7 @@ const Sidebar: React.FC = () => {
       items: [
         { name: "Testimonials", path: "/Admin/testimonials" },
         { name: "Bio & Contacts", path: "/Admin/information" },
-        { name: "Website Pictures", path: "/Admin/images" }
+        { name: "Website Pictures", path: "/Admin/Images" }
       ],
     },
     {
