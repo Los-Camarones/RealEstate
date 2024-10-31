@@ -317,3 +317,53 @@ export async function updateAboutMeSection(id: number, headingText: string, para
     }
   }
   
+
+  /**
+ * Retrieves the "Bio" section from the text_content table
+ */
+export async function getBioSection() {
+    try {
+      const supabase = createSupabaseServerClient();
+  
+      const { data, error } = await supabase
+        .from('text_content')
+        .select('*')
+        .eq('section_text', 'Bio'); // Filter for the "Bio" section
+  
+      if (error) {
+        console.error('Error fetching Bio section:', error.message);
+        return { success: false, error: 'Error fetching Bio section.' };
+      }
+      return { success: true, data };
+    } catch (error) {
+      console.error('Unexpected error fetching Bio section:', error);
+      return { success: false, error: 'An unexpected error occurred.' };
+    }
+  }
+  
+  /**
+   * Updates the "Bio" section in the text_content table
+   * @param id - The ID of the "Bio" section entry to update
+   * @param headingText - The new heading text
+   * @param paragraphText - The new paragraph text
+   */
+  export async function updateBioSection(id: number, headingText: string, paragraphText: string) {
+    try {
+      const supabase = createSupabaseServerClient();
+  
+      const { data, error } = await supabase
+        .from('text_content')
+        .update({ heading_text: headingText, paragraph_text: paragraphText })
+        .eq('id', id);
+  
+      if (error) {
+        console.error('Error updating Bio section:', error.message);
+        return { success: false, error: 'Error updating Bio section.' };
+      }
+      return { success: true, data };
+    } catch (error) {
+      console.error('Unexpected error updating Bio section:', error);
+      return { success: false, error: 'An unexpected error occurred.' };
+    }
+  }
+  
