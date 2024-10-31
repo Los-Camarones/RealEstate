@@ -49,34 +49,55 @@ const Page: React.FC = () => {
   // Handle file selection for each section and label
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>, section: string, label: string) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setFileInputs((prevState) => ({
-        ...prevState,
-        [`${section}-${label}`]: file,
-      }));
-    }
+    console.log(`File selected for ${section}-${label}:`, file);
+    setFileInputs((prevState) => ({
+      ...prevState,
+      [`${section}-${label}`]: file,
+    }));
   };
 
-  // Function to handle the upload
-  const handleUpload = async (section: string, page: string, label: string) => {
-    const fileKey = `${section}-${label}`;
-    const file = fileInputs[fileKey];
-
-    if (!file) {
-      alert("Please select a file first.");
-      return;
+  // Function to convert ArrayBuffer to base64 string
+  function arrayBufferToBase64(buffer: ArrayBuffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
     }
+    return window.btoa(binary);
+  }
 
-    try {
-      const response = await uploadImageAndUpdateURL(file, label, page);
-      if (response.success) {
-        alert(`Image for ${label} uploaded successfully!`);
-      } else {
-        alert(`Failed to upload image: ${response.error}`);
+  // Function to handle uploading selected files for a section
+  const handleSectionUpload = async (section: string, page: string, labels: string[]) => {
+    for (const label of labels) {
+      const fileKey = `${section}-${label}`;
+      const file = fileInputs[fileKey];
+
+      // Only upload if a file was selected for the label
+      if (file) {
+        console.log(`Starting upload for ${section}-${label} with file:`, file);
+
+        try {
+          const filePath = `${page}/${section}/${file.name}`;
+          const arrayBuffer = await file.arrayBuffer(); // Convert file to ArrayBuffer
+          const imageUrl = arrayBufferToBase64(arrayBuffer); // Convert ArrayBuffer to base64
+
+          console.log(`File path: ${filePath}`);
+          console.log(`Image URL (base64):`, imageUrl.slice(0, 100) + "..."); // Log first 100 chars for readability
+
+          const response = await uploadImageAndUpdateURL(filePath, label, page, imageUrl);
+          console.log(`Upload response for ${label}:`, response);
+
+          if (response.success) {
+            alert(`Image for ${label} uploaded successfully!`);
+          } else {
+            alert(`Failed to upload image: ${response.error}`);
+          }
+        } catch (error) {
+          console.error("Upload error:", error);
+          alert("An unexpected error occurred during upload.");
+        }
       }
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("An unexpected error occurred during upload.");
     }
   };
 
@@ -84,21 +105,25 @@ const Page: React.FC = () => {
     return <p>Access denied. Admins only.</p>;
   }
 
-  // Helper function to render input and upload button for each image section
-  const renderImageUpload = (label: string, section: string, page: string) => (
-    <div className="mb-4" key={`${section}-${label}`}>
-      <label className="block font-medium mb-1">{label}</label>
-      <input
-        type="file"
-        accept="image/*"
-        className="w-full p-2 border rounded mb-2"
-        onChange={(e) => handleFileChange(e, section, label)}
-      />
+  // Helper function to render input for each image in a section, but only one upload button per section
+  const renderImageUpload = (labels: string[], section: string, page: string) => (
+    <div key={section}>
+      {labels.map((label) => (
+        <div className="mb-4" key={`${section}-${label}`}>
+          <label className="block font-medium mb-1">{label}</label>
+          <input
+            type="file"
+            accept="image/*"
+            className="w-full p-2 border rounded mb-2"
+            onChange={(e) => handleFileChange(e, section, label)}
+          />
+        </div>
+      ))}
       <button
         className="bg-blue-500 text-white py-1 px-4 rounded"
-        onClick={() => handleUpload(section, page, label)}
+        onClick={() => handleSectionUpload(section, page, labels)}
       >
-        Upload {label}
+        Upload {section} Images
       </button>
     </div>
   );
@@ -123,8 +148,10 @@ const Page: React.FC = () => {
               </div>
               {openSections.carousel && (
                 <div className="collapse-content">
-                  {Array.from({ length: 10 }, (_, i) =>
-                    renderImageUpload(`Carousel Picture ${i + 1}`, "home", "Home")
+                  {renderImageUpload(
+                    Array.from({ length: 10 }, (_, i) => `Carousel Picture ${i + 1}`),
+                    "Carousel",
+                    "Home"
                   )}
                 </div>
               )}
@@ -137,7 +164,7 @@ const Page: React.FC = () => {
               </div>
               {openSections.aboutMeHome && (
                 <div className="collapse-content">
-                  {renderImageUpload("About Me", "home", "Home")}
+                  {renderImageUpload(["About Me"], "About Me Home", "Home")}
                 </div>
               )}
             </section>
@@ -149,8 +176,10 @@ const Page: React.FC = () => {
               </div>
               {openSections.middlePictures && (
                 <div className="collapse-content">
-                  {Array.from({ length: 4 }, (_, i) =>
-                    renderImageUpload(`Middle Pictures ${i + 1}`, "home", "Home")
+                  {renderImageUpload(
+                    Array.from({ length: 4 }, (_, i) => `Middle Pictures ${i + 1}`),
+                    "Middle Pictures",
+                    "Home"
                   )}
                 </div>
               )}
@@ -163,9 +192,7 @@ const Page: React.FC = () => {
               </div>
               {openSections.bottomPictures && (
                 <div className="collapse-content">
-                  {renderImageUpload("Sacramento Picture", "home", "Home")}
-                  {renderImageUpload("Yuba", "home", "Home")}
-                  {renderImageUpload("Elk Grove", "home", "Home")}
+                  {renderImageUpload(["Sacramento Picture", "Yuba", "Elk Grove"], "Bottom Pictures", "Home")}
                 </div>
               )}
             </section>
@@ -178,10 +205,7 @@ const Page: React.FC = () => {
             About Me
           </div>
           <div className="collapse-content">
-            {renderImageUpload("Lourdes", "aboutMe", "About Me")}
-            {renderImageUpload("Image 1", "aboutMe", "About Me")}
-            {renderImageUpload("Image 2", "aboutMe", "About Me")}
-            {renderImageUpload("Image 3", "aboutMe", "About Me")}
+            {renderImageUpload(["Lourdes", "Image 1", "Image 2", "Image 3"], "About Me", "About Me")}
           </div>
         </section>
 
@@ -191,8 +215,7 @@ const Page: React.FC = () => {
             Get Prequalified
           </div>
           <div className="collapse-content">
-            {renderImageUpload("Lourdes", "getPrequalified", "Get Prequalified")}
-            {renderImageUpload("Background", "getPrequalified", "Get Prequalified")}
+            {renderImageUpload(["Lourdes", "Background"], "Get Prequalified", "Get Prequalified")}
           </div>
         </section>
       </div>

@@ -1,250 +1,116 @@
 .reviewList {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 16px;
-  grid-auto-rows: minmax(150px, auto); /* Allows rows to expand based on content */
+  grid-gap: 20px;
+  padding: 0 16px;
 }
 
 @media (min-width: 768px) {
   .reviewList {
-    grid-template-columns: repeat(2, 1fr); /* Two columns for medium-sized screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
   .reviewList {
-    grid-template-columns: repeat(3, 1fr); /* Three columns for larger screens */
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .card {
-  padding: 16px;
+  padding: 20px;
   border-radius: 8px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.cardOverLay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(196, 189, 189, 0.322); /* Gray overlay */
-  z-index: 1;
-  
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2); /* Softer, transparent black outline */
 }
 
 .card:hover {
   transform: scale(1.05);
 }
 
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .userPicture {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  position: absolute;
-  top: 4px;
-  left: 8px;
 }
 
-.stars {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 14px;
-  color: gold;
-}
-
-.date {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  font-size: 12px;
-  color: gray;
-}
-
-.review {
-  margin-top: 50px; /* Adjust margin to accommodate user picture */
-  font-size: 14px;
-  color: black;
+.nameDate {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between name and date */
 }
 
 .name {
-  position: absolute;
-  top: 8px;
-  left: 60px; /* Adjusted to accommodate user picture */
-  font-size: 14px;
   font-weight: bold;
   color: rgb(0, 0, 0);
 }
 
-.googleIcon {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 24px;
-  color: #4285F4; /* Google blue */
+.stars {
+  font-size: 16px;
+  color: gold;
+  margin-top: 4px;
 }
 
-.header {
-  position: relative; /* Take the header out of normal flow */
-  left: 50%; /* Move it halfway across the container */
-  transform: translateX(-50%); /* Adjust for the header's own width */
-  font-family: 'Arial', sans-serif;
-  font-size: 40px;
-  margin-bottom: 12px;
-  text-align: center;
+.reviewContent {
+  margin-top: 10px;
+  font-size: 14px;
+  color: black;
+  line-height: 1.6;
+}
 
+.googleIcon {
+  font-size: 24px;
+  color: #4285F4; /* Google blue */
+  align-self: flex-end;
+}
 
+.date {
+  font-size: 12px;
+  color: gray;
 }
 
 .headerContainer {
   display: flex;
-  justify-content: space-between; /* Space between header and button */
-  align-items: center; /* Align items vertically */
-  width: 100%;
-  position: relative;
-  margin-bottom: 12px;
-  padding: 8px
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
 }
 
-.headerAdminContainer {
+.header {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.addReviewContainer {
   display: flex;
-  justify-content: space-between; /* Space between header and button */
-  align-items: center; /* Align items vertically */
-  width: 100%;
-  position: relative;
-  margin: 24px;
-}
-
-.headerAdminContainer button {
-  /* Style for the button */
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.headerAdminContainer .headerText{
-  /* Style for the text in the center */
-  text-align: center;
-  flex-grow: 1;
-  font-family: 'Arial', sans-serif;
-  font-size: 40px;
-  margin-bottom: 12px;
-
-}
-
-.container {
-  position: relative;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 .addReviewButton {
-  margin-left: auto; 
-  justify-content: right;
-  background-color: #007bff; /* Blue background */
-  color: #fff;               /* White text */
-  padding: 10px 20px;        /* Padding for size */
-  border: none;              /* No border */
-  border-radius: 5px;        /* Slightly rounded corners */
-  font-size: 16px;           /* Font size */
-  cursor: pointer;           /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth hover transition */
-}
-
-
-.button {
-  background-color: #007bff; /* Blue background */
-  color: #fff;               /* White text */
-  padding: 10px 20px;        /* Padding for size */
-  border: none;              /* No border */
-  border-radius: 5px;        /* Slightly rounded corners */
-  font-size: 16px;           /* Font size */
-  cursor: pointer;           /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth hover transition */
-}
-
-.button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-.reviewList {
-  flex: 1;
-}
-
-.sidebar {
-  position: fixed;            /* Fixed to the viewport */
-  margin-top: 100px;
-  top: 0;
-  right: 0;
-  width: 500px;
-  height: 80vh;
-  padding: 20px;
-  background-color: #f4f4f4;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  z-index: 10;               /* Ensure it appears above other elements */
-}
-.sidebar h3 {
-  font-size: 32px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.sidebar input {
-  margin-bottom: 10px;
-  padding: 8px;
-  width: 100%;
-}
-
-.sidebar button {
-  margin-bottom: 10px;
-}
-
-.successMessage {
-  color: #28a745; /* Green color */
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  padding: 10px;
-  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   font-size: 16px;
-  text-align: center;
-  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Error message styles */
-.errorMessage {
-  color: #dc3545; /* Red color */
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  padding: 10px;
-  border-radius: 4px;
-  font-size: 16px;
-  text-align: center;
-  margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-  .headerAdminContainer {
-    flex-direction: column; /* Stack header and button vertically */
-    align-items: center; /* Center-align both items */
-    gap: 10px; /* Add space between header and button */
-  }
-
-  .header {
-    text-align: center; /* Center the header on smaller screens */
-    margin-bottom: 10px; /* Add space below the header */
-  }
-
-  .button {
-    margin-left: 0; /* Reset margin to prevent any overlap */
-  }
+.addReviewButton:hover {
+  background-color: #0056b3;
 }

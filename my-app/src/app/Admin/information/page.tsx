@@ -209,7 +209,7 @@ const ContentManagementPage: React.FC = () => {
       <NavBar />
       <div className="flex">
         <div className="p-6 flex-grow">
-          <h1 className="text-5xl font-bold mb-5">Bio &</h1>
+          <h1 className="text-5xl font-bold mb-5">Contact Information</h1>
 
           {/* Display loading, error, or success messages */}
           {loading && <p>Loading content...</p>}
