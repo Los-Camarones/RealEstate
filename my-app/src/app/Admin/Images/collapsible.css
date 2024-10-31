@@ -1,0 +1,48 @@
+/* General styles */
+.collapse-section {
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  /* Header style */
+  .collapse-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1rem;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s;
+  }
+  
+  .collapse-header:hover {
+    background-color: #e2e2e2;
+  }
+  
+  /* Chevron icon for expanding/collapsing */
+  .collapse-header::after {
+    content: "▼";
+    font-size: 1rem;
+    transition: transform 0.3s;
+  }
+  
+  .collapse-header.active::after {
+    transform: rotate(180deg);
+  }
+  
+  /* Collapsible content style */
+  .collapse-content {
+    padding: 1rem;
+    display: none;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  /* Show content when active */
+  .collapse-section.active .collapse-content {
+    display: block;
+  }
+  
