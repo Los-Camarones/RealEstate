@@ -1,75 +1,117 @@
-/*
-    This component is responsible for rendering the sidebar of the admin panel.
-    It contains a list of menu items that the user can click to navigate to different pages.
-    The sidebar also contains a logout button that will log the user out of the application.
-*/
-import React from "react";
+'use client';
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { FaHome, FaUsers, FaCog, FaClipboardList, FaChartLine, FaCommentDots, FaBuilding, FaTasks } from 'react-icons/fa';
+import { MdSupervisorAccount } from 'react-icons/md';
+import { useSidebarContext } from "../../app/context/SidebarContext";
+import useAuth from "../../app/hooks/useAuth"; // Import your existing auth hook
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
+  const auth = useAuth(); // Get authentication status
 
-  const menuItems = [
-    // Pages need to be created for these paths
-    // The paths are just placeholders for now
-    // The paths should be updated to the actual paths of the pages
-    // that will be created for the admin panel
-    { name: "Dashboard", path: "/Admin/dashboard" },
-    { name: "Users", path: "/Admin/users" },
-    { name: "Settings", path: "/Admin/settings" },
-    { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
-    {name:"Leads List", path:"/Admin/lead-list"},  
-    {name: "Property Listings", path: "/Admin/property-listings"},
-    {name: "Testimonials" , path: "/Admin/testimonials"},
-    {name: "Contact Requests", path: "/Admin/contact-requests"},
-    {name: "Property Details", path: "/Admin/property-details"},
-    {name: "Valuation requests", path: "/Admin/valuation-requests"},
-    {name: "Listing Report Signup Requests", path: "/Admin/listing-report-signup-requests"},
-    {name: "Property Details", path: "/Admin/property-details"},
-    {name: "Market Trends", path : "/Admin/Market"},
-    {name: "Content Management", path: "/Admin/content-management"}
+  const { openDropdown, toggleDropdown } = useSidebarContext();
 
+  const menuCategories = [
+    {
+      category: "Dashboard",
+      icon: <FaHome />,
+      items: [{ name: "Dashboard", path: "/Admin/dashboard" }],
+    },
+    {
+      category: "Leads/Subscribers",
+      icon: <FaUsers />,
+      items: [{ name: "Leads List", path: "/Admin/lead-list" }],
+    },
+    {
+      category: "Client Interactions",
+      icon: <FaClipboardList />,
+      items: [
+        { name: "Contact Requests", path: "/Admin/contact-requests" },
+        { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
+        { name: "Valuation Requests", path: "/Admin/valuation-requests" },
+        { name: "More Info Requests", path: "/Admin/more-info-requests"},
+        { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
+      ],
+    },
+    {
+      category: "Properties",
+      icon: <FaBuilding />,
+      items: [
+        { name: "Property Listings", path: "/Admin/property-listings" },
+      ],
+    },
+    {
+      category: "Reports",
+      icon: <FaChartLine />,
+      items: [
+        { name: "Listing Report Signup Requests", path: "/Admin/listing-report-signup-requests" },
+        { name: "Market Trends", path: "/Admin/Market" },
+      ],
+    },
+    {
+      category: "Content Management",
+      icon: <FaTasks />,
+      items: [
+        { name: "Testimonials", path: "/Admin/testimonials" },
+        { name: "Home Page Content Management", path: "/Admin/content-management" }
+      ],
+    },
+    {
+      category: "Settings",
+      icon: <FaCog />,
+      items: [{ name: "Settings", path: "/Admin/settings" }],
+    },
   ];
 
-  // The Logout button call the /api/logout endpoint
   const handleLogout = async () => {
     try {
-      await axios.post('/api/logout');  // Clear the HTTP-only cookie on logout
-      router.push('/Sign-in');  // Redirect to the sign-in page after logout
+      await axios.post("/api/logout");
+      router.push("/Sign-in");
     } catch (err) {
       console.error("Error during logout", err);
     }
   };
 
+  // Render loading indicator if auth check is still pending
+  if (!auth) {
+    return null;
+  }
+
   return (
-<div className="navbar-container" style={{ background: 'linear-gradient(to bottom, rgb(189, 238, 253), rgb(120, 184, 249), rgb(51, 130, 228))', opacity: 0.9, backdropFilter: 'blur(10px)', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', padding: '1rem' }}>
-  {/* Navbar content */}
-
-
-
-<div>
-        <h1 className="text-2xl font-bold mb-10">Admin Panel</h1>
-        <ul>
-          {menuItems.map((item) => (
-            <li key={item.name} className="mb-6">
-              <a
-                href={item.path}
-                className="text-lg hover:bg-gray-200 rounded-lg px-3 py-2 block"
-
-                onClick={() => router.push(item.path)}
-              >
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mb-4">
-        <button
-          className="w-full bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded"
-          onClick={handleLogout}  // Logout button to call API logout functionality
-        >
+    <div className="navbar-container" style={{ /* styling */ }}>
+      <h1 className="text-2xl font-bold mb-10">Admin Panel</h1>
+      <ul>
+        {menuCategories.map((category) => (
+          <li key={category.category} className="mb-4">
+            <button
+              onClick={() => toggleDropdown(category.category)}
+              className="flex items-center text-lg font-semibold w-full text-left hover:bg-gray-300 rounded-lg px-3 py-2"
+            >
+              <span className="mr-2">{category.icon}</span>
+              {category.category}
+            </button>
+            {openDropdown === category.category && (
+              <ul className="pl-6">
+                {category.items.map((item) => (
+                  <li key={item.name} className="mb-2">
+                    <a
+                      onClick={() => router.push(item.path)}
+                      className="text-base hover:bg-gray-200 rounded-lg px-3 py-1 block"
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6">
+        <button className="w-full bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded" onClick={handleLogout}>
           Logout
         </button>
       </div>

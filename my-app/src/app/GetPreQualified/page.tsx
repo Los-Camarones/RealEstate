@@ -133,8 +133,8 @@ const LandingPage = () => {
                     branch="Sacramento"
                     phone="916.516.0007"
                     email="lourdesmendoza1@yahoo.com"
-                    language="english and spanish"
-                    location="california"
+                    language="English and Spanish"
+                    location="California"
                     />
                 </div>
                 <div className="flex justify-center mt-20">

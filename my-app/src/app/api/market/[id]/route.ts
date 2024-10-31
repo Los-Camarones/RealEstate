@@ -1,3 +1,5 @@
+// src/app/api/markets/[id]/route.ts
+
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
@@ -12,10 +14,10 @@ function getAuthToken(req: Request): string | null {
 
   // Extract the token value
   const token = tokenCookie.split('=')[1];
-  return token ? `Basic ${token}` : null;  // Return token with Basic auth prefix
+  return token ? `Basic ${token}` : null;  // Return token with 'Basic ' prefix
 }
 
-// Handle GET requests (Fetch specific Listing Report Signup Request by ID)
+// Handle GET requests (Fetch specific Market by ID)
 export async function GET(req: Request) {
   const token = getAuthToken(req);
   const url = new URL(req.url);
@@ -26,12 +28,12 @@ export async function GET(req: Request) {
   }
 
   if (!id) {
-    return NextResponse.json({ error: 'Missing contact request ID' }, { status: 400 });
+    return NextResponse.json({ error: 'Missing market ID' }, { status: 400 });
   }
 
   try {
-    // Fetch the specific listing report signup request with the given ID
-    const response = await axios.get(`https://www.idxhome.com/api/v1/client/scheduleShowingRequest/${id}.json`, {
+    // Fetch the specific market with the given ID
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/market/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -40,10 +42,9 @@ export async function GET(req: Request) {
 
     return NextResponse.json(response.data, { status: 200 });
   } catch (error: any) {
-    console.error('Error fetching listing report signup request:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch listing report signup request' }, { status: 500 });
+    console.error('Error fetching market:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch market' }, { status: 500 });
   }
 }
 
-// Optionally, you can also add DELETE method similar to how you did for leads
-    
+// Optionally, you can also add DELETE or other methods as needed

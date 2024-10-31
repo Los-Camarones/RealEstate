@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 
   try {
     // Fetch the specific listing report signup request with the given ID
-    const response = await axios.get(`https://www.idxhome.com/api/v1/client/scheduleShowingRequest/${id}.json`, {
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/listing/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -46,4 +46,3 @@ export async function GET(req: Request) {
 }
 
 // Optionally, you can also add DELETE method similar to how you did for leads
-    

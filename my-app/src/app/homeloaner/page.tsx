@@ -1,102 +1,136 @@
-
 'use client';
 
-
-import link from 'next/link';
-import React, {useState} from 'react';
-import Popup from '../../components/Popup/Popup';
-
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import NavBar from '../../components/Navbar/navbar';
 
 const LandingPage = () => {
+    const router = useRouter();
 
-    const [showPopup, setShowPopup] = useState(false);
+    // State for user choices and form fields
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
-
+    // Handle selection of option
+    const handleOptionSelect = (option: string) => {
+        setSelectedOption(option);
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
+    // Handle form submission
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Placeholder for form submission or further actions
+        console.log({ name, address, phone, email, selectedOption });
+        // Redirect or perform other actions as needed
     };
 
     return (
-    
-            
+        <div>
+            <NavBar />
         
-
         <div className="bg-gradient-to-r from-blue-600 to-blue-300 min-h-screen flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-5xl flex flex-col md:flex-row items-center md:items-start">
-                {/*Main Content*/}
-                <div className="w-full md:w-2/3">
-                {/*logo*/}
+            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-5xl flex flex-col items-center">
+                
+                {/* Logo */}
                 <div className="mb-4">
-                    <img src="/loanerlogo.png" alt="Ben Bhangu" className= "h-20 mx-auto md:mx-0"/>
-                 </div>
+                    <img src="/loanerlogo.png" alt="Ben Bhangu" className="h-20 mx-auto" />
+                </div>
 
-                 {/*Heading and sub*/}
-                 <h1 className="text-3xl font-bold text-gray-800 text-center md:text-left mb-2">
+                {/* Heading and Subheading */}
+                <h1 className="text-3xl font-bold text-gray-800 text-center mb-2">
                     Only a few steps away from a home loan
-                 </h1>
-                 <p className="text-lg text-gray-500 text-center md:text-left mb-4">
-                    The home loan guru is here to help
-                 </p>
+                </h1>
+                
 
-                 {/*customer info capture*/}
-                 <div className="flex items-center justify-center md:justify-start">
-                    <input 
-                        type="email"
-                        placeholder='Please enter your email'
-                        className="border border-gray-300 rounded-1-md p-3 w-64"
-                        />
-                    <button className="bg-black text-white px-4 py-3 rounded-r-md">
-                        Continue 
-                    </button>
-                 </div>
-
-                 {/*Sign up link*/}
-                 <div className="mt-4 text-center md:text-left">
-                    <p className="text-gray-500">
-                     Already have an account?{" "}
-                        <a href="#" className="text-blue-600 font-semibold">
-                            Sign in 
-                        </a>
-                    </p>
-                 </div>
-                </div>
-
-                {/*Loan officer info*/}
-
-                <div className="w-full md:w-1/3 mt-8 md:mt-0 flex flex-col items-center md:items-start md:ml-8">
-                {/*profile name*/}
-                <div className="w-28 h-28 mg-4 mt-10">
-                    <img 
-                        src="/benBhangu.jpg"
-                        alt="Loan Officer"
-                        className="rounded-full border-4 border-white shadow-md"
-                        />
-                </div>
-
-                {/*Name and Info*/}
-                <div className="text-center md:text-left mt-12">
-                    <h3 className="text-2xl font-bold text-gray-800">
-                        Ben Bhangu
-                    </h3>
-                    <p className='text-gray-500'>
-                        NMLS 746773 | {" "}
-                        <div className="landing-page">
+                {/* Question and Options */}
+                {!selectedOption ? (
+                    <div className="text-center">
+                        <p className="text-lg font-semibold mb-4">What best describes your current situation?</p>
+                        <div className="grid grid-cols-2 gap-4">
                             <button 
-                                className="px-4 py-2 bg-blue-500 text-white rounded"
-                                onClick={handleOpenPopup}
-                                >
-                                    More Info
-                                </button>
-                                <Popup show={ showPopup } onClose={handleClosePopup} />
+                                onClick={() => handleOptionSelect("Buying a new home")}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-md"
+                            >
+                                I'm thinking about buying
+                            </button>
+                            <button 
+                                onClick={() => handleOptionSelect("Refinancing an existing home")}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-md"
+                            >
+                                Touring open houses
+                            </button>
+                            <button 
+                                onClick={() => handleOptionSelect("Looking to invest")}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-md"
+                            >
+                                Making offers on a property
+                            </button>
+                            <button 
+                                onClick={() => handleOptionSelect("Exploring options")}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-md"
+                            >
+                                I've signed a purchase contract 
+                            </button>
                         </div>
-                    </p>
-                </div>
+                    </div>
+                ) : (
+                    // Form for additional details
+                    <form onSubmit={handleSubmit} className="w-full max-w-md mt-6">
+                        <p className="text-lg font-semibold text-center mb-4">Please enter your details</p>
+                        <div className="space-y-4">
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                placeholder="Name"
+                                className="w-full p-3 border rounded-md"
+                            />
+                            <input
+                                type="text"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                required
+                                placeholder="Address"
+                                className="w-full p-3 border rounded-md"
+                            />
+                            <input
+                                type="tel"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                required
+                                placeholder="Phone"
+                                className="w-full p-3 border rounded-md"
+                            />
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                placeholder="Email"
+                                className="w-full p-3 border rounded-md"
+                            />
+                        </div>
+                        <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded-md mt-6">
+                            Submit
+                        </button>
+                    </form>
+                )}
+
+                {/* Sign in Button */}
+                <div className="mt-4">
+                    <button
+                        onClick={() => router.push('/SignIn')}
+                        className="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md mt-4"
+                    >
+                        Sign in
+                    </button>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

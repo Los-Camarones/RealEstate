@@ -3,7 +3,6 @@
 "use client";
 import "../../globals.css";
 import NavBar from "../../../components/Navbar/navbar";
-import Sidebar from "../../../components/Admin/Sidebar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth"; // Ensure user is authenticated
@@ -14,11 +13,43 @@ const RequestListPage: React.FC = () => {
 
   interface Request {
     id: string;
+    subscriberId: string;
+    createdOn: string;
+    preferableOn: string;
+    alternativeOn: string;
+    subscriber: {
+      links: { href: string} [];
+  }
+  listing: {
+      links: { href: string}[];
+  }
+  links: { href: string}[];
+  }
+
+  interface Subscriber {
+    id: string;
     firstName: string;
-    lastName: string;
+    lastName: string 
     emailAddress: string;
-    phone?: string;
-    pipelineStage?: string;
+    phone: string;
+    score: number;
+    createdOn: string;
+  }
+
+  interface Listing {
+    id: string;
+    boardId: number;
+    listingNumber: string;
+  address: {
+    internalDisplay: string,
+    externalDisplay: string,
+    houseNumber: string,
+    streetName: string,
+    unitNumber: string,
+    city: string,
+    state: string,
+    postalCode: string
+  };
   }
 
   // Complete array of requests pulled from ihomefinder
@@ -64,6 +95,11 @@ const RequestListPage: React.FC = () => {
   // Number of items to display per page
   const itemsPerPage = 10;
 
+  const [detailsLoading, setDetailsLoading] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
+  const [subscriberDetails, setSubscriberDetails] = useState<Subscriber | null>(null);
+  const [listingDetails, setListingDetails] = useState<Listing | null>(null);
+
   // Fetch the list of requests on component mount if authenticated
   useEffect(() => {
     if (auth) {
@@ -84,7 +120,7 @@ const RequestListPage: React.FC = () => {
       setError(null);
 
       // Hardcoded limit at 500. If limit exceeds, better to implement pagination of subscriber requests, though, filtering will not exist anymore
-      const response = await axios.get(`/api/requests?&limit=500`, {
+      const response = await axios.get(`/api/scheduleShowingRequests`, {
         withCredentials: true, // This ensures the cookie is sent with the request
       });
 
@@ -172,33 +208,7 @@ const RequestListPage: React.FC = () => {
    * sets our array of filtered requests
    * @param name
    */
-  const handleFilteringRequests = async (name: string) => {
-    try {
-      if (name) {
-        // Filter our data points such that the parameter is in first or last name
-        const filteredRequests = requests.filter(
-          (record: Request) =>
-            record.firstName.toLowerCase().includes(name.toLowerCase()) ||
-            record.lastName.toLowerCase().includes(name.toLowerCase())
-        );
 
-        // Update what is displayed based on parameter
-        setDisplayedRequests(filteredRequests.slice(offset, offset + itemsPerPage)); // Set displayed requests
-
-        // Update our array of filtered requests
-        setFilteredRequests(filteredRequests);
-
-        // Update the pages we have to display
-        setDisplayPages(Math.ceil(filteredRequests.length / 10));
-      }
-    } catch (error: any) {
-      console.error(
-        "Error filtering requests",
-        error.response?.data || error.message
-      );
-      setError("Failed to filter requests");
-    }
-  };
 
   // If the user isn't authenticated, prevent rendering the requests
   if (!auth) {
@@ -243,29 +253,60 @@ const RequestListPage: React.FC = () => {
       setCurrentOffset(0);
 
       // If user enters a name to filter, we have to update which requests are shown
-      handleFilteringRequests(name);
+     {/* handleFilteringRequests(name); */}
     }
   };
 
+  const fetchRequestDetails = async (id: string) => {
+    try{
+      setDetailsLoading(true);
+      const response = await axios.get(`/api/scheduleShowingRequests/${id}`);
+      setSelectedRequest(response.data);
+      setDetailsLoading(false);
+    } catch (error:any){
+      console.error('error fetching request details:', error.response?.data || error.message );
+      setError('failed to fetch request details');
+      setDetailsLoading(false);
+    }
+  };
+
+  // Fetch subscriber details using the new API route
+ const fetchSubscriberDetails = async (id: string) => {
+  try {
+    const response = await axios.get(`/api/leads/${id}`, {
+      withCredentials: true, // Ensure authentication credentials are sent with the request
+    });
+    setSubscriberDetails(response.data); // Store the subscriber data
+  } catch (error: any) {
+    console.error('Error fetching subscriber details:', error);
+    setError('Failed to fetch subscriber details.');
+  }
+};
+
+  // Fetch subscriber details using the new API route
+  const fetchListingDetails = async (id: string) => {
+    try {
+      const response = await axios.get(`/api/scheduleShowingRequests/${id}`, {
+        withCredentials: true, // Ensure authentication credentials are sent with the request
+      });
+      setListingDetails(response.data); // Store the subscriber data
+    } catch (error: any) {
+      console.error('Error fetching listing details:', error);
+      setError('Failed to fetch listing details.');
+    }
+  };
+
+
   return (
-    <div className="flex">
-      <Sidebar />
+
       <div className="flex-grow">
         <NavBar />
         <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">Request List</h1>
+          <h1 className="text-2xl font-bold mb-4">Schedule Showing Request List</h1>
 
           {error && <div className="text-red-500 mb-4">{error}</div>}
 
-          {/* Add New Request Button */}
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => setShowForm(!showForm)}
-            disabled={loading} // Disable while loading
-          >
-            Add New
-          </button>
-
+          
           {/* Add New Lead Form */}
           {showForm && (
             <form
@@ -320,6 +361,67 @@ const RequestListPage: React.FC = () => {
             </form>
           )}
 
+        <div>
+          {displayedRequests.map((request) => (
+            <div key={request.links[0].href} className="mb-4 p-4 border rounded">
+              <p>Schedule Showing ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+                onClick={() => fetchRequestDetails(request.links[0].href.split('/').pop()?.split('.')[0] || '')}
+              >
+                View Details
+              </button>
+            </div>
+          ))}
+        </div>
+
+           {/* Details for selected request */}
+           {detailsLoading && <div>Loading details...</div>}
+
+{selectedRequest && !detailsLoading && (
+ <div className="mt-8 p-4 border rounded bg-gray-100">
+ <h2 className="text-xl font-bold mb-4">Schedule Showing Request Details</h2>
+ <p>Request ID: {selectedRequest.id}</p>
+ <p>Subscriber ID: {selectedRequest.subscriberId}</p>
+<p>Created On: {new Date(selectedRequest.createdOn).toLocaleString()}</p>
+<p>Preferrable On: {selectedRequest.preferableOn}</p>
+<p>Alternative On: {selectedRequest.alternativeOn}</p>
+
+<h3 className="text-lg font-bold mt-4">Subscriber</h3>
+{selectedRequest.subscriberId && (
+<button
+className="text-blue-500 underline"
+onClick={() => fetchSubscriberDetails(selectedRequest.subscriberId)}
+>
+View Subscriber Details
+</button>
+)}
+
+<h3 className="text-lg font-bold mt-4">Schedule Showing Request Report</h3>
+{selectedRequest.subscriber?.links?.[0]?.href && (
+<p>
+<a href={selectedRequest.subscriber.links[0].href}>
+View Schedule Showing Request Details
+</a>
+</p>
+)}
+     {/* Display subscriber details if available */}
+     {subscriberDetails && (
+        <div className="mt-8 p-4 border rounded bg-gray-100">
+            <h2 className="text-xl font-bold mb-4">Subscriber Details</h2>
+            <p>Subscriber ID: {subscriberDetails.id}</p>
+            <p>First Name: {subscriberDetails.firstName}</p>
+            <p>Last Name: {subscriberDetails.lastName}</p>
+            <p>Email Address: {subscriberDetails.emailAddress}</p>
+            <p>Phone: {subscriberDetails.phone}</p>
+            <p>Score: {subscriberDetails.score}</p>
+            <p>Created On: {new Date(subscriberDetails.createdOn).toLocaleString()}</p>
+        </div>
+        )}
+   
+        </div>
+        )}
+
           {/* Filtering search bar*/}
           <form className="flex items-center space-x-2 p-4 bg-white max-w-sm ml-auto mr-4 mt-4">
             <input
@@ -334,33 +436,7 @@ const RequestListPage: React.FC = () => {
             />
           </form>
 
-          <table className="min-w-full table-auto mt-4">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Phone</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayedRequests.map((request) => (
-                <tr key={request.id} className="border-t">
-                  <td className="px-4 py-2">{`${request.firstName} ${request.lastName}`}</td>
-                  <td className="px-4 py-2">{request.emailAddress}</td>
-                  <td className="px-4 py-2">{request.phone || "N/A"}</td>
-                  <td className="px-4 py-2">
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => handleDeleteRequest(request.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        
 
           {/* Pagination component */}
           <div className="flex justify-center mt-4">
@@ -384,7 +460,6 @@ const RequestListPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
