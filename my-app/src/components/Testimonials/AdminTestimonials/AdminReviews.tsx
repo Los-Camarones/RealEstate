@@ -18,9 +18,11 @@ const AdminReviews: React.FC = () => {
   const [error, setError] = useState<string | null>();
   const [success, setSuccess] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ITestimonial | null>();
+  const [message, setMessage] = useState<string | null>(null);
+
 
   const blank_url_profile_pic ="https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/public/testimonials_images/default_pfp.jpg"
-  const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
+  const [newTestimonial] = useState<ITestimonial>({
     created_at: "",
     rating: 5,
     comments: "",
@@ -71,6 +73,7 @@ const AdminReviews: React.FC = () => {
   const handleDeleteReview = async (id: string) => {
     const response = await deleteTestimonial(id);
     if (response.success) {
+      showAlert('Testimonial deleted successfully!');
       setReviews((prev) => prev.filter((review) => review.id !== id));
       setSelectedReview(null);
     } else {
@@ -149,6 +152,9 @@ const AdminReviews: React.FC = () => {
             review.id === response.data[0].id ? response.data[0] : review
           )
         );
+
+        showAlert('Testimonial updated successfully!');
+
 
         setError(null);
 
@@ -232,6 +238,9 @@ const AdminReviews: React.FC = () => {
         console.log("Successfully added testimonial!");
         setSuccess(true);
 
+        showAlert('Testimonial added successfully!');
+
+
         //refresh our reviews
         setReviews([...reviews, response.data[0]]);
 
@@ -290,6 +299,13 @@ const AdminReviews: React.FC = () => {
     });
   }
 
+  const showAlert = (msg: string) => {
+    setMessage(msg);
+    setTimeout(() => {
+        setMessage(null);
+    }, 7000); // Alert disappears after 7 seconds
+};
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -317,9 +333,17 @@ const AdminReviews: React.FC = () => {
       >
         Add a Testimonial
       </button>
-      
+
     </div>
 
+      <div className={styles.containerAlert}>      
+        {message && (
+                <div className={styles.alertStyle}>
+                    {message}
+                </div>
+            )}
+        </div>
+ 
 
       <div className={styles.reviewList}>
         {reviews.map((review) => (
