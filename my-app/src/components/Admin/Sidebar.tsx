@@ -32,8 +32,8 @@ const Sidebar: React.FC = () => {
         { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
         { name: "More Info Requests", path: "/Admin/more-info-requests"},
-        { name: "Market Sign up Request", path: "/Admin/marketReportSignupRequest"},
-        { name: "Open Home Report Signup Requests", path:"/Admin/openHomeSignupRequests"},
+        { name: "Market Sign up Request", path: "/Admin/market-report-signup-requests"},
+        { name: "Open Home Report Signup Requests", path:"/Admin/open-home-report-signup-requests"},
         { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
         {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
       ],
