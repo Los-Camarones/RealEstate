@@ -209,7 +209,7 @@ const ContentManagementPage: React.FC = () => {
       <NavBar />
       <div className="flex">
         <div className="p-6 flex-grow">
-          <h1 className="text-5xl font-bold mb-5">Bio & Contacts</h1>
+          <h1 className="text-5xl font-bold mb-5">Contact Information</h1>
 
           {/* Display loading, error, or success messages */}
           {loading && <p>Loading content...</p>}
@@ -222,56 +222,55 @@ const ContentManagementPage: React.FC = () => {
           </h2>
           {aboutMeOpen && (
   <div>
-    {/* Fetch and render Bio section first */}
-{contentSections
-  .filter((section) => section.section_text === "Bio")
-  .map((bioSection) => (
-    <div key={bioSection.id} className="mb-6">
-      <h3 className="text-xl font-semibold">Bio</h3>
-      <label className="block mb-1 font-medium">Heading</label>
-      <input
-        type="text"
-        value={bioSection.heading_text}
-        onChange={(e) => handleContentInputChange(bioSection.id, "heading_text", e.target.value)}
-        className="w-full p-2 border rounded mb-2"
-        placeholder="Edit heading"
-      />
-      <label className="block mb-1 font-medium">Paragraph</label>
-      <textarea
-        value={bioSection.paragraph_text}
-        onChange={(e) => handleContentInputChange(bioSection.id, "paragraph_text", e.target.value)}
-        className="w-full p-2 border rounded mb-2 h-32"
-        placeholder="Edit paragraph"
-      />
-    </div>
-  ))}
+    {/* Render Bio section first if it exists */}
+    {contentSections
+      .filter((section) => section.section_text === "Bio")
+      .map((bioSection) => (
+        <div key={bioSection.id} className="mb-6">
+          <h3 className="text-xl font-semibold">Bio</h3>
+          <label className="block mb-1 font-medium">Heading</label>
+          <input
+            type="text"
+            value={bioSection.heading_text}
+            onChange={(e) => handleContentInputChange(bioSection.id, "heading_text", e.target.value)}
+            className="w-full p-2 border rounded mb-2"
+            placeholder="Edit heading"
+          />
+          <label className="block mb-1 font-medium">Paragraph</label>
+          <textarea
+            value={bioSection.paragraph_text}
+            onChange={(e) => handleContentInputChange(bioSection.id, "paragraph_text", e.target.value)}
+            className="w-full p-2 border rounded mb-2 h-32"
+            placeholder="Edit paragraph"
+          />
+        </div>
+      ))}
 
-{/* Render other sections below */}
-{contentSections
-  .filter((section) => section.section_text !== "Bio")
-  .map((section) => (
-    <div key={section.id} className="mb-6">
-      <h3 className="text-xl font-semibold">
-        {section.section_text.replace("about_me_section_", "Section ")}
-      </h3>
-      <label className="block mb-1 font-medium">Heading</label>
-      <input
-        type="text"
-        value={section.heading_text}
-        onChange={(e) => handleContentInputChange(section.id, "heading_text", e.target.value)}
-        className="w-full p-2 border rounded mb-2"
-        placeholder="Edit heading"
-      />
-      <label className="block mb-1 font-medium">Paragraph</label>
-      <textarea
-        value={section.paragraph_text}
-        onChange={(e) => handleContentInputChange(section.id, "paragraph_text", e.target.value)}
-        className="w-full p-2 border rounded mb-2 h-32"
-        placeholder="Edit paragraph"
-      />
-    </div>
-  ))}
-
+    {/* Render other sections below */}
+    {contentSections
+      .filter((section) => section.section_text !== "Bio")
+      .map((section) => (
+        <div key={section.id} className="mb-6">
+          <h3 className="text-xl font-semibold">
+            {section.section_text.replace("about_me_section_", "Section ")}
+          </h3>
+          <label className="block mb-1 font-medium">Heading</label>
+          <input
+            type="text"
+            value={section.heading_text}
+            onChange={(e) => handleContentInputChange(section.id, "heading_text", e.target.value)}
+            className="w-full p-2 border rounded mb-2"
+            placeholder="Edit heading"
+          />
+          <label className="block mb-1 font-medium">Paragraph</label>
+          <textarea
+            value={section.paragraph_text}
+            onChange={(e) => handleContentInputChange(section.id, "paragraph_text", e.target.value)}
+            className="w-full p-2 border rounded mb-2 h-32"
+            placeholder="Edit paragraph"
+          />
+        </div>
+      ))}
 
     <button onClick={handleUpdateContent} className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-700">
       Update About Me Section

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { signOut, updatePassword } from "../../actions/AuthActions";
 import { useRouter } from "next/navigation";
-import { createClient } from "../../utils/supabase/supabaseClient";
+import supabase from "../../utils/supabase/supabaseClient"; // Use supabase instance directly
 
 const PasswordUpdate = () => {
   const [password, setPassword] = useState<string>("");
@@ -10,13 +10,10 @@ const PasswordUpdate = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  useEffect(() => {async function init() {
-      const supabase = createClient();
-
-      //get the pkce code from url
-      const tokenHash = new URLSearchParams(window.location.search).get(
-        "token_hash"
-      );
+  useEffect(() => {
+    async function init() {
+      // Get the PKCE code from the URL
+      const tokenHash = new URLSearchParams(window.location.search).get("token_hash");
 
       if (!tokenHash) {
         setError("Missing token hash parameter");
@@ -24,50 +21,47 @@ const PasswordUpdate = () => {
       }
 
       if (tokenHash.startsWith("pkce_")) {
-
-        //remove the pkce_ in front of token
+        // Remove the "pkce_" prefix from the token
         const code = tokenHash.substring(5);
 
         console.log("CODE", code);
 
-        //exchange code for a session
-        const { data, error } = await supabase.auth.exchangeCodeForSession(
-          code
-        );
+        // Exchange code for a session
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
         console.log(data);
+
         if (error) {
-          console.log("error with session");
+          console.log("Error with session");
           setError(error.message);
           return;
         }
-        //check validity of session
+
+        // Check validity of session
         if (data.session) {
-          console.log("Session aquired", data.session);
+          console.log("Session acquired", data.session);
         } else {
           setError("Invalid session");
         }
-      } 
-
+      }
     }
-    init();
 
+    init();
   }, []);
 
   const handlePasswordUpdate = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (passwordMatch(password, confirmPassword)) {
-      //call response to update password
+      // Call response to update password
       const response = await updatePassword(password);
 
-      //if successfull, still log out the user so they sign in again
+      // If successful, log out the user so they sign in again
       if (response.success) {
-        console.log("password updated successfully. ");
-        //signOut
+        console.log("Password updated successfully.");
         router.push("/");
       } else {
         console.log(response.error);
-        setError(response.error || "Unknown Error has occured");
+        setError(response.error || "An unknown error has occurred");
       }
     } else {
       console.log("Passwords don't match");
@@ -76,15 +70,12 @@ const PasswordUpdate = () => {
   };
 
   const passwordMatch = (password: string, confirmPassword: string) => {
-    if (password === confirmPassword) {
-      return true;
-    } else {
-      return false;
-    }
+    return password === confirmPassword;
   };
 
   return (
     <div>
+      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handlePasswordUpdate}>
         <label htmlFor="password" className="sr-only">
           Password
@@ -101,14 +92,14 @@ const PasswordUpdate = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label htmlFor="password" className="sr-only">
+        <label htmlFor="confirm-password" className="sr-only">
           Confirm Password
         </label>
         <input
-          id="pwd"
-          name="pwd"
+          id="confirm-password"
+          name="confirm-password"
           type="password"
-          autoComplete="password"
+          autoComplete="new-password"
           required
           className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           placeholder="Confirm Password"
