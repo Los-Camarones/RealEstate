@@ -38,7 +38,16 @@ const AdminReviews: React.FC = () => {
   const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      setFile(file);
+
+      //check file size to make sure its less than 1mb
+      if(file.size >= 1000000) {
+        setError("Image size cannot exceed 1mb");
+        return;
+      } else {
+        setError(null);
+      }
+
+
       if (file) {
         setFile(file);
 
@@ -93,7 +102,7 @@ const AdminReviews: React.FC = () => {
       //create temporary variable to hold our selected review
       let updatedReview: ITestimonial = { ...selectedReview};
 
-      //handle change if profile picture was changed
+      //handle change if profile picture was changed and 
       if(newProfilePic && file) {
 
         //convert the file to base64
@@ -303,7 +312,7 @@ const AdminReviews: React.FC = () => {
     setMessage(msg);
     setTimeout(() => {
         setMessage(null);
-    }, 7000); // Alert disappears after 7 seconds
+    }, 10000); // Alert disappears after 10 seconds
 };
 
   useEffect(() => {
@@ -495,6 +504,7 @@ const AdminReviews: React.FC = () => {
         onClick={() => {
           setSelectedReview(null);
           setNewProfilePic(null);
+          setError(null);
         }}
       >
         Close
