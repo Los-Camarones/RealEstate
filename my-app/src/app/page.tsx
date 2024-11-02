@@ -40,7 +40,7 @@ const Page: React.FC = () => {
             </strong>
           </center>
         </div>
-
+        <hr></hr>
         {/* Reviews Section */}
         <div>
           <Reviews1 />

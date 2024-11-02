@@ -1,0 +1,54 @@
+/* Reset padding and margin for body and all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar container styling */
+.navbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures navbar stays on top */
+    padding: 0; /* Remove any padding */
+    margin: 0; /* Remove any margin */
+    box-shadow: none; /* Remove any shadow if previously applied */
+}
+
+/* Page background adjustments to remove top padding */
+.page-background {
+    padding-top: 0;
+    margin: 0;
+}
+
+/* Header or wrapper container adjustments */
+.header-container,
+.navbar-wrapper {
+    display: flex;
+    align-items: center; /* Adjust as necessary */
+    padding: 0;
+    margin: 0;
+}
+
+/* Optional: Add custom styling for navbar links */
+.navbar-container a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333; /* Adjust color */
+}
+
+.navbar-container a:hover {
+    color: #007bff; /* Adjust hover color */
+}
+
+/* Optional: Add styles for main content to avoid overlapping with fixed navbar */
+.main-content {
+    padding-top: 60px; /* Adjust this based on the navbar's height */
+}

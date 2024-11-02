@@ -33,6 +33,8 @@ const Sidebar: React.FC = () => {
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
         { name: "More Info Requests", path: "/Admin/more-info-requests"},
         {name: "Market Sign up Request", path :"/Admin/marketReportSignupRequest" }
+        { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
       ],
     },
     {
@@ -40,7 +42,6 @@ const Sidebar: React.FC = () => {
       icon: <FaBuilding />,
       items: [
         { name: "Property Listings", path: "/Admin/property-listings" },
-        { name: "Property Details", path: "/Admin/property-details" },
       ],
     },
     {
@@ -56,7 +57,7 @@ const Sidebar: React.FC = () => {
       icon: <FaTasks />,
       items: [
         { name: "Testimonials", path: "/Admin/testimonials" },
-        { name: "Home Page Content Management", path: "/Admin/content-management" }
+        { name: "Bio & Contacts", path: "/Admin/information" }
       ],
     },
     {

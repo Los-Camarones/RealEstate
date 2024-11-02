@@ -3,44 +3,52 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import PropertyOrganizerLogin from '../PropertyOrganizerLogin/PropertyOrganizerLogin'; // Import your login component
+import PropertyOrganizerLogin from '../PropertyOrganizerLogin/PropertyOrganizerLogin';
 
 const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
+const dropdownItemStyle = "block px-4 py-2 text-black hover:bg-gray-200";
 
 const NavBar: React.FC = () => {
   const [isSignInPopupOpen, setIsSignInPopupOpen] = useState(false);
-  const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false); // Track when the widget is displayed instead of Sign In button
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Track mobile menu open state
+  const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
 
-  // Function to toggle the Sign In popup
+  // Toggle the Sign In popup
   const toggleSignInPopup = () => {
     setIsSignInPopupOpen(!isSignInPopupOpen);
   };
 
-  // Function to close the Sign In popup and replace the Sign In button with the widget content
+  // Close Sign In popup and show widget
   const closeSignInPopupAndShowWidget = () => {
     setIsSignInPopupOpen(false);
-    setIsWidgetDisplayed(true); // Mark the widget to display in place of the button
+    setIsWidgetDisplayed(true);
   };
 
-  // Function to toggle the mobile menu
+  // Toggle the mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Handle dropdown hover
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
   };
 
   return (
     <>
       <nav className="navbar-container bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 relative z-50">
         <div className="mx-auto flex items-center px-4 lg:px-8">
-          {/* Logo */}
           <Link href="/" passHref>
             <Image src="/logo_.png" alt="logo" width={120} height={120} className="cursor-pointer" priority />
           </Link>
 
-          {/* Spacer */}
           <div className="flex-grow"></div>
 
-          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={toggleMobileMenu}
@@ -53,7 +61,6 @@ const NavBar: React.FC = () => {
             </button>
           </div>
 
-          {/* Desktop Menu */}
           <div className="hidden lg:flex lg:items-center lg:w-auto">
             <Link href="/">
               <button className={buttonStyle}>Home</button>
@@ -66,6 +73,31 @@ const NavBar: React.FC = () => {
             <Link href="/Aboutme">
               <button className={buttonStyle}>About Me</button>
             </Link>
+
+            {/* Buyers Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <Link href="/Buyers">
+                <button className={`buyers-button ${buttonStyle}`}>Buyers</button>
+              </Link>
+
+              {isDropdownOpen && (
+                <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
+                  <Link href="/property-search" className={dropdownItemStyle}>
+                    Search Property
+                  </Link>
+                  <Link href="/property-organizer" className={dropdownItemStyle}>
+                    Get Listing Updates
+                  </Link>
+                  <Link href="/contact" className={dropdownItemStyle}>
+                    Ask me
+                  </Link>
+                </div>
+              )}
+            </div>
 
             <Link href="/Sellers">
               <button className={buttonStyle}>Sellers</button>
@@ -87,10 +119,10 @@ const NavBar: React.FC = () => {
               <button className={buttonStyle}>Contact</button>
             </Link>
 
-            {/* Display the Sign In button OR the plugin content */}
+            {/* Sign In button OR plugin content */}
             {isWidgetDisplayed ? (
               <div className="login-widget relative z-50">
-                <PropertyOrganizerLogin /> {/* Render the plugin in place of the button */}
+                <PropertyOrganizerLogin />
               </div>
             ) : (
               <button className={buttonStyle} onClick={toggleSignInPopup}>
@@ -112,32 +144,33 @@ const NavBar: React.FC = () => {
             <Link href="/Aboutme">
               <button className={buttonStyle + " block w-full text-left py-2"}>About Me</button>
             </Link>
-            <Link href="/Sellers">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Sellers</button>
+            {/* Buyers Dropdown for Mobile */}
+            <Link href="/Buyers">
+              <button className={buttonStyle + " block w-full text-left py-2"}>Buyers</button>
             </Link>
-            <Link href="/GetPreQualified">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Get PreQualified</button>
+            <Link href="/Buyers/Residential" className={buttonStyle + " block w-full text-left py-2"}>
+              Residential Buyers
             </Link>
-            <Link href="/markets">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Communities</button>
+            <Link href="/property-search" className={buttonStyle + " block w-full text-left py-2"}>
+              Search Property
             </Link>
-            <Link href="/valuation">
-              <button className={buttonStyle + " block w-full text-left py-2"}>What's My Home Worth?</button>
+            <Link href="/Buyers/Commercial" className={buttonStyle + " block w-full text-left py-2"}>
+              Commercial Buyers
             </Link>
-            <Link href="/contact">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Contact</button>
+            <Link href="/Sign-up" className={buttonStyle + " block w-full text-left py-2"}>
+              Get Listing Updates
             </Link>
-
-            {/* Mobile Sign In Button */}
-            {isWidgetDisplayed ? (
-              <div className="login-widget relative z-50">
-                <PropertyOrganizerLogin /> {/* Render the plugin in place of the button */}
-              </div>
-            ) : (
-              <button className={buttonStyle + " block w-full text-left py-2"} onClick={toggleSignInPopup}>
-                Sign In
-              </button>
-            )}
+            <Link href="/Buyers/FirstTime" className={buttonStyle + " block w-full text-left py-2"}>
+              First-Time Buyers
+            </Link>
+            <Link href="/contact" className={buttonStyle + " block w-full text-left py-2"}>
+              Ask me
+            </Link>
+            {/* Additional Mobile Links */}
+            {/* ... other mobile links */}
+            <button className={buttonStyle + " block w-full text-left py-2"} onClick={toggleSignInPopup}>
+              Sign In
+            </button>
           </div>
         )}
       </nav>
@@ -146,22 +179,11 @@ const NavBar: React.FC = () => {
       {isSignInPopupOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-md mx-auto max-h-full overflow-y-auto">
-            {/* Close Button (X) */}
-            <button
-              className="absolute top-2 right-2 text-gray-600 text-xl"
-              onClick={closeSignInPopupAndShowWidget} // Clicking X triggers widget replacement
-            >
+            <button className="absolute top-2 right-2 text-gray-600 text-xl" onClick={closeSignInPopupAndShowWidget}>
               &times;
             </button>
-
-            {/* Property Organizer Login */}
             <PropertyOrganizerLogin />
-
-            {/* Cancel Button */}
-            <button
-              className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full"
-              onClick={closeSignInPopupAndShowWidget} // Triggers widget replacement as well
-            >
+            <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full" onClick={closeSignInPopupAndShowWidget}>
               Cancel
             </button>
           </div>
@@ -172,4 +194,3 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
-

@@ -15,7 +15,7 @@ function getAuthToken(req: Request): string | null {
   return token ? `Basic ${token}` : null;  // Return token with Basic auth prefix
 }
 
-// Handle GET requests (Fetch Property Listings)
+// Handle GET requests (Fetch Subscribers)
 export async function GET(req: Request) {
   const token = getAuthToken(req);
 
@@ -24,8 +24,23 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Fetch property listings (you can add pagination or fields as needed)
-    const response = await axios.get('https://www.idxhome.com/api/v1/client/listings.json', {
+    //To do: find a way to show all subscribers
+    //pagination and fields can be passed as query parameters
+    // Fetch all subscribers (with optional pagination/fields if needed look at the API documentation)
+    const url = new URL(req.url);
+
+    const id = url.searchParams.get('id');
+    let API_URL: string;
+    if(id) {
+      API_URL = `https://www.idxhome.com/api/v1/client/listing/{listingId}.json`;
+    } else {
+      const offset = url.searchParams.get('offset') || '0'; // Get 'offset' from query params, default to '0'
+      const limit = url.searchParams.get('limit') || '10'; // limit is defaulted to 10, unless otherwise specified
+      const fields = url.searchParams.get('fields') || '*'; //fields to get specific data, otherwise get everything
+      API_URL = `https://www.idxhome.com/api/v1/client/listings.json?fields=${fields}&offset=${offset}&limit=${limit}`;   
+    }
+
+    const response = await axios.get(API_URL, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -34,12 +49,12 @@ export async function GET(req: Request) {
 
     return NextResponse.json(response.data);
   } catch (error: any) {
-    console.error('Error fetching property listings:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to fetch property listings' }, { status: 500 });
+    console.error('Error fetching listings:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to fetch listings' }, { status: 500 });
   }
 }
 
-// Handle POST requests (Add New Property)
+// Handle POST requests (Add New Subscriber)
 export async function POST(req: Request) {
   const token = getAuthToken(req);
   const body = await req.json();
@@ -49,13 +64,13 @@ export async function POST(req: Request) {
   }
 
   // Validate the request body for required fields
-  if (!body.address || !body.price || !body.bedrooms) {
+  if (!body.firstName || !body.lastName || !body.emailAddress) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
   try {
-    // Add a new property listing
-    const response = await axios.post(`https://www.idxhome.com/api/v1/client/listings.json`, body, {
+    // Add a new subscriber
+    const response = await axios.post(`https://www.idxhome.com/api/v1/client/listings.json`, {}, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -64,37 +79,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response.data, { status: 201 });
   } catch (error: any) {
-    console.error('Error creating property listing:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to create property listing' }, { status: 500 });
-  }
-}
-
-// Handle DELETE requests (Delete Property)
-export async function DELETE(req: Request) {
-  const token = getAuthToken(req);
-  const url = new URL(req.url);
-  const id = url.pathname.split('/').pop();  // Get ID from URL path
-
-  if (!token) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-  }
-
-  if (!id) {
-    return NextResponse.json({ error: 'Missing property ID' }, { status: 400 });
-  }
-
-  try {
-    // Delete the property with the given ID
-    await axios.delete(`https://www.idxhome.com/api/v1/client/listings.json`, {
-      headers: {
-        Authorization: token,
-        Accept: 'application/json',
-      },
-    });
-
-    return NextResponse.json(null, { status: 204 });
-  } catch (error: any) {
-    console.error('Error deleting property listing:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to delete property listing' }, { status: 500 });
+    console.error('Error creating listings:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to create listing' }, { status: 500 });
   }
 }

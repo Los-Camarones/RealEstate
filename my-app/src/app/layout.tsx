@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react"
+
 export const metadata = {
   title: 'Lourdes Mendoza | Real Estate', 
   description: 'Explore expert real estate services in the Sacramento area. Discover homes for sale, community information, and property listings tailored to your needs. Find your dream home today!',
@@ -33,7 +35,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+      {children} 
+      <Analytics />
+      </body>
     </html>
   );
 }
