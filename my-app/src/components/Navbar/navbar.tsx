@@ -146,16 +146,20 @@ const NavBar: React.FC = () => {
               onMouseLeave={handleMouseLeaveSignIn}>
                 
               {/* Show the Sign in button */}
-              <button className={buttonStyle} onClick={toggleSignInPopup}>
+              <button className={buttonStyle}>
                 Sign In
               </button>
 
               {/* When the user hovers, show drop down options */}
               {isDropdownOpenSignIn && (
                 <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
-                <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
+                {/* <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
                   User Login
-                </button>
+                </button> */}
+
+                <Link href="/PropertyOrganizer" className={dropdownItemStyle}>
+                  User Login
+                </Link>
                 <Link href="/Sign-in" className={dropdownItemStyle}>
                   Admin Login
                 </Link>
