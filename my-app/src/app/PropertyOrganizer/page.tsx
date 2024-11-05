@@ -1,57 +1,62 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import PropertyOrganizerLogin from '../../components/PropertyOrganizerLogin/PropertyOrganizerLogin';
-import NavBar from '../../components/Navbar/navbar';
-import Head from 'next/head';
-import '../globals.css'; 
-
+import React, { useEffect } from "react";
+import PropertyOrganizerLogin from "../../components/PropertyOrganizerLogin/PropertyOrganizerLogin";
+import NavBar from "../../components/Navbar/navbar";
+import Head from "next/head";
+import "../globals.css";
 
 const PropertyOrganizerPage: React.FC = () => {
-
   function isLoggedIn() {
 
-    //select the ihomefinder div 
-    const ihomefinderDiv = document.getElementsByClassName('ihf-container')[0];
+    //select the ihomefinder div, which is our shadown host
+    const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
 
-    console.log(ihomefinderDiv);
+    if (shadowHost && shadowHost.shadowRoot) {
+      //Access the shadow root (open shadow DOM)
+      const shadowRoot = shadowHost.shadowRoot;
 
-    //get all buttons within the ihomefinder div
-    const buttonsList = ihomefinderDiv.querySelectorAll('button');
-    // const buttons = document.querySelectorAll("button");
+      //query all our spans
+      const spans = shadowRoot.querySelectorAll("span");
 
-    const spansList = document.getElementsByClassName('ui-button-label');
-    console.log(spansList);
-    console.log(buttonsList);
+      //Check if any span contains "sign in"
+      spans.forEach((span) => {
+        console.log(span.textContent);
+        if (span.textContent) {
+          const text = span.textContent.toLowerCase();
+
+          if (text.includes("sign in")) {
+            console.log("not logged in");
+            return false;
+          }
+        }
+      });
+    } else {
+      //shadow dom not present. return false just incase
+      return false;
+    }
+
+    //sign in is not present. therefore is logged in
+    console.log("logged in");
+    return true;
+  }
+
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   // This function will run once the entire DOM is fully loaded
+  //   console.log("DOM fully loaded and parsed");
+  
+  //   // Call your function here
+  //   isLoggedIn();
+  // });
 
 
-    let signInButton;
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      isLoggedIn();
+    }, 3000); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
 
-//     //printing all buttons 
-//     console.log(buttonsList);
-//     buttonsList.forEach(button => {
-//       console.log(button);
-//     const span = button.querySelector("span");
-//     if (span && span.textContent === "Sign In") {
-//         signInButton = button;
-//         console.log("not logged in");
-//         return false;
-//     }
-//   }
-// );
-// console.log("logged in ");
-// return true;
-}
-
-useEffect(() =>{
-  const timeoutId = setTimeout(() => {
-
-    isLoggedIn();
-
-  }, 3000); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
-
-  return () => clearTimeout(timeoutId);
-}, [])
+    return () => clearTimeout(timeoutId);
+  }, []);
   return (
     <>
       <Head>
@@ -64,7 +69,7 @@ useEffect(() =>{
       <NavBar />
       <main>
         <h2>User Login</h2>
-        <div style={{ paddingLeft: '200px', paddingRight:'200px' }}>
+        <div style={{ paddingLeft: "200px", paddingRight: "200px" }}>
           <PropertyOrganizerLogin />
         </div>
       </main>
