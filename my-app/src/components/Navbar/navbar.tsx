@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import PropertyOrganizerLogin from '../PropertyOrganizerLogin/PropertyOrganizerLogin';
-import useAuth from '@/app/hooks/useAuth';
-import userAuth from '@/app/hooks/user/userAuth';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import PropertyOrganizerLogin from "../PropertyOrganizerLogin/PropertyOrganizerLogin";
+import useAuth from "@/app/hooks/useAuth";
+import userAuth from "@/app/hooks/user/userAuth";
 
-const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
+const buttonStyle =
+  "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
 const dropdownItemStyle = "block px-4 py-2 text-black hover:bg-gray-200";
 
 const NavBar: React.FC = () => {
@@ -16,15 +17,15 @@ const NavBar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
   const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const [nextRoute, setNextRoute] = useState<String>('/propertyOrganizer');
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
+  const adminLoggedIn = useAuth(); // Check if the user is authenticated
+  const userLoggedIn = userAuth();
 
   // Toggle the Sign In popup
   const toggleSignInPopup = () => {
     setIsSignInPopupOpen(true);
     setIsWidgetDisplayed(true);
-
   };
 
   // Close Sign In popup and show widget
@@ -56,27 +57,34 @@ const NavBar: React.FC = () => {
     setIsDropdownOpenSignIn(false);
   };
 
-  async function checkLogin{
-    const adminLoggedIn = useAuth();  // Check if the user is authenticated
-    const userLoggedIn = userAuth();
-
-    if(adminLoggedIn) {
-      setIsLoggedIn(true)
-      setNextRoute('/Admin')
+  async function checkLogin() {
+    if (adminLoggedIn) {
+      setIsLoggedIn(true);
+      setNextRoute("/Admin");
     } else if (userLoggedIn) {
       setIsLoggedIn(true);
-    } else 
+    } else {
       setIsLoggedIn(false);
-
+    }
   }
 
+  useEffect(() => {
+    checkLogin();
+  }, [adminLoggedIn, userLoggedIn]);
 
   return (
     <>
       <nav className="navbar-container bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 relative z-50">
         <div className="mx-auto flex items-center px-4 lg:px-8">
           <Link href="/" passHref>
-            <Image src="/logo_.png" alt="logo" width={120} height={120} className="cursor-pointer" priority />
+            <Image
+              src="/logo_.png"
+              alt="logo"
+              width={120}
+              height={120}
+              className="cursor-pointer"
+              priority
+            />
           </Link>
 
           <div className="flex-grow"></div>
@@ -87,8 +95,19 @@ const NavBar: React.FC = () => {
               className="text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500"
               aria-label="Open Menu"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
               </svg>
             </button>
           </div>
@@ -113,7 +132,9 @@ const NavBar: React.FC = () => {
               onMouseLeave={handleMouseLeave}
             >
               <Link href="/Buyers">
-                <button className={`buyers-button ${buttonStyle}`}>Buyers</button>
+                <button className={`buyers-button ${buttonStyle}`}>
+                  Buyers
+                </button>
               </Link>
 
               {isDropdownOpen && (
@@ -121,7 +142,10 @@ const NavBar: React.FC = () => {
                   <Link href="/property-search" className={dropdownItemStyle}>
                     Search Property
                   </Link>
-                  <Link href="/property-organizer" className={dropdownItemStyle}>
+                  <Link
+                    href="/property-organizer"
+                    className={dropdownItemStyle}
+                  >
                     Get Listing Updates
                   </Link>
                   <Link href="/contact" className={dropdownItemStyle}>
@@ -151,43 +175,40 @@ const NavBar: React.FC = () => {
               <button className={buttonStyle}>Contact</button>
             </Link>
 
-            {/* Sign In button OR plugin content */}
-            <div>
-            {isWidgetDisplayed ? (
-              <div className="login-widget relative z-50">
-                 {/* <PropertyOrganizerLogin /> */}
-              </div>
-            ) : (
+            {!isLoggedIn && (
+              <div
+                className="relative"
+                onMouseEnter={handleMouseEnterSignIn}
+                onMouseLeave={handleMouseLeaveSignIn}
+              >
+                <button className={buttonStyle}>Sign in </button>
+                {/* When the user hovers, show drop down options */}
 
-              // Show if a user isn't signed in
-              <div className="relative"
-              onMouseEnter={handleMouseEnterSignIn}
-              onMouseLeave={handleMouseLeaveSignIn}>
-                
-              {/* Show the Sign in button */}
-              <button className={buttonStyle}>
-                Sign In
-              </button>
-
-              {/* When the user hovers, show drop down options */}
-              {isDropdownOpenSignIn && (
-                <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
-                {/* <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
+                {isDropdownOpenSignIn && (
+                  <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
+                    {/* <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
                   User Login
                 </button> */}
 
-                <Link href="/PropertyOrganizer" className={dropdownItemStyle}>
-                  User Login
-                </Link>
-                <Link href="/Sign-in" className={dropdownItemStyle}>
-                  Admin Login
-                </Link>
-              </div>
-
-              )}
+                    <Link
+                      href="/PropertyOrganizer"
+                      className={dropdownItemStyle}
+                    >
+                      User Login
+                    </Link>
+                    <Link href="/Sign-in" className={dropdownItemStyle}>
+                      Admin Login
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
-            </div>
+
+            {isLoggedIn && (
+              <button className={buttonStyle}>
+                <Link href={nextRoute}>Profile</Link>
+              </button>
+            )}
           </div>
         </div>
 
@@ -195,39 +216,68 @@ const NavBar: React.FC = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden bg-blue-300 w-full py-4 px-2 absolute left-0 top-full z-40">
             <Link href="/">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Home</button>
+              <button className={buttonStyle + " block w-full text-left py-2"}>
+                Home
+              </button>
             </Link>
             <Link href="/property-search">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Listings</button>
+              <button className={buttonStyle + " block w-full text-left py-2"}>
+                Listings
+              </button>
             </Link>
             <Link href="/Aboutme">
-              <button className={buttonStyle + " block w-full text-left py-2"}>About Me</button>
+              <button className={buttonStyle + " block w-full text-left py-2"}>
+                About Me
+              </button>
             </Link>
             {/* Buyers Dropdown for Mobile */}
             <Link href="/Buyers">
-              <button className={buttonStyle + " block w-full text-left py-2"}>Buyers</button>
+              <button className={buttonStyle + " block w-full text-left py-2"}>
+                Buyers
+              </button>
             </Link>
-            <Link href="/Buyers/Residential" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/Buyers/Residential"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               Residential Buyers
             </Link>
-            <Link href="/property-search" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/property-search"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               Search Property
             </Link>
-            <Link href="/Buyers/Commercial" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/Buyers/Commercial"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               Commercial Buyers
             </Link>
-            <Link href="/Sign-up" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/Sign-up"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               Get Listing Updates
             </Link>
-            <Link href="/Buyers/FirstTime" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/Buyers/FirstTime"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               First-Time Buyers
             </Link>
-            <Link href="/contact" className={buttonStyle + " block w-full text-left py-2"}>
+            <Link
+              href="/contact"
+              className={buttonStyle + " block w-full text-left py-2"}
+            >
               Ask me
             </Link>
             {/* Additional Mobile Links */}
             {/* ... other mobile links */}
-            <button className={buttonStyle + " block w-full text-left py-2"} onClick={toggleSignInPopup}>
+            <button
+              className={buttonStyle + " block w-full text-left py-2"}
+              onClick={toggleSignInPopup}
+            >
               Sign In
             </button>
           </div>
@@ -238,11 +288,17 @@ const NavBar: React.FC = () => {
       {isSignInPopupOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg relative w-full max-w-md mx-auto max-h-full overflow-y-auto">
-            <button className="absolute top-2 right-2 text-gray-600 text-xl" onClick={closeSignInPopupAndShowWidget}>
+            <button
+              className="absolute top-2 right-2 text-gray-600 text-xl"
+              onClick={closeSignInPopupAndShowWidget}
+            >
               &times;
             </button>
             <PropertyOrganizerLogin />
-            <button className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full" onClick={closeSignInPopupAndShowWidget}>
+            <button
+              className="mt-4 bg-red-500 text-white py-2 px-4 rounded w-full"
+              onClick={closeSignInPopupAndShowWidget}
+            >
               Cancel
             </button>
           </div>
