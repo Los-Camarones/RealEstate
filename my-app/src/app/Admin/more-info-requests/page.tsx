@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import "../../globals.css";
 import NavBar from '../../../components/Navbar/navbar';
 import ReactPaginate from 'react-paginate';
-import Sidebar from '../../../components/Admin/Sidebar';
+
 
 
 const MoreInfoRequestsPage: React.FC = () => {
@@ -198,7 +198,6 @@ if (loading) {
 
 return (
   <div className="flex">
-    <Sidebar />
     <div className="flex-grow">
       <NavBar />
       <div className="p-4">

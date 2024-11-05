@@ -32,15 +32,10 @@ const Sidebar: React.FC = () => {
         { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
         { name: "More Info Requests", path: "/Admin/more-info-requests"},
-<<<<<<< HEAD
         { name: "Market Sign up Request", path: "/Admin/market-report-signup-requests"},
         { name: "Open Home Report Signup Requests", path:"/Admin/open-home-report-signup-requests"},
-=======
->>>>>>> parent of a04f894 (Merge pull request #73 from Los-Camarones/dp-280)
         { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
         {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"},
-        { name: "Market Report Sign-up Requests", path: "/Admin/marketReportSignupRequests"},
-        {name: "Open Home Report Sign-up Requests", path: "/Admin/openHomeReportSignupRequests"}
       ],
     },
     {
