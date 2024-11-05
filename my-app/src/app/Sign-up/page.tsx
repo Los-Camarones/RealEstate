@@ -14,7 +14,7 @@ const SignUpPage: React.FC = () => {
         <NavBar></NavBar>
       </header>
 
-      <SignUp ></SignUp>
+      <SignUp> </SignUp>
 
 
     </main>
