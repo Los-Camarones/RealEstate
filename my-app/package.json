@@ -55,6 +55,7 @@
     "@testing-library/react": "^16.0.1",
     "@types/axios": "^0.14.0",
     "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "20.12.7",
     "@types/react": "18.2.77",
     "autoprefixer": "^10.4.19",

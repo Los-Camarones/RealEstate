@@ -5,10 +5,11 @@ import PropertyOrganizerLogin from "../../components/PropertyOrganizerLogin/Prop
 import NavBar from "../../components/Navbar/navbar";
 import Head from "next/head";
 import "../globals.css";
+import { addToken, removeToken } from "@/actions/UserIhomfinder/StateActions";
+import axios from "axios";
 
 const PropertyOrganizerPage: React.FC = () => {
   function isLoggedIn() {
-
     //select the ihomefinder div, which is our shadown host
     const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
 
@@ -23,7 +24,7 @@ const PropertyOrganizerPage: React.FC = () => {
       spans.forEach((span) => {
         console.log(span.textContent);
         if (span.textContent) {
-          const text = span.textContent.toLowerCase();
+          const text = span.textContent.trim().toLowerCase();
 
           if (text.includes("sign in")) {
             console.log("not logged in");
@@ -33,6 +34,8 @@ const PropertyOrganizerPage: React.FC = () => {
       });
     } else {
       //shadow dom not present. return false just incase
+      console.log("false not logged in");
+
       return false;
     }
 
@@ -41,18 +44,29 @@ const PropertyOrganizerPage: React.FC = () => {
     return true;
   }
 
-  // document.addEventListener('DOMContentLoaded', () => {
-  //   // This function will run once the entire DOM is fully loaded
-  //   console.log("DOM fully loaded and parsed");
-  
-  //   // Call your function here
-  //   isLoggedIn();
-  // });
-
+  async function handleToken() {
+    if (isLoggedIn()) {
+      //set token
+      try {
+        const response = await axios.post("./api/user/setCookie");
+        console.log(response);
+      } catch (error) {
+        console.log("error occured");
+      }
+    } else {
+      //delete token
+      try {
+        const response = await axios.post("./api/user/deleteCookie");
+        console.log(response);
+      } catch (error) {
+        console.log("error occured");
+      }
+    }
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      isLoggedIn();
+      handleToken();
     }, 3000); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
 
     return () => clearTimeout(timeoutId);

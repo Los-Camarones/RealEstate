@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import PropertyOrganizerLogin from '../PropertyOrganizerLogin/PropertyOrganizerLogin';
+import useAuth from '@/app/hooks/useAuth';
+import userAuth from '@/app/hooks/user/userAuth';
 
 const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
 const dropdownItemStyle = "block px-4 py-2 text-black hover:bg-gray-200";
@@ -14,6 +16,8 @@ const NavBar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
   const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [nextRoute, setNextRoute] = useState<String>('/propertyOrganizer');
 
 
   // Toggle the Sign In popup
@@ -51,6 +55,21 @@ const NavBar: React.FC = () => {
   const handleMouseLeaveSignIn = () => {
     setIsDropdownOpenSignIn(false);
   };
+
+  async function checkLogin{
+    const adminLoggedIn = useAuth();  // Check if the user is authenticated
+    const userLoggedIn = userAuth();
+
+    if(adminLoggedIn) {
+      setIsLoggedIn(true)
+      setNextRoute('/Admin')
+    } else if (userLoggedIn) {
+      setIsLoggedIn(true);
+    } else 
+      setIsLoggedIn(false);
+
+  }
+
 
   return (
     <>
