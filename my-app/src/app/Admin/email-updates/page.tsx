@@ -161,7 +161,6 @@ const fetchRequestDetails = async (id: string) => {
 
     return (
         <div className="flex">
-         
             <div className="flex-grow">
                 <NavBar />
                 <div className="p-4">
