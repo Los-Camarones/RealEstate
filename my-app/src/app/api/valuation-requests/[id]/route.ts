@@ -15,24 +15,24 @@ function getAuthToken(req: Request): string | null {
   return token ? `Basic ${token}` : null;  // Return token with Basic auth prefix
 }
 
-// Handle DELETE requests (Delete Market Report Signup) based on dynamic ID in URL
+// Handle DELETE requests (Delete Valuation Request) based on dynamic id in URL
 export async function DELETE(req: Request) {
   const token = getAuthToken(req);
   const url = new URL(req.url);
-  const id = url.pathname.split('/').pop(); // Get ID from URL path
+  const valuationRequestId = url.pathname.split('/').pop();  // Get valuationRequestId from URL path
 
   if (!token) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  if (!id) {
-    return NextResponse.json({ error: 'Missing Market Report Signup ID' }, { status: 400 });
+  if (!valuationRequestId) {
+    return NextResponse.json({ error: 'Missing valuation request ID' }, { status: 400 });
   }
 
   try {
-    // Delete the Market Report Signup with the given ID
-    console.log(`https://www.idxhome.com/api/v1/client/marketReportSignups/${id}.json`);
-    await axios.delete(`https://www.idxhome.com/api/v1/client/marketReportSignups/${id}.json`, {
+    // Delete the valuation request with the given ID
+    console.log(`https://www.idxhome.com/api/v1/client/valuationRequest/${valuationRequestId}.json`);
+    await axios.delete(`https://www.idxhome.com/api/v1/client/valuationRequest/${valuationRequestId}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -41,7 +41,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json(null, { status: 204 });
   } catch (error: any) {
-    console.error('Error deleting Market Report Signup:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to delete Market Report Signup' }, { status: 500 });
+    console.error('Error deleting valuation request:', error.response?.data || error.message);
+    return NextResponse.json({ error: 'Failed to delete valuation request' }, { status: 500 });
   }
 }

@@ -1,0 +1,46 @@
+/* about.css */
+
+body {
+    background-color: #b3d9ff; /* Pastel blue background */
+    font-family: 'Roboto', sans-serif; /* Professional-looking font */
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+  }
+  
+  h1 {
+    color: #299FDD;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  img {
+    border-radius: 8px; /* Softens image edges for a cleaner look */
+    max-width: 100%;
+    height: auto;
+  }
+  
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
