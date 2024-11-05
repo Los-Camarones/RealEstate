@@ -23,22 +23,25 @@
       }
     ],
     "strictNullChecks": true,
-    "baseUrl": ".",                
-    "paths": {                      
-      "@/*": ["./src/*"]
-    }
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "cypress/**/*.ts",              
-    "cypress/**/*.tsx"              
+    "cypress/**/*.ts",
+    "cypress/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
-    "cypress/**/*.cy.ts",  // Exclude Cypress tests from Jest types
-    "cypress/**/*.cy.tsx"  // Exclude Cypress tests from Jest types
+    "cypress/**/*.cy.ts", // Exclude Cypress tests from Jest types
+    "cypress/**/*.cy.tsx" // Exclude Cypress tests from Jest types
   ]
 }
