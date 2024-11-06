@@ -20,42 +20,47 @@ const PropertyOrganizerPage: React.FC = () => {
       //query all our spans
       const spans = shadowRoot.querySelectorAll("span");
 
-      //Check if any span contains "sign in"
-      spans.forEach((span) => {
-        console.log(span.textContent);
-        if (span.textContent) {
-          const text = span.textContent.trim().toLowerCase();
+      // Check if any span contains "sign in"
+      if (spans && spans.length > 0) {
+        for (let i = 0; i < spans.length; i++) {
+          const span = spans[i];
+          console.log(span.textContent);
 
-          if (text.includes("sign in")) {
-            console.log("not logged in");
-            return false;
+          if (span.textContent) {
+            const text = span.textContent.trim().toLowerCase();
+
+            if (text.includes("sign in")) {
+              console.log("not logged in");
+              return false;  // Exit the function immediately if "sign in" is found
+            }
           }
         }
-      });
-    } else {
-      //shadow dom not present. return false just incase
-      console.log("false not logged in");
+      } else {
+        // Shadow DOM not present. Return false just in case
+        console.log("false not logged in");
+        return false;
+      }
 
-      return false;
+      // "sign in" is not present. Therefore, the user is logged in
+      console.log("logged in");
+      return true;
     }
-
-    //sign in is not present. therefore is logged in
-    console.log("logged in");
-    return true;
   }
+
 
   async function handleToken() {
     if (isLoggedIn()) {
       //set token
       try {
+        console.log('adding token');
         const response = await axios.post("./api/user/setCookie");
-        console.log(response);
       } catch (error) {
         console.log("error occured");
       }
     } else {
       //delete token
       try {
+        console.log('delete token');
         const response = await axios.post("./api/user/deleteCookie");
         console.log(response);
       } catch (error) {
@@ -65,12 +70,51 @@ const PropertyOrganizerPage: React.FC = () => {
   }
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      handleToken();
-    }); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
 
-    return () => clearTimeout(timeoutId);
-  }, [PropertyOrganizerLogin]);
+    //define function to run on each mutation 
+    const handleMutation = (mutationList: Array<any>) => {
+      console.log('shadow dom changed');
+      handleToken();
+    }
+
+    //set up mutationObserver
+    const observer = new MutationObserver(handleMutation);
+
+    const initializeObserver = () => {
+
+      //select the shadow root
+      const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
+      if (shadowHost && shadowHost.shadowRoot) {
+
+        //select root
+        const shadowRoot = shadowHost.shadowRoot;
+
+        handleMutation([{ type: 'initial' }]);
+
+        observer.observe(shadowRoot, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          characterData: true
+        });
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      initializeObserver();
+      console.log('document ready');
+    } else {
+      window.addEventListener('load', initializeObserver);
+      console.log('document loading');
+    }
+
+    //clean up observer on component unmount 
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('load', initializeObserver);
+    };
+  }, []);
+
   return (
     <>
       <Head>

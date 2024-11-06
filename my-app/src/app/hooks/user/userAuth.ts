@@ -15,8 +15,7 @@ const router = useRouter();
   useEffect(() => {
     const checkCookie = () => {
       const cookie = document.cookie.split('; ').find(row => row.startsWith('userStateToken='));
-      console.log(cookie);
-      console.log('check user auth');
+      console.log('checking cookie' ,cookie);
       if(cookie) {
         const value = cookie.split('=')[1];
         console.log('value' , value);

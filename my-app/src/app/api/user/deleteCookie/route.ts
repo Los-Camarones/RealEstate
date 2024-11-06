@@ -6,7 +6,10 @@ import { NextResponse } from 'next/server';
 
 export async function POST() {
   const res = NextResponse.json({ success: true });
+
   // Clear the token by setting an expired cookie
-  res.headers.set('Set-Cookie', 'userStateToken=; Max-Age=0; Path=/');
+  res.cookies.delete('userStateToken');
+  res.headers.delete('userStateToken');
+
   return res;
 }
