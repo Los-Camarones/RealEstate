@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import PropertyOrganizerLogin from "../PropertyOrganizerLogin/PropertyOrganizerLogin";
-import useAuth from "@/app/hooks/useAuth";
 import userAuth from "@/app/hooks/user/userAuth";
+import adminAuth from "@/app/hooks/admin/adminAuth";
 
 const buttonStyle =
   "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
@@ -19,7 +19,7 @@ const NavBar: React.FC = () => {
   const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
-  const adminLoggedIn = useAuth(); // Check if the user is authenticated
+  const adminLoggedIn = adminAuth(); // Check if the user is authenticated
   const userLoggedIn = userAuth();
 
   // Toggle the Sign In popup
@@ -61,14 +61,18 @@ const NavBar: React.FC = () => {
     if (adminLoggedIn) {
       setIsLoggedIn(true);
       setNextRoute("/Admin");
+      console.log("admin logged in");
     } else if (userLoggedIn) {
       setIsLoggedIn(true);
+      console.log("user logged in");
     } else {
       setIsLoggedIn(false);
+      console.log("no one logged in");
     }
   }
 
   useEffect(() => {
+    setIsDropdownOpenSignIn(false); //force render for some reason to allow dropdown on first render
     checkLogin();
   }, [adminLoggedIn, userLoggedIn]);
 

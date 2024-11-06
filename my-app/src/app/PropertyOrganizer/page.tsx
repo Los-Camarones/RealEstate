@@ -67,10 +67,10 @@ const PropertyOrganizerPage: React.FC = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       handleToken();
-    }, 3000); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
+    }); // Adjust the delay time in milliseconds (3000ms = 3 seconds)
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [PropertyOrganizerLogin]);
   return (
     <>
       <Head>

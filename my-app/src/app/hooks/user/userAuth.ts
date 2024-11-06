@@ -9,19 +9,27 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const userAuth = () => {
-const [hasCookie, setHasCookie] = useState<boolean>(false);
+const [auth, setAuth] = useState<boolean>(false);
 const router = useRouter();
 
   useEffect(() => {
     const checkCookie = () => {
-      const cookie = document.cookie.split('; ').find(row => row.startsWith('userStateCookie=true'));
-      setHasCookie(!!cookie);
+      const cookie = document.cookie.split('; ').find(row => row.startsWith('userStateToken='));
+      console.log(cookie);
+      console.log('check user auth');
+      if(cookie) {
+        const value = cookie.split('=')[1];
+        console.log('value' , value);
+        if (value) {
+          setAuth(true)
+        }
+      }
     };
     
     checkCookie();
   }, []);
 
-  return hasCookie;
+  return auth;
 };
 
 export default userAuth;
