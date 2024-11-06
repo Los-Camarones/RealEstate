@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styles from "./TestimonialForm.module.css";
 import { getPublicURL, uploadProfilePicture } from "@/actions/BucketActions";
 import { addTestimonial } from "@/actions/TestimonialsActions";
-import useAuth from "@/app/hooks/useAuth";
 
 const UserTestimonialForm = () => {
   const blank_url_profile_pic =
@@ -161,13 +160,6 @@ const UserTestimonialForm = () => {
         };
       });
     }
-    const auth = useAuth();  // Check if the user is authenticated
-  
-    if (!auth) {
-      // If the user is not authenticated, show a loading spinner or redirect
-      return <div></div>;
-    }
-
     return (
       <div className={styles.container}>
         {!formSubmitted ? (
