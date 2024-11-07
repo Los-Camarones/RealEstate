@@ -6,6 +6,8 @@ import Image from "next/image";
 import PropertyOrganizerLogin from "../PropertyOrganizerLogin/PropertyOrganizerLogin";
 import userAuth from "@/app/hooks/user/userAuth";
 import adminAuth from "@/app/hooks/admin/adminAuth";
+import { useAuth } from "@/actions/AuthContext";
+import { divide } from "cypress/types/lodash";
 
 const buttonStyle =
   "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
@@ -20,7 +22,7 @@ const NavBar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
   const adminLoggedIn = adminAuth(); // Check if the user is authenticated
-  const userLoggedIn = userAuth();
+  const { isAuthenticated } = useAuth();
 
   // Toggle the Sign In popup
   const toggleSignInPopup = () => {
@@ -58,11 +60,13 @@ const NavBar: React.FC = () => {
   };
 
   async function checkLogin() {
+    console.log('running user auth in navbar' ,isAuthenticated);
+
     if (adminLoggedIn) {
       setIsLoggedIn(true);
       setNextRoute("/Admin");
       console.log("admin logged in");
-    } else if (userLoggedIn) {
+    } else if (isAuthenticated) {
       setIsLoggedIn(true);
       console.log("user logged in");
     } else {
@@ -74,7 +78,7 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     setIsDropdownOpenSignIn(false); //force render for some reason to allow dropdown on first render
     checkLogin();
-  }, [adminLoggedIn, userLoggedIn]);
+  }, [adminLoggedIn,isAuthenticated]);
 
   return (
     <>
@@ -178,6 +182,9 @@ const NavBar: React.FC = () => {
             <Link href="/contact">
               <button className={buttonStyle}>Contact</button>
             </Link>
+            {isAuthenticated && (
+              <button>test</button>
+            )}
 
             {!isLoggedIn && (
               <div

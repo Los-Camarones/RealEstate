@@ -1,3 +1,5 @@
+import { AuthProvider } from "@/actions/AuthContext";
+
 export const metadata = {
   title: 'Lourdes Mendoza | Real Estate', 
   description: 'Explore expert real estate services in the Sacramento area. Discover homes for sale, community information, and property listings tailored to your needs. Find your dream home today!',
@@ -33,7 +35,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+          </AuthProvider>
+      </body>
     </html>
   );
 }

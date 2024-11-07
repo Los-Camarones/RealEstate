@@ -5,10 +5,14 @@ import PropertyOrganizerLogin from "../../components/PropertyOrganizerLogin/Prop
 import NavBar from "../../components/Navbar/navbar";
 import Head from "next/head";
 import "../globals.css";
-import { addToken, removeToken } from "@/actions/UserIhomfinder/StateActions";
+import Cookies from "js-cookie";
 import axios from "axios";
+import userAuth from "../hooks/user/userAuth";
+import { useAuth } from "@/actions/AuthContext";
 
 const PropertyOrganizerPage: React.FC = () => {
+  const { checkAuthStatus } = useAuth();
+
   function isLoggedIn() {
     //select the ihomefinder div, which is our shadown host
     const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
@@ -24,7 +28,7 @@ const PropertyOrganizerPage: React.FC = () => {
       if (spans && spans.length > 0) {
         for (let i = 0; i < spans.length; i++) {
           const span = spans[i];
-          console.log(span.textContent);
+          //console.log(span.textContent);
 
           if (span.textContent) {
             const text = span.textContent.trim().toLowerCase();
@@ -48,12 +52,14 @@ const PropertyOrganizerPage: React.FC = () => {
   }
 
 
+
   async function handleToken() {
     if (isLoggedIn()) {
       //set token
       try {
         console.log('adding token');
         const response = await axios.post("./api/user/setCookie");
+
       } catch (error) {
         console.log("error occured");
       }
@@ -73,8 +79,8 @@ const PropertyOrganizerPage: React.FC = () => {
 
     //define function to run on each mutation 
     const handleMutation = (mutationList: Array<any>) => {
-      console.log('shadow dom changed');
       handleToken();
+      checkAuthStatus();
     }
 
     //set up mutationObserver
@@ -95,14 +101,14 @@ const PropertyOrganizerPage: React.FC = () => {
           childList: true,
           subtree: true,
           attributes: true,
-          characterData: true
+          characterData: false
         });
       }
     };
 
     if (document.readyState === 'complete') {
-      initializeObserver();
       console.log('document ready');
+      initializeObserver();
     } else {
       window.addEventListener('load', initializeObserver);
       console.log('document loading');

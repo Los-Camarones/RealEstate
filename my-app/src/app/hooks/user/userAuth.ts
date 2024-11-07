@@ -26,7 +26,7 @@ const router = useRouter();
     };
     
     checkCookie();
-  }, []);
+  }, [router]);
 
   return auth;
 };
