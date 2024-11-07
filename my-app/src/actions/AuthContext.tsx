@@ -13,10 +13,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkAuthStatus = () => {
     const cookie = document.cookie.split('; ').find(row => row.startsWith('userStateToken='));
-    const cookies = document.cookie.split('; ');
-    cookies.forEach(cookie => {
-      console.log(cookie);
-    });
     console.log('checking cookie' ,cookie);
     if(cookie) {
       const value = cookie.split('=')[1];
@@ -25,11 +21,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log("auth user cookie found and returning true");
         setIsAuthenticated(true)
       }
+    } else{
+      setIsAuthenticated(false);
     }
-    setIsAuthenticated(false);
   };
 
   useEffect(() => {
+    // const interval = setInterval(() => {
+    //   checkAuthStatus();
+    // }, 1000); // Polling every second; adjust as needed
     checkAuthStatus();
   }, []);
 

@@ -23,6 +23,8 @@ const NavBar: React.FC = () => {
   const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
   const adminLoggedIn = adminAuth(); // Check if the user is authenticated
   const { isAuthenticated } = useAuth();
+  const [forceRender, setForceRender] = useState(false);
+
 
   // Toggle the Sign In popup
   const toggleSignInPopup = () => {
@@ -78,6 +80,7 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     setIsDropdownOpenSignIn(false); //force render for some reason to allow dropdown on first render
     checkLogin();
+    setForceRender(!forceRender);
   }, [adminLoggedIn,isAuthenticated]);
 
   return (
