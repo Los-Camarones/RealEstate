@@ -1,24 +1,27 @@
+/**
+ * Checks if user is logged in based on their cookie state.
+ */
+
 "use client";
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type AuthContextType = {
-  isAuthenticated: boolean;
+  isUserAuthenticated: boolean;
   checkAuthStatus: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isUserAuthenticated, setIsAuthenticated] = useState(false);
 
   const checkAuthStatus = () => {
     const cookie = document.cookie.split('; ').find(row => row.startsWith('userStateToken='));
-    console.log('checking cookie' ,cookie);
     if(cookie) {
       const value = cookie.split('=')[1];
-      console.log('value' , value);
       if (value) {
-        console.log("auth user cookie found and returning true");
+        console.log("User logged in authcontext and returning true");
         setIsAuthenticated(true)
       }
     } else{
@@ -31,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, checkAuthStatus }}>
+    <AuthContext.Provider value={{ isUserAuthenticated, checkAuthStatus }}>
       {children}
     </AuthContext.Provider>
   );

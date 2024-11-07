@@ -7,12 +7,17 @@ import Head from "next/head";
 import "../globals.css";
 import Cookies from "js-cookie";
 import axios from "axios";
-import userAuth from "../hooks/user/userAuth";
 import { useAuth } from "@/actions/AuthContext";
 
 const PropertyOrganizerPage: React.FC = () => {
   const { checkAuthStatus } = useAuth();
 
+  /**
+   * Function to see if user is logged in based on webscraping on ihomefinder shadowDom
+   * If "sign in" is present, user is not logged in
+   * else, user must be logged in.
+   * @returns boolean
+   */
   function isLoggedIn() {
     //select the ihomefinder div, which is our shadown host
     const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
@@ -34,31 +39,34 @@ const PropertyOrganizerPage: React.FC = () => {
             const text = span.textContent.trim().toLowerCase();
 
             if (text.includes("sign in")) {
-              console.log("not logged in");
+              // console.log("not logged in");
               return false;  // Exit the function immediately if "sign in" is found
             }
           }
         }
       } else {
         // Shadow DOM not present. Return false just in case
-        console.log("false not logged in");
+        // console.log("false not logged in");
         return false;
       }
 
       // "sign in" is not present. Therefore, the user is logged in
-      console.log("logged in");
+      // console.log("logged in");
       return true;
     }
   }
 
 
 
+  /**
+   * Handles token set/delete based on if the user is logged in
+   */
   async function handleToken() {
     if (isLoggedIn()) {
       //set token
       try {
-        console.log('adding token');
         const response = await axios.post("./api/user/setCookie");
+        console.log('added token');
 
       } catch (error) {
         console.log("error occured");
@@ -66,8 +74,8 @@ const PropertyOrganizerPage: React.FC = () => {
     } else {
       //delete token
       try {
-        console.log('delete token');
         const response = await axios.post("./api/user/deleteCookie");
+        console.log('token deleted');
       } catch (error) {
         console.log("error occured");
       }
@@ -76,49 +84,57 @@ const PropertyOrganizerPage: React.FC = () => {
 
   useEffect(() => {
 
-    //define function to run on each mutation 
-    const handleMutation = (mutationList: Array<any>) => {
-      handleToken();
-      checkAuthStatus();
+    // Define function to handle changes in the observed element's mutations
+    const handleMutation = async (mutationList: Array<any>) => {
+      
+        // Ensure token is properly set before checking authentication status
+        await handleToken();  
+        checkAuthStatus();    
     }
 
-    //set up mutationObserver
+    // Initialize a MutationObserver to monitor changes within the targeted element (Shadow DOM)
     const observer = new MutationObserver(handleMutation);
 
+    // Function to set up and start the observer if the target element and its Shadow DOM exist
     const initializeObserver = () => {
+        // Access the shadow host container to target its Shadow DOM
+        const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
+        
+        // Verify if the shadow host and its ShadowRoot exist before proceeding
+        if (shadowHost && shadowHost.shadowRoot) {
+            const shadowRoot = shadowHost.shadowRoot;
 
-      //select the shadow root
-      const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
-      if (shadowHost && shadowHost.shadowRoot) {
+            // Trigger initial authentication check when observer starts
+            handleMutation([{ type: 'initial' }]);
 
-        //select root
-        const shadowRoot = shadowHost.shadowRoot;
-
-        handleMutation([{ type: 'initial' }]);
-
-        observer.observe(shadowRoot, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          characterData: false
-        });
-      }
+            // Start observing for mutations within the Shadow DOM, focusing on specific types of changes
+            observer.observe(shadowRoot, {
+                childList: true,       // Observe additions/removals of child nodes
+                subtree: true,         // Observe changes in all descendants, not just direct children
+                attributes: false,      // Observe changes to attributes
+                characterData: false   // Ignore changes in character data for efficiency
+            });
+        }
     };
 
+    // Check if the document is already fully loaded before initializing the observer
     if (document.readyState === 'complete') {
-      console.log('document ready');
-      initializeObserver();
+        console.log('document ready');
+        initializeObserver(); // Immediately initialize if document is fully loaded
     } else {
-      window.addEventListener('load', initializeObserver);
-      console.log('document loading');
+        // If document is still loading, wait for the load event to initialize the observer
+        window.addEventListener('load', initializeObserver);
+        console.log('document loading');
     }
 
-    //clean up observer on component unmount 
+    // Clean-up function to disconnect observer and remove event listener when component unmounts
     return () => {
-      observer.disconnect();
-      window.removeEventListener('load', initializeObserver);
+        observer.disconnect(); 
+        window.removeEventListener('load', initializeObserver); // Remove event listener if it was added
     };
-  }, []);
+
+}, []); 
+
 
   return (
     <>

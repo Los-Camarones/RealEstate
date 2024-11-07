@@ -4,10 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import PropertyOrganizerLogin from "../PropertyOrganizerLogin/PropertyOrganizerLogin";
-import userAuth from "@/app/hooks/user/userAuth";
 import adminAuth from "@/app/hooks/admin/adminAuth";
 import { useAuth } from "@/actions/AuthContext";
-import { divide } from "cypress/types/lodash";
 
 const buttonStyle =
   "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
@@ -22,7 +20,7 @@ const NavBar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
   const adminLoggedIn = adminAuth(); // Check if the admin is authenticated
-  const { isAuthenticated } = useAuth();
+  const { isUserAuthenticated } = useAuth();
   const [forceRender, setForceRender] = useState(false);
 
 
@@ -61,14 +59,15 @@ const NavBar: React.FC = () => {
     setIsDropdownOpenSignIn(false);
   };
 
+  //function to check if either user or admin is logged in
   async function checkLogin() {
-    console.log('running user auth in navbar' ,isAuthenticated);
+    // console.log('running user auth in navbar' ,isUserAuthenticated);
 
     if (adminLoggedIn) {
       setIsLoggedIn(true);
       setNextRoute("/Admin");
       console.log("admin logged in");
-    } else if (isAuthenticated) {
+    } else if (isUserAuthenticated) {
       setIsLoggedIn(true);
       console.log("user logged in");
     } else {
@@ -81,7 +80,7 @@ const NavBar: React.FC = () => {
     setIsDropdownOpenSignIn(false); //force render for some reason to allow dropdown on first render
     checkLogin();
     setForceRender(!forceRender);
-  }, [adminLoggedIn,isAuthenticated]);
+  }, [adminLoggedIn,isUserAuthenticated]);
 
   return (
     <>
@@ -186,6 +185,7 @@ const NavBar: React.FC = () => {
               <button className={buttonStyle}>Contact</button>
             </Link>
 
+              {/* No one is logged in */}
             {!isLoggedIn && (
               <div
                 className="relative"
@@ -193,8 +193,8 @@ const NavBar: React.FC = () => {
                 onMouseLeave={handleMouseLeaveSignIn}
               >
                 <button className={buttonStyle}>Sign in </button>
-                {/* When the user hovers, show drop down options */}
 
+                {/* When the user hovers, show drop down options */}
                 {isDropdownOpenSignIn && (
                   <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
                     {/* <button className={dropdownItemStyle} onClick={toggleSignInPopup}>
@@ -205,21 +205,28 @@ const NavBar: React.FC = () => {
                       href="/PropertyOrganizer"
                       className={dropdownItemStyle}
                     >
-                      User Login
+                      User 
                     </Link>
                     <Link href="/Sign-in" className={dropdownItemStyle}>
-                      Admin Login
+                      Admin 
                     </Link>
                   </div>
                 )}
               </div>
             )}
 
+            {/*admin is logged in */}
             {isLoggedIn && (
               <button className={buttonStyle}>
                 <Link href={nextRoute}>Profile</Link>
               </button>
             )}
+
+            {/* User is logged in. plug in ihomefinder plug in
+            {isLoggedIn && isUserAuthenticated && (
+            <PropertyOrganizerLogin />
+
+            )} */}
           </div>
         </div>
 
