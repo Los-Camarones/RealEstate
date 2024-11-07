@@ -53,7 +53,7 @@ const LandingPage = () => {
         <div>
             <NavBar />
         
-        <div className="bg-gradient-to-r from-blue-600 to-blue-300 min-h-screen flex items-center justify-center">
+        <div className="bg-gradient-to-r from-white-600 to-blue-300 min-h-screen flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-5xl flex flex-col items-center">
                 
                 {/* Logo */}
