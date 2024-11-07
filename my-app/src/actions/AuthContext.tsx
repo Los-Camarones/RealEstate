@@ -27,9 +27,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    //   checkAuthStatus();
-    // }, 1000); // Polling every second; adjust as needed
     checkAuthStatus();
   }, []);
 

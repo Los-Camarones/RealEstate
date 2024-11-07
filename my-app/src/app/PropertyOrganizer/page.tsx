@@ -68,7 +68,6 @@ const PropertyOrganizerPage: React.FC = () => {
       try {
         console.log('delete token');
         const response = await axios.post("./api/user/deleteCookie");
-        console.log(response);
       } catch (error) {
         console.log("error occured");
       }

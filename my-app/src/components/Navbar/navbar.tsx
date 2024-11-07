@@ -21,7 +21,7 @@ const NavBar: React.FC = () => {
   const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
-  const adminLoggedIn = adminAuth(); // Check if the user is authenticated
+  const adminLoggedIn = adminAuth(); // Check if the admin is authenticated
   const { isAuthenticated } = useAuth();
   const [forceRender, setForceRender] = useState(false);
 
@@ -185,9 +185,6 @@ const NavBar: React.FC = () => {
             <Link href="/contact">
               <button className={buttonStyle}>Contact</button>
             </Link>
-            {isAuthenticated && (
-              <button>test</button>
-            )}
 
             {!isLoggedIn && (
               <div
