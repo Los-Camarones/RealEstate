@@ -29,7 +29,7 @@ export async function GET(req: Request) {
     const id = url.searchParams.get('id');
     let API_URL: string;
     if (id) {
-      API_URL = `https://www.idxhome.com/api/v1/client/openHomeReportSignup/${id}.json`;
+      API_URL = `https://www.idxhome.com/api/v1/client/openHomeReportSignup/{openHomeReportSignupRequestId}.json`;
     } else {
       const offset = url.searchParams.get('offset') || '0'; // Get 'offset' from query params, default to '0'
       const limit = url.searchParams.get('limit') || '10'; // Limit is defaulted to 10, unless otherwise specified
