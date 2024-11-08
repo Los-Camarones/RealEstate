@@ -1,37 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
+import { createClient } from '@supabase/supabase-js';
 
-const SocialMediaLinks = () => (
-  <div className="fixed left-2 top-1/2 transform -translate-y-1/2 space-y-2 z-50">
-    <div className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
-      <a href="https://www.instagram.com/lourdesmendoza1/" target="_blank" rel="noopener noreferrer">
-        <FaInstagram className="text-red-500" size={32} />
-      </a>
-    </div>
-    <div className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
-      <a href="https://www.facebook.com/Lolucasellsrealestate/" target="_blank" rel="noopener noreferrer">
-        <FaFacebook className="text-blue-600" size={32} />
-      </a>
-    </div>
-    
-    <div className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
-      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-        <FaLinkedin className="text-blue-700" size={32} />
-      </a>
-    </div>
-    <div className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
-      <a href="https://www.youtube.com/@LourdesMendozaTV" target="_blank" rel="noopener noreferrer">
-      <FaYoutube className="text-red-500" size={32} />
-      </a>
-    </div>
-    <div className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
-      <a href="https://x.com/lourdesmendoza?fbclid=IwY2xjawFEDC1leHRuA2FlbQIxMAABHRLf2lKnpkI1M7JiS8MpIyiKXiev2vg4wWdeL-TAvgxtvVC5LPg9Ry-x6A_aem_ailAeZPj9DvY9P7x6D-L8w" target="_blank" rel="noopener noreferrer">
-        <FaXTwitter className="text-black-400" size={32} />
-      </a>
-    </div>
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-  </div>
-);
+interface SocialLink {
+  platform: string;
+  url: string;
+}
+
+const SocialMediaLinks: React.FC = () => {
+  const [links, setLinks] = useState<SocialLink[]>([]);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      const { data, error } = await supabase.from('media_links').select('platform, url');
+      if (!error && data) {
+        setLinks(data);
+      } else {
+        console.error("Error fetching social links:", error?.message);
+      }
+    };
+    fetchLinks();
+  }, []);
+
+  const getIcon = (platform: string) => {
+    switch (platform) {
+      case 'Instagram': return <FaInstagram className="text-red-500" size={32} />;
+      case 'Facebook': return <FaFacebook className="text-blue-600" size={32} />;
+      case 'LinkedIn': return <FaLinkedin className="text-blue-700" size={32} />;
+      case 'YouTube': return <FaYoutube className="text-red-500" size={32} />;
+      case 'X (Twitter)':
+        return <img src="/X.png" alt="X Logo" style={{ width: 32, height: 32 }} />; // Custom X logo image
+      default: return null;
+    }
+  };
+
+  return (
+    <div className="fixed left-2 top-1/2 transform -translate-y-1/2 space-y-2 z-50">
+      {links.map(({ platform, url }) => (
+        <div key={platform} className="bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full p-2 transition-all">
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {getIcon(platform)}
+          </a>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default SocialMediaLinks;

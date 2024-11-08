@@ -1,12 +1,13 @@
 "use client";
 // components/ReviewCardList.tsx
 import React, { useEffect, useRef, useState } from "react";
-import styles from "../Reviews.module.css";
+import styles from "./admin.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import {
   getTestimonials,
   addTestimonial,
   updateTestimonial,
+  deleteTestimonial,
 } from "@/actions/TestimonialsActions";
 //deleteTestimonial, updateTestimonial,
 import { ITestimonial } from "@/types/database_interface";
@@ -17,9 +18,11 @@ const AdminReviews: React.FC = () => {
   const [error, setError] = useState<string | null>();
   const [success, setSuccess] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ITestimonial | null>();
+  const [message, setMessage] = useState<string | null>(null);
+
 
   const blank_url_profile_pic ="https://nczvyuangfyovbjycopv.supabase.co/storage/v1/object/public/testimonials_images/default_pfp.jpg"
-  const [newTestimonial, setNewTestimonial] = useState<ITestimonial>({
+  const [newTestimonial] = useState<ITestimonial>({
     created_at: "",
     rating: 5,
     comments: "",
@@ -35,7 +38,16 @@ const AdminReviews: React.FC = () => {
   const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      setFile(file);
+
+      //check file size to make sure its less than 1mb
+      if(file.size >= 1000000) {
+        setError("Image size cannot exceed 1mb");
+        return;
+      } else {
+        setError(null);
+      }
+
+
       if (file) {
         setFile(file);
 
@@ -67,18 +79,15 @@ const AdminReviews: React.FC = () => {
     setSelectedReview(review);
   };
 
-  /**
-   * TODO: 
-   * Activated when clicked on "delete"
-   * Calls Supabase to delete the selected review based on its UUID 
-   * Updates the reviews on the client side
-   * @param id 
-   */
   const handleDeleteReview = async (id: string) => {
-    //get id of selected review
-    //await deleteTestimonial(id); //create this back-end function in /actionsTestimonials.ts
-    //update the current reviews on the client side
-    setSelectedReview(null); // Close sidebar after deletion
+    const response = await deleteTestimonial(id);
+    if (response.success) {
+      showAlert('Testimonial deleted successfully!');
+      setReviews((prev) => prev.filter((review) => review.id !== id));
+      setSelectedReview(null);
+    } else {
+      setError(response.error || "Failed to delete the testimonial.");
+    }
   };
 
   /**
@@ -93,7 +102,7 @@ const AdminReviews: React.FC = () => {
       //create temporary variable to hold our selected review
       let updatedReview: ITestimonial = { ...selectedReview};
 
-      //handle change if profile picture was changed
+      //handle change if profile picture was changed and 
       if(newProfilePic && file) {
 
         //convert the file to base64
@@ -152,6 +161,9 @@ const AdminReviews: React.FC = () => {
             review.id === response.data[0].id ? response.data[0] : review
           )
         );
+
+        showAlert('Testimonial updated successfully!');
+
 
         setError(null);
 
@@ -235,6 +247,9 @@ const AdminReviews: React.FC = () => {
         console.log("Successfully added testimonial!");
         setSuccess(true);
 
+        showAlert('Testimonial added successfully!');
+
+
         //refresh our reviews
         setReviews([...reviews, response.data[0]]);
 
@@ -293,6 +308,13 @@ const AdminReviews: React.FC = () => {
     });
   }
 
+  const showAlert = (msg: string) => {
+    setMessage(msg);
+    setTimeout(() => {
+        setMessage(null);
+    }, 10000); // Alert disappears after 10 seconds
+};
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -312,16 +334,25 @@ const AdminReviews: React.FC = () => {
   return (
     <div>
     <div className={styles.headerAdminContainer}>
-    <button
+      <header className={styles.headerText}>Manage Your Testimonials</header>
+      <button
+        className={styles.addButton}
         //everytime you click on "add testimonial" , a blank new Testimonial is set as your selected Review
         onClick={() => setSelectedReview({ ...newTestimonial })}
       >
         Add a Testimonial
       </button>
-      <header className={styles.headerText}>Manage Your Testimonials</header>
-      
+
     </div>
 
+      <div className={styles.containerAlert}>      
+        {message && (
+                <div className={styles.alertStyle}>
+                    {message}
+                </div>
+            )}
+        </div>
+ 
 
       <div className={styles.reviewList}>
         {reviews.map((review) => (
@@ -331,6 +362,7 @@ const AdminReviews: React.FC = () => {
             onClick={() => handleSelectReview(review)}
           >
             <img src={review.profile_picture} className={styles.userPicture} />
+            <div className={styles.name}>- {review.user_name || "Anonymous"}</div>
             <div className={styles.stars}>
               {review.rating} {renderStars(review.rating)}
             </div>
@@ -339,7 +371,6 @@ const AdminReviews: React.FC = () => {
             {!review.is_displayed && (<div className={styles.cardOverLay}></div> )}
             <div className={styles.date}>{review.created_at}</div>
             <div className={styles.review}>{review.comments}</div>
-            <div className={styles.name}>- {review.user_name}</div>
             <div className={styles.googleIcon}>
               <GoogleIcon />
             </div>
@@ -376,7 +407,7 @@ const AdminReviews: React.FC = () => {
               <input type="file" onChange={handleProfilePicChange} />
             ) : (
               <button
-                className={styles.button}
+                className={styles.addButton}
                 onClick={() => setIsEditing(true)}
               >
                 Change Profile Picture
@@ -465,7 +496,7 @@ const AdminReviews: React.FC = () => {
             {selectedReview.id ? "Save" : "Add"}
           </button>
           {selectedReview.id && (
-            <button onClick={() => handleDeleteReview}>
+            <button onClick={() => handleDeleteReview(selectedReview.id!)}>
               Delete
             </button>
           )}
@@ -473,6 +504,7 @@ const AdminReviews: React.FC = () => {
         onClick={() => {
           setSelectedReview(null);
           setNewProfilePic(null);
+          setError(null);
         }}
       >
         Close

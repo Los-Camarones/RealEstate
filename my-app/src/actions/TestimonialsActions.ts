@@ -5,127 +5,117 @@ import { ITestimonial } from "@/types/database_interface";
 
 /**
  * Fetches testimonials from Supabase.
- * homepage_testimonials: boolean to display only homepage testimonials
- *
- * @returns A Promise that resolves to an object containing:
- *   - `success`: A boolean indicating whether the fetch was successful.
- *   - `data`: An array of testimonial objects if successful, or `undefined` if an error occurred.
- *   - `error`: An error message if the fetch failed.
+ * @param homepage_testimonials boolean to display only homepage testimonials
  */
 export async function getTestimonials(homepage_testimonials: boolean) {
+  try {
+    const supabase = createSupabaseServerClient();
+    let result;
+    if (homepage_testimonials) {
+      result = await supabase
+        .from('Testimonials')
+        .select()
+        .eq('is_displayed', homepage_testimonials ? true : null);
+    } else {
+      result = await supabase.from('Testimonials').select();
+    }
 
-    try {
-        const supabase = createSupabaseServerClient();
+    const data = result.data;
+    const error = result.error;
 
-        let result;
-        if(homepage_testimonials) {
-           result = await supabase
-          .from('Testimonials')
-          .select()
-          .eq('is_displayed', homepage_testimonials ? true : null);
-        } else {
-           result = await supabase
-          .from('Testimonials')
-          .select()
-        }
-
-        const data = result.data;
-        const error = result.error;
-
-
-
-        if (error) {
-          console.error('Error fetching user information:', error?.message);
-          return {success: false, error: 'Error retrieving testimonials.' };
-        }
-        else{
-          return{success: true, data: data}
-
-        }
-    
-        // Ensure the data conforms to the CustomUser interface
-        //const user: CustomUser = data;
-      } catch (error) {
-        console.error('Unexpected error fetching user information:', error);
-        return {success: false, error: 'An unexpected error occurred.' };
-      }
-
+    if (error) {
+      console.error('Error fetching testimonials:', error?.message);
+      return { success: false, error: 'Error retrieving testimonials.' };
+    }
+    return { success: true, data: data };
+  } catch (error) {
+    console.error('Unexpected error fetching testimonials:', error);
+    return { success: false, error: 'An unexpected error occurred.' };
+  }
 }
 
 /**
- * Adds a testimonial to supabase
- * @param testimonial 
+ * Adds a testimonial to Supabase
+ * @param testimonial
  */
 export async function addTestimonial(testimonial: ITestimonial) {
-
   try {
     const supabase = createSupabaseServerClient();
-
-    //add value in supabase
     const { data, error } = await supabase
-    .from('Testimonials')
-    .insert([
-      { created_at: testimonial.created_at , 
-         rating: testimonial.rating,
-         comments: testimonial.comments,
-         user_name: testimonial.user_name,
-         profile_picture: testimonial.profile_picture,
-         is_displayed: testimonial.is_displayed
-         },
-    ])
-    .select()
+      .from('Testimonials')
+      .insert([
+        {
+          created_at: testimonial.created_at,
+          rating: testimonial.rating,
+          comments: testimonial.comments,
+          user_name: testimonial.user_name,
+          profile_picture: testimonial.profile_picture,
+          is_displayed: testimonial.is_displayed,
+        },
+      ])
+      .select();
 
     if (error) {
-      console.error('Error adding testimonial: ', error?.message);
-      return {success: false, error: 'Error adding testimonial.' };
+      console.error('Error adding testimonial:', error?.message);
+      return { success: false, error: 'Error adding testimonial.' };
     }
-    else{
-        return{success: true, data: data}
-    }
-
+    return { success: true, data: data };
   } catch (error) {
-    console.error('Unexpected error fetching user information:', error);
-    return {success: false, error: 'An unexpected error occurred.' };
+    console.error('Unexpected error adding testimonial:', error);
+    return { success: false, error: 'An unexpected error occurred.' };
   }
-
 }
 
 /**
- * Update a testimonial
+ * Updates a testimonial in Supabase
+ * @param testimonial
  */
-
-
 export async function updateTestimonial(testimonial: ITestimonial) {
-
   try {
     const supabase = createSupabaseServerClient();
-
-    //update value in supabase 
     const { data, error } = await supabase
-    .from('Testimonials')
-    .update(
-      { 
-      created_at: testimonial.created_at , 
-      rating: testimonial.rating,
-      comments: testimonial.comments,
-      user_name: testimonial.user_name,
-      profile_picture: testimonial.profile_picture,
-      is_displayed: testimonial.is_displayed
+      .from('Testimonials')
+      .update({
+        created_at: testimonial.created_at,
+        rating: testimonial.rating,
+        comments: testimonial.comments,
+        user_name: testimonial.user_name,
+        profile_picture: testimonial.profile_picture,
+        is_displayed: testimonial.is_displayed,
       })
-    .eq('id', testimonial.id) //assure that you are updating a testimonial by its ID
-    .select() //return the data by selecting it 
+      .eq('id', testimonial.id)
+      .select();
 
     if (error) {
-      console.error('Error updating testimonial: ', error?.message);
-      return {success: false, error: 'Error updating testimonial.' };
+      console.error('Error updating testimonial:', error?.message);
+      return { success: false, error: 'Error updating testimonial.' };
     }
-    else{
-        return{success: true, data: data}
-    }
-
+    return { success: true, data: data };
   } catch (error) {
-    console.error('Unexpected error updating user information:', error);
-    return {success: false, error: 'An unexpected error occurred.' };
+    console.error('Unexpected error updating testimonial:', error);
+    return { success: false, error: 'An unexpected error occurred.' };
   }
+}
 
+/**
+ * Deletes a testimonial from Supabase by ID
+ * @param id
+ */
+export async function deleteTestimonial(id: string) {
+  try {
+    const supabase = createSupabaseServerClient();
+    const { error } = await supabase
+      .from('Testimonials')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting testimonial:', error?.message);
+      return { success: false, error: 'Error deleting testimonial.' };
+    }
+    return { success: true };
+  } catch (error) {
+    console.error('Unexpected error deleting testimonial:', error);
+    return { success: false, error: 'An unexpected error occurred.' };
+  }
 }

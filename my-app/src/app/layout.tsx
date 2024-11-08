@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react"
+
 import { AuthProvider } from "@/actions/AuthContext";
 
 export const metadata = {
@@ -36,9 +38,12 @@ export default function RootLayout({
         />
       </head>
       <body>
+      
         <AuthProvider>
           {children}
           </AuthProvider>
+       
+      <Analytics />
       </body>
     </html>
   );
