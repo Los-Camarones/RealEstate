@@ -21,7 +21,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if(cookie) {
       const value = cookie.split('=')[1];
       if (value) {
-        console.log("User logged in authcontext and returning true");
+        // console.log("User logged in authcontext and returning true");
         setIsAuthenticated(true)
       }
     } else{

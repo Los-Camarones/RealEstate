@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PropertyOrganizerLogin from "../PropertyOrganizerLogin/PropertyOrganizerLogin";
 import adminAuth from "@/app/hooks/admin/adminAuth";
-import { useAuth } from "@/actions/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 
 const buttonStyle =
   "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";

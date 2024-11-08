@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/react"
 
-import { AuthProvider } from "@/actions/AuthContext";
+import { AuthProvider } from "@/app/context/AuthContext";
 
 export const metadata = {
   title: 'Lourdes Mendoza | Real Estate', 

@@ -7,7 +7,7 @@ import Head from "next/head";
 import "../globals.css";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useAuth } from "@/actions/AuthContext";
+import { useAuth } from "@/app/context/AuthContext";
 
 const PropertyOrganizerPage: React.FC = () => {
   const { checkAuthStatus } = useAuth();
@@ -109,10 +109,10 @@ const PropertyOrganizerPage: React.FC = () => {
 
             // Start observing for mutations within the Shadow DOM, focusing on specific types of changes
             observer.observe(shadowRoot, {
-                childList: true,       // Observe additions/removals of child nodes
-                subtree: true,         // Observe changes in all descendants, not just direct children
-                attributes: false,      // Observe changes to attributes
-                characterData: false   // Ignore changes in character data for efficiency
+                childList: true,       
+                subtree: true,         
+                attributes: false,      
+                characterData: false   // Ignore changes in character data 
             });
         }
     };
@@ -120,7 +120,7 @@ const PropertyOrganizerPage: React.FC = () => {
     // Check if the document is already fully loaded before initializing the observer
     if (document.readyState === 'complete') {
         console.log('document ready');
-        initializeObserver(); // Immediately initialize if document is fully loaded
+        initializeObserver(); 
     } else {
         // If document is still loading, wait for the load event to initialize the observer
         window.addEventListener('load', initializeObserver);
