@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Track dropdown state
   const [isDropdownOpenSignIn, setIsDropdownOpenSignIn] = useState(false); // Track dropdown state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [nextRoute, setNextRoute] = useState("/PropertyOrganizer");
+  const [nextRoute, setNextRoute] = useState("/property-organizer");
   const adminLoggedIn = adminAuth(); // Check if the admin is authenticated
   const { isUserAuthenticated } = useAuth();
   const [forceRender, setForceRender] = useState(false);
@@ -69,6 +69,7 @@ const NavBar: React.FC = () => {
       console.log("admin logged in");
     } else if (isUserAuthenticated) {
       setIsLoggedIn(true);
+      setNextRoute("/property-organizer");
       console.log("user logged in");
     } else {
       setIsLoggedIn(false);
@@ -202,7 +203,7 @@ const NavBar: React.FC = () => {
                 </button> */}
 
                     <Link
-                      href="/PropertyOrganizer"
+                      href="/property-organizer"
                       className={dropdownItemStyle}
                     >
                       User 

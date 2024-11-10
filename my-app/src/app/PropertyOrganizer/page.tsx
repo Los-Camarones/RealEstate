@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PropertyOrganizerLogin from "../../components/PropertyOrganizerLogin/PropertyOrganizerLogin";
 import NavBar from "../../components/Navbar/navbar";
 import Head from "next/head";
@@ -8,8 +8,11 @@ import "../globals.css";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
+import UserTestimonialForm from "@/components/Testimonials/UserTestimonialForm/UserTestimonialForm";
+import Footer from "@/components/Footer/footer";
 
 const PropertyOrganizerPage: React.FC = () => {
+  const pageRef = useRef<HTMLDivElement>(null);
   const { checkAuthStatus } = useAuth();
 
   /**
@@ -84,6 +87,20 @@ const PropertyOrganizerPage: React.FC = () => {
 
   useEffect(() => {
 
+    // Function to add the IDX Property Organizer widget script
+    const addScript = () => {
+      if (pageRef.current && !pageRef.current.querySelector('script')) {
+        const script = document.createElement('script');
+        script.innerHTML = `
+          document.currentScript.replaceWith(ihfKestrel.render());
+        `;
+        pageRef.current.appendChild(script);
+      }
+    };
+
+    // Add the script on component mount
+    addScript();
+
     // Define function to handle changes in the observed element's mutations
     const handleMutation = async (mutationList: Array<any>) => {
       
@@ -131,6 +148,10 @@ const PropertyOrganizerPage: React.FC = () => {
     return () => {
         observer.disconnect(); 
         window.removeEventListener('load', initializeObserver); // Remove event listener if it was added
+
+        if (pageRef.current) {
+          pageRef.current.innerHTML = ''; // Clear all children including the script
+        }
     };
 
 }, []); 
@@ -147,11 +168,13 @@ const PropertyOrganizerPage: React.FC = () => {
       </Head>
       <NavBar />
       <main>
-        <h2>User Login</h2>
-        <div style={{ paddingLeft: "200px", paddingRight: "200px" }}>
-          <PropertyOrganizerLogin />
+        <div style={{ padding: '20px' }}>
+          {/* Placeholder for the IDX Property Organizer widget */}
+          <div ref={pageRef} />
         </div>
+        <UserTestimonialForm></UserTestimonialForm>
       </main>
+      <Footer />
     </>
   );
 };
