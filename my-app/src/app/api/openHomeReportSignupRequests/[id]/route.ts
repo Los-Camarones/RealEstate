@@ -29,7 +29,7 @@ export async function GET(req: Request) {
 
   try {
     // Fetch the specific open home report signup with the given ID
-    const response = await axios.get(`https://www.idxhome.com/api/v1/client/openHomeReportSignup/${id}.json`, {
+    const response = await axios.get(`https://www.idxhome.com/api/v1/client/openHomeReportSignupRequest/${id}.json`, {
       headers: {
         Authorization: token,
         Accept: 'application/json',
@@ -43,32 +43,32 @@ export async function GET(req: Request) {
   }
 }
 
-// Handle DELETE requests (Delete Open Home Report Signup) based on dynamic ID in URL
-export async function DELETE(req: Request) {
-  const token = getAuthToken(req);
-  const url = new URL(req.url);
-  const id = url.pathname.split('/').pop();  // Get the signup ID from URL path
+// // Handle DELETE requests (Delete Open Home Report Signup) based on dynamic ID in URL
+// export async function DELETE(req: Request) {
+//   const token = getAuthToken(req);
+//   const url = new URL(req.url);
+//   const openHomeReportSignupRequestId = url.pathname.split('/').pop();  // Get the signup ID from URL path
 
-  if (!token) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-  }
+//   if (!token) {
+//     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+//   }
 
-  if (!id) {
-    return NextResponse.json({ error: 'Missing signup ID' }, { status: 400 });
-  }
+//   if (!openHomeReportSignupRequestId) {
+//     return NextResponse.json({ error: 'Missing signup ID' }, { status: 400 });
+//   }
 
-  try {
-    // Delete the open home report signup with the given ID
-    await axios.delete(`https://www.idxhome.com/api/v1/client/openHomeReportSignup/${id}.json`, {
-      headers: {
-        Authorization: token,
-        Accept: 'application/json',
-      },
-    });
+//   try {
+//     // Delete the open home report signup with the given ID
+//     await axios.delete(`https://www.idxhome.com/api/v1/client/openHomeReportSignup/${openHomeReportSignupRequestId}.json`, {
+//       headers: {
+//         Authorization: token,
+//         Accept: 'application/json',
+//       },
+//     });
 
-    return NextResponse.json(null, { status: 204 });
-  } catch (error: any) {
-    console.error('Error deleting open home report signup:', error.response?.data || error.message);
-    return NextResponse.json({ error: 'Failed to delete open home report signup' }, { status: 500 });
-  }
-}
+//     return NextResponse.json(null, { status: 204 });
+//   } catch (error: any) {
+//     console.error('Error deleting open home report signup:', error.response?.data || error.message);
+//     return NextResponse.json({ error: 'Failed to delete open home report signup' }, { status: 500 });
+//   }
+// }

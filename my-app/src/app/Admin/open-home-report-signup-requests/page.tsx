@@ -15,6 +15,9 @@ const OpenHomeReportSignupPage: React.FC = () => {
     lastName: string;
     emailAddress: string;
     phone?: string;
+    subscriber: {
+        links: { href: string} [];
+                };
   }
 
   const [signups, setSignups] = useState<SignupRequest[]>([]);

@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NavBar from '../../components/Navbar/navbar';
-
+import PropertyOrganizerLogin from '../../components/PropertyOrganizerLogin/PropertyOrganizerLogin';
+import Modal from '../../components/PropertyOrganizerLogin/Modal';
 const LandingPage = () => {
     const router = useRouter();
 
@@ -14,6 +15,23 @@ const LandingPage = () => {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
 
+
+    //sign in widget
+    const buttonStyle = "ml-2 bg-transparent hover:bg-gray-200 text-black font-bold py-1 px-2 rounded";
+    const [isSignInPopupOpen, setIsSignInPopupOpen] = useState(false);
+    const [isWidgetDisplayed, setIsWidgetDisplayed] = useState(false);
+
+    // Toggle the Sign In popup
+    const toggleSignInPopup = () => {
+    setIsSignInPopupOpen(!isSignInPopupOpen);
+   };
+
+  // Close Sign In popup and show widget
+    const closeSignInPopupAndShowWidget = () => {
+    setIsSignInPopupOpen(false);
+    setIsWidgetDisplayed(true);
+    };
+
     // Handle selection of option
     const handleOptionSelect = (option: string) => {
         setSelectedOption(option);
@@ -22,16 +40,20 @@ const LandingPage = () => {
     // Handle form submission
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Placeholder for form submission or further actions
-        console.log({ name, address, phone, email, selectedOption });
-        // Redirect or perform other actions as needed
+
+        const emailBody = `Hi lourdes ! I'm sending an email in hopes that you could help me find a home loaner based on my needs 
+        Name: ${name}\nAddress: ${address}\nPhone: ${phone}\nEmail: ${email}\nSelected Option: ${selectedOption}` ;
+        const mailtolink = `mailto:lourdesmendoza1@yahoo.com?subject=New%20User%20Submission&body=${encodeURIComponent(emailBody)}`;
+        
+        window.location.href = mailtolink;
+        
     };
 
     return (
         <div>
             <NavBar />
         
-        <div className="bg-gradient-to-r from-blue-600 to-blue-300 min-h-screen flex items-center justify-center">
+        <div className="bg-gradient-to-r from-white-600 to-blue-300 min-h-screen flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-5xl flex flex-col items-center">
                 
                 {/* Logo */}
@@ -121,14 +143,35 @@ const LandingPage = () => {
                 )}
 
                 {/* Sign in Button */}
-                <div className="mt-4">
+                {/* {isWidgetDisplayed ? (
+                    <div className='login-widget relative z-50'>
+                        <PropertyOrganizerLogin />
+                        </div>
+                ):(
+                    <button className={buttonStyle} onClick={toggleSignInPopup}>
+                        Sign In 
+                    </button>
+                
+                )}
+                {/*<div className="mt-4">
                     <button
-                        onClick={() => router.push('/SignIn')}
+                        onClick={() => router.push( '/PropertyOrganizerLogin' )}
                         className="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md mt-4"
                     >
                         Sign in
                     </button>
-                </div>
+                </div> */}
+
+                <button
+                    className= 'ml-2 bg-transparent hover:bg-gray-200 text-black font-black font-bold py-1 px-2 rounded'
+                    onClick={toggleSignInPopup}
+                    >
+                        Sign In 
+                    </button>
+
+                    <Modal isOpen={isSignInPopupOpen} onClose={toggleSignInPopup}>
+                        <PropertyOrganizerLogin />
+                    </Modal>
             </div>
         </div>
         </div>

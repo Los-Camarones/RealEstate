@@ -99,7 +99,14 @@ const Aboutme: React.FC = () => {
               <i className="fab fa-twitter-square text-xl"></i>
             </a>
           </div>
-
+            <div className="mt-4">
+            <a
+              href="/Merchandise"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Check out my Merchandise
+            </a>
+            </div>
           {/* Contact Info with Icons */}
           <div className="contact-info mt-4">
             <div className="flex items-center mb-2">
