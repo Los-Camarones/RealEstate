@@ -1,37 +1,36 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+// Custom command to log in a user
+Cypress.Commands.add('login', (username: string, password: string) => {
+    cy.request({
+      method: 'POST',
+      url: '/api/login',
+      body: { username, password },
+      failOnStatusCode: false,
+    }).then((resp) => {
+      cy.log(`Response status: ${resp.status}`);
+      cy.log(`Response status text: ${resp.statusText}`);
+      cy.log(`Response body: ${JSON.stringify(resp.body)}`);
+      cy.log(`Response headers: ${JSON.stringify(resp.headers)}`);
+      if (resp.status === 200) {
+        window.localStorage.setItem('authToken', resp.body.token); // Adjust based on your auth mechanism
+      } else {
+        throw new Error(`Login failed with status: ${resp.status}`);
+      }
+    });
+  });
+  
+  
+  
+  // Extend Cypress namespace to include the custom command
+  declare global {
+    namespace Cypress {
+      interface Chainable {
+        /**
+         * Custom command to log in a user with username and password.
+         * @example cy.login('user', 'password')
+         */
+        login(username: string, password: string): Chainable<void>;
+      }
+    }
+  }
+  
+  export {};

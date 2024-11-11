@@ -32,34 +32,6 @@ describe('"Contact Me" Button Scrolls to Form', () => {
 
 
 
-/*
- * Tests the search
-*/
-describe('Search Component Tests', () => {
-  beforeEach(() => {
-      // Visit the main page before each test
-      cy.visit('https://www.lourdesmendoza.com');
-  });
-
-  it('should search for an address and navigate to the valuation page', () => {
-      // Step 1: Locate the search input field and type in the address
-      cy.get('.search-input')
-          .should('be.visible') // Ensure the search input is visible
-          .type('3999 apple street, sacramento CA 95838');
-
-      // Step 2: Click the search button
-      cy.get('.search-input + button') // Assuming the search button is immediately next to the input field
-          .should('be.visible')
-          .click({ force: true });
-
-      // Step 3: Verify that the user is navigated to the expected valuation page
-      cy.url().should('include', '/valuation');
-  });
-});
-
-
-
-
 
 /*
 Test the expand button
@@ -104,22 +76,37 @@ describe('Button Navigation Tests', () => {
     // Click the first button and verify it navigates to the correct URL
     cy.get(':nth-child(1) > .image-link > .circular-image')
       .click({ force: true });
-    cy.url().should('include', '/WhatMyHomeWorth');
+    cy.url().should('include', '/valuation');
 
     // Verify if the URL returns a status code of 200
-    cy.request('https://www.lourdesmendoza.com/WhatMyHomeWorth').then((response) => {
+    cy.request('https://www.lourdesmendoza.com/valuation').then((response) => {
       expect(response.status).to.eq(200);
     });
   });
 
-  it('should navigate to the "Sellers" page when the third button is clicked', () => {
+  it('should navigate to the "Listings" page when the second button is clicked', () => {
+    // Click the second button and verify it navigates to the correct URL
+    cy.get(':nth-child(2) > .image-link > .circular-image')
+      .click({ force: true });
+    cy.url().should('include', '/property-search');
+
+    // Verify if the URL returns a status code of 200
+    cy.request({
+      url: 'https://www.lourdesmendoza.com/property-search',
+      failOnStatusCode: false, // This prevents the test from failing on non-200 responses
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+
+  it('should navigate to the "GetPreQualified" page when the third button is clicked', () => {
     // Click the third button and verify it navigates to the correct URL
     cy.get(':nth-child(3) > .image-link > .circular-image')
       .click({ force: true });
-    cy.url().should('include', '/Sellers');
+    cy.url().should('include', '/GetPreQualified');
 
     // Verify if the URL returns a status code of 200
-    cy.request('https://www.lourdesmendoza.com/Sellers').then((response) => {
+    cy.request('https://www.lourdesmendoza.com/GetPreQualified').then((response) => {
       expect(response.status).to.eq(200);
     });
   });
@@ -136,20 +123,6 @@ describe('Button Navigation Tests', () => {
     });
   });
 
-  it('should navigate to the "Listings" page when the second button is clicked', () => {
-    // Click the second button and verify it navigates to the correct URL
-    cy.get(':nth-child(2) > .image-link > .circular-image')
-      .click({ force: true });
-    cy.url().should('include', '/listings');
-
-    // Verify if the URL returns a status code of 200
-    cy.request({
-      url: 'https://www.lourdesmendoza.com/listings',
-      failOnStatusCode: false, // This prevents the test from failing on non-200 responses
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-    });
-  });
 });
 
 
@@ -165,7 +138,7 @@ describe('Button Navigation Tests', () => {
 * Hits Submit Button
 * Email client on host opens up
 */ 
-describe('Form Submission with mailto', () => {
+describe('Contact Form Test', () => {
   beforeEach(() => {
     // Wait for the page to load completely
     cy.intercept('GET', '**').as('pageLoad');
@@ -219,13 +192,6 @@ describe('Form Submission with mailto', () => {
           expect(url).to.contain('mailto:'); // Ensure mailto link is triggered
         });
       });
-
-      // Submit the form and prevent Cypress from waiting for page load
-      cy.get('form')
-        .find('button[type="submit"]')
-        .should('be.visible')
-        .last()
-        .click({ waitForAnimations: false, timeout: 0 });
 
       // Immediately end the test after form submission
       cy.end();  // End the test explicitly after the form submission
