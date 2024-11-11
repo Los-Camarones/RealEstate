@@ -1,0 +1,13 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 10px; /* Optional: space between buttons */
+}
+
+.loginButton {
+  /* Add any additional styles for the login button */
+}
+
+.cancelButton {
+  /* Add any additional styles for the cancel button */
+}

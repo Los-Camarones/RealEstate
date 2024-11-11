@@ -1,5 +1,7 @@
 import { Analytics } from "@vercel/analytics/react"
 
+import { AuthProvider } from "@/app/context/AuthContext";
+
 export const metadata = {
   title: 'Lourdes Mendoza | Real Estate', 
   description: 'Explore expert real estate services in the Sacramento area. Discover homes for sale, community information, and property listings tailored to your needs. Find your dream home today!',
@@ -36,7 +38,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-      {children} 
+      
+        <AuthProvider>
+          {children}
+          </AuthProvider>
+       
       <Analytics />
       </body>
     </html>
