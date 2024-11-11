@@ -8,14 +8,13 @@ import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
 import UserTestimonialForm from "@/components/Testimonials/UserTestimonialForm/UserTestimonialForm";
 import Footer from "@/components/Footer/footer";
+import { isNull } from "cypress/types/lodash";
 
 const PropertyOrganizerPage: React.FC = () => {
   const pageRef = useRef<HTMLDivElement>(null);
   const { checkAuthStatus } = useAuth();
-  const [prevAuthStatus, setPrevAuthStatus] = useState<boolean>(false);
   const [isObserving, setIsObserving] = useState(false);
   const [currentAuthStatus, setcurrentAuthStatus] = useState(false);
-  const observerRef = useRef(null);
 
 
 
@@ -53,6 +52,17 @@ const PropertyOrganizerPage: React.FC = () => {
 
             if(text.includes("logout")) {
               console.log("logout detected. you must be signed in");
+              const logoutButton = span.closest('button'); // Find the closest button
+              console.log(logoutButton);
+
+              if (logoutButton) {
+                  console.log('Logout button found:', logoutButton);
+
+                  // Add a click event listener to the logout button
+                  logoutButton.addEventListener('click', handleLogout, { capture: true });
+                  console.log("Event listener attached to the logout button.");
+
+              }
               setcurrentAuthStatus(true);
               return true;
             }
@@ -83,17 +93,15 @@ const PropertyOrganizerPage: React.FC = () => {
       try {
         const response = await axios.post("./api/user/setCookie");
         console.log('added token');
-        setPrevAuthStatus(true);
 
       } catch (error) {
         console.log("error occured");
       }
-    } else if (!isLoggedIn()){
+    } else{
       //delete token
       try {
         const response = await axios.post("./api/user/deleteCookie");
         console.log('token deleted');
-        setPrevAuthStatus(false);
       } catch (error) {
         console.log("error occured");
       }
@@ -102,9 +110,8 @@ const PropertyOrganizerPage: React.FC = () => {
 
 
   useEffect(() => {
-
     // Function to add the IDX Property Organizer widget script
-    const addScript = () => {
+    const addScript = async () => {
       if (pageRef.current && !pageRef.current.querySelector('script')) {
         const script = document.createElement('script');
         script.innerHTML = `
@@ -118,7 +125,6 @@ const PropertyOrganizerPage: React.FC = () => {
     console.log("added ihomefinder script");
     addScript();
 
-
     return() => {
       if (pageRef.current) {
         pageRef.current.innerHTML = ''; // Clear all children including the script
@@ -126,19 +132,40 @@ const PropertyOrganizerPage: React.FC = () => {
     }
   })
 
+  //function to run when logout is clicked
+  const handleLogout = async () => {
+    const response = await axios.post("./api/user/deleteCookie");
+    console.log("deleted cookie using event listener");
+    checkAuthStatus(); //send update to context so navbar refreshes
+    setcurrentAuthStatus(false);
+
+  };
+
 
   useEffect(() => {
+
     let observer: MutationObserver | null = null; // Declare the observer outside to manage it
 
     // Function to handle mutations in the Shadow DOM
-    const handleMutation = async () => {
-        await handleToken();  
-        checkAuthStatus();
-    };
+    const handleMutation = async (mutationList: MutationRecord[]) => {
+  
+
+
+    // Set a timeout for the first function
+    const timerId = setTimeout(async () => {
+      // Perform token handling and authentication check
+      await handleToken();  
+      checkAuthStatus();
+  }, 3000); // 3-second delay
+
+  // Cleanup timeout on component unmount
+  return () => clearTimeout(timerId);
+  };
 
     // Function to set up and start the observer
     const initializeObserver = () => {
-        const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
+      
+        const shadowHost = pageRef.current?.querySelector(".ihf-container") as HTMLElement;
 
         if (shadowHost && shadowHost.shadowRoot) {
             const shadowRoot = shadowHost.shadowRoot;
@@ -149,37 +176,19 @@ const PropertyOrganizerPage: React.FC = () => {
             // Create a new MutationObserver and start observing
             observer = new MutationObserver(handleMutation);
             observer.observe(shadowRoot, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                characterData: false,
+              childList: true,
+              subtree: true,
             });
 
             setIsObserving(true);
 
             // Trigger initial authentication check
-            handleMutation();
+            handleMutation(observer.takeRecords());
         } else {
             // Retry if shadowHost or shadowRoot is not found, in case it’s still loading
             setTimeout(initializeObserver, 3000);
         }
     };
-
-    // Set up a continuous check for the login plugin component's presence
-    const monitorComponentPresence = setInterval(() => {
-        console.log("running interval")
-        const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
-        if (!shadowHost || !shadowHost.shadowRoot) {
-
-          if (observer) {
-            console.log("observer is observer");
-          } 
-          
-            initializeObserver(); // Reinitialize observer if the component reappears
-
-          
-        }
-    }, 1000);
 
     // Initialize observer when the document is ready
     if (document.readyState === 'complete') {
@@ -194,17 +203,9 @@ const PropertyOrganizerPage: React.FC = () => {
         if (observer) observer.disconnect();
         window.removeEventListener('load', initializeObserver);
         setIsObserving(false);
-        clearInterval(monitorComponentPresence); // Stop checking for component presence
+        // clearInterval(monitorComponentPresence); // Stop checking for component presence
     };
 }, []);
-
-function printTest() {
-  console.log("currently observing outside useeffect");
-}
-while(isObserving) {
-  setTimeout(printTest, 4000);
-}
-
 
 
 
