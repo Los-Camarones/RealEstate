@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import PropertyOrganizerLogin from "../../components/PropertyOrganizerLogin/PropertyOrganizerLogin";
 import NavBar from "../../components/Navbar/navbar";
 import Head from "next/head";
 import "../globals.css";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
 import UserTestimonialForm from "@/components/Testimonials/UserTestimonialForm/UserTestimonialForm";
@@ -15,8 +13,10 @@ const PropertyOrganizerPage: React.FC = () => {
   const pageRef = useRef<HTMLDivElement>(null);
   const { checkAuthStatus } = useAuth();
   const [prevAuthStatus, setPrevAuthStatus] = useState<boolean>(false);
-  const [shadowReady, setShadowReady] = useState(false);
+  const [isObserving, setIsObserving] = useState(false);
   const [currentAuthStatus, setcurrentAuthStatus] = useState(false);
+  const observerRef = useRef(null);
+
 
 
   /**
@@ -49,6 +49,12 @@ const PropertyOrganizerPage: React.FC = () => {
               console.log("not logged in");
               setcurrentAuthStatus(false);
               return false;  // Exit the function immediately if "sign in" is found
+            }
+
+            if(text.includes("logout")) {
+              console.log("logout detected. you must be signed in");
+              setcurrentAuthStatus(true);
+              return true;
             }
           }
         }
@@ -109,6 +115,7 @@ const PropertyOrganizerPage: React.FC = () => {
     };
 
     // Add the script on component mount
+    console.log("added ihomefinder script");
     addScript();
 
 
@@ -121,58 +128,84 @@ const PropertyOrganizerPage: React.FC = () => {
 
 
   useEffect(() => {
+    let observer: MutationObserver | null = null; // Declare the observer outside to manage it
 
-    // Function to run when any changes occur in shadow dom tree. 
-    const handleMutation = async (mutationList: Array<any>) => {
-      
-        //handles token depending on items within shadown dom tree
+    // Function to handle mutations in the Shadow DOM
+    const handleMutation = async () => {
         await handleToken();  
-        //notifies the context
-        checkAuthStatus();    
-    }
+        checkAuthStatus();
+    };
 
-    // Initialize a MutationObserver to monitor changes within the targeted element (Shadow DOM)
-    const observer = new MutationObserver(handleMutation);
-
-    // Function to set up and start the observer if the target element and its Shadow DOM exist
+    // Function to set up and start the observer
     const initializeObserver = () => {
-        // Access the shadow host container to target its Shadow DOM
         const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
-        
-        // Verify if the shadow host and its ShadowRoot exist before proceeding
+
         if (shadowHost && shadowHost.shadowRoot) {
             const shadowRoot = shadowHost.shadowRoot;
 
-            // Trigger initial authentication check when observer starts
-            handleMutation([{ type: 'initial' }]);
+            // If observer exists from a previous call, disconnect it before creating a new one
+            if (observer) observer.disconnect();
 
-            // Start observing for mutations within the Shadow DOM, focusing on specific types of changes
+            // Create a new MutationObserver and start observing
+            observer = new MutationObserver(handleMutation);
             observer.observe(shadowRoot, {
-                childList: true,       
-                subtree: true,         
-                attributes: true,      
-                characterData: false   // Ignore changes in character data 
+                childList: true,
+                subtree: true,
+                attributes: true,
+                characterData: false,
             });
+
+            setIsObserving(true);
+
+            // Trigger initial authentication check
+            handleMutation();
+        } else {
+            // Retry if shadowHost or shadowRoot is not found, in case it’s still loading
+            setTimeout(initializeObserver, 3000);
         }
     };
 
-    // Check if the document is already fully loaded before initializing the observer
+    // Set up a continuous check for the login plugin component's presence
+    const monitorComponentPresence = setInterval(() => {
+        console.log("running interval")
+        const shadowHost = document.querySelector(".ihf-container") as HTMLElement;
+        if (!shadowHost || !shadowHost.shadowRoot) {
+
+          if (observer) {
+            console.log("observer is observer");
+          } 
+          
+            initializeObserver(); // Reinitialize observer if the component reappears
+
+          
+        }
+    }, 1000);
+
+    // Initialize observer when the document is ready
     if (document.readyState === 'complete') {
-        console.log('document ready');
-        initializeObserver(); 
+        initializeObserver();
     } else {
-        // If document is still loading, wait for the load event to initialize the observer
         window.addEventListener('load', initializeObserver);
-        console.log('document loading');
     }
+  
 
-    // Clean-up function to disconnect observer and remove event listener when component unmounts
+    // Clean up on component unmount
     return () => {
-        observer.disconnect(); 
-        window.removeEventListener('load', initializeObserver); // Remove event listener if it was added
+        if (observer) observer.disconnect();
+        window.removeEventListener('load', initializeObserver);
+        setIsObserving(false);
+        clearInterval(monitorComponentPresence); // Stop checking for component presence
     };
+}, []);
 
-}, []); 
+function printTest() {
+  console.log("currently observing outside useeffect");
+}
+while(isObserving) {
+  setTimeout(printTest, 4000);
+}
+
+
 
 
   return (
