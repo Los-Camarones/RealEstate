@@ -3,6 +3,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import styles from './ContactMe.module.css';
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -43,7 +44,7 @@ export default function Contact() {
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center lg:flex-row lg:p-4">
       <Head>
-        <title>Contact Me</title>
+        <title className={styles.title}>Contact Me</title>
         <meta name="description" content="Contact information page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -91,7 +92,7 @@ export default function Contact() {
 
         <div className="flex-shrink-0 ml-4 hidden sm:block">
           <a href={`tel:${contactInfo?.phone}`} className="block">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full">
+            <button className={styles.contactButton}>
               Contact Me
             </button>
           </a>

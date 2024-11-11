@@ -20,6 +20,7 @@ interface MarketReportRequest {
     emailAddress: string;
     phone?: string;
     region?: string; // Replace as needed with any Market Report-specific field
+    links: { href: string}[];
   }
 
   const MarketReportRequestPage: React.FC = () => {
@@ -41,6 +42,9 @@ interface MarketReportRequest {
     const [offset, setCurrentOffset] = useState(0);
     const [displayPages, setDisplayPages] = useState(0);
     const itemsPerPage = 10;
+
+    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState<MarketReportRequest | null>(null);
    
     useEffect(() => {
        if (auth) {
@@ -134,6 +138,19 @@ interface MarketReportRequest {
        }
      };
 
+     const fetchRequestDetails = async (id: string) => {
+      try{
+        setDetailsLoading(true);
+        const response = await axios.get(`/api/marketReportSignupRequests/${id}`);
+        setSelectedRequest(response.data);
+        setDetailsLoading(false);
+      } catch (error:any){
+        console.error('error fetching request details:', error.response?.data || error.message );
+        setError('failed to fetch request details');
+        setDetailsLoading(false);
+      }
+    };
+
      ///U/DmarketReportSignupRequest
    
      if (!auth) {
@@ -153,6 +170,21 @@ interface MarketReportRequest {
            <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => setShowForm(!showForm)} disabled={loading}>
              Add New
            </button>
+
+           <div>
+          {displayedRequests.map((request) => (
+            <div key={request.links[0].href} className="mb-4 p-4 border rounded">
+              <p>Email Sign-up Request ID: {request.links[0].href.split('/').pop()?.split('.')[0]}</p>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+                onClick={() => fetchRequestDetails(request.links[0].href.split('/').pop()?.split('.')[0] || '')}
+              >
+                View Details
+              </button>
+            </div>
+          ))}
+        </div>
+
    
            {showForm && (
              <form onSubmit={handleAddNewRequest} className="mt-4 bg-gray-200 p-4 rounded">
