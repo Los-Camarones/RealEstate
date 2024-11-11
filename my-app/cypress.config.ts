@@ -1,5 +1,9 @@
 // cypress.config.ts
 import { defineConfig } from "cypress";
+import dotenv from "dotenv";
+
+// Load environment variables from .env.local file
+dotenv.config({path: '.env.local'});
 
 export default defineConfig({
   e2e: {
@@ -7,7 +11,13 @@ export default defineConfig({
     viewportWidth: 1924,
     viewportHeight: 1080,
     baseUrl: "https://www.lourdesmendoza.com/", // Optional, set your base URL if needed
-    // You can add other settings like timeouts, retries, etc.
+
+    // Add environment variables
+    env: {
+      IHOMEFINDER_USERNAME: process.env.IHOMEFINDER_USERNAME,
+      IHOMEFINDER_PASSWORD: process.env.IHOMEFINDER_PASSWORD,
+    },
+    // Other optional settings like timeouts, retries, etc.
   },
 
   component: {
