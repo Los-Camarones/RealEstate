@@ -3,10 +3,16 @@ import './PhotoGallery.css'; // Import the updated CSS
 
 const PhotoGallery = () => {
   const images = [
-    { name: 'SACRAMENTO', path: 'Sacramento.jpg', link: 'https://www.lourdesmendoza.com/listing-report?id=2816179' },
-    { name: 'YUBA CITY', path: 'yuba.jpg', link: 'https://www.lourdesmendoza.com/listing-report?id=2816182' },
-    { name: 'ELK GROVE', path: 'elk+grove.jpeg', link: 'https://www.lourdesmendoza.com/listing-report?id=2814737' },
+    { name: 'SACRAMENTO', path: 'Sacramento.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=798' },
+    { name: 'YUBA CITY', path: 'yuba.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=1033' },
+    { name: 'ELK GROVE', path: 'elk+grove.jpeg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=271' },
     // Add more Areas of expee rtise
+    { name: 'El Dorado Hills', path: 'cc-el-dorado-county-ca-homes-for-sale-2-630-410.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=262'},
+    { name: 'Olivehurst', path: 'sutter-county-ca-homes-for-sale-2-630-410.jpg' , link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=647'},
+    { name: 'Fair Oaks', path: 'san-joaquin-county-ca-homes-for-sale-630-410.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=282'},
+    { name: 'Folsom', path: 'colusa-county-ca-homes-for-sale-2-630-410.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=294'},
+    { name: 'Davis', path: 'Davis.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=216'},
+    { name: 'Carmichael', path:'stanislaus-county-ca-homes-for-sale-2-630-410.jpg', link: 'https://www.lourdesmendoza.com/property-search?boardId=6&bedrooms=0&bathCount=0&propertyType=SFR,CND&status=active&sort=importDate&dateRange=0&cityId=137'}
   ];
 
   return (
