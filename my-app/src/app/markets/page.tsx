@@ -58,20 +58,20 @@ const MarketsPage = () => {
           hidden: { opacity: 0, y: 50 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
         }}
-        className="relative min-h-screen bg-blue-100 text-gray-900 flex flex-col items-center justify-start pt-8"
+        className="relative min-h-screen bg-white text-gray-800 flex flex-col items-center justify-start pt-8"
       >
-        <div className="relative z-10 w-full max-w-7xl p-8 bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 bg-opacity-90 rounded-lg shadow-lg mb-16 text-center">
-          <h1 className="text-5xl font-extrabold mb-4 text-gray-900">Communities</h1>
-          <p className="text-lg text-gray-700 mb-8 px-4">
+        <div className="relative z-10 w-full max-w-7xl p-8 bg-white bg-opacity-95 rounded-lg shadow-lg mb-16 text-center">
+          <h1 className="text-5xl font-extrabold mb-4 text-gray-800">Communities</h1>
+          <p className="text-lg text-gray-600 mb-8 px-4">
             Discover your ideal neighborhood. From vibrant cityscapes to serene suburbs, explore communities that match your lifestyle and preferences.
           </p>
-          <p className="text-md text-gray-600 mb-4 px-4">
+          <p className="text-md text-gray-500 mb-4 px-4">
             Use the widget below to search for properties and explore community details.
           </p>
         </div>
         <motion.div
           ref={pageRef}
-          className="relative z-10 w-full max-w-7xl bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 bg-opacity-90 rounded-lg shadow-lg p-8"
+          className="relative z-10 w-full max-w-7xl bg-white bg-opacity-95 rounded-lg shadow-lg p-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
@@ -79,9 +79,7 @@ const MarketsPage = () => {
           {/* IDX Markets Widget */}
         </motion.div>
       </motion.div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };
