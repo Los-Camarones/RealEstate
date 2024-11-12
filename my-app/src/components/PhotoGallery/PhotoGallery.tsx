@@ -18,7 +18,7 @@ const PhotoGallery = () => {
   return (
     <div className="photo-gallery-container">
     <div className="heading">
-      <h2>AREAS OF EXPERTISE</h2>
+      <h2>EXPLORE BY COUNTY</h2>
       <div className="underline"></div>
     </div>
     <div className="photo-gallery">
@@ -29,7 +29,9 @@ const PhotoGallery = () => {
             <div className="overlay">
               <div>
                 <h3>{image.name}</h3>
-                <button>Explore</button>
+                
+               
+                
               </div>
             </div>
           </a>
