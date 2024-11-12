@@ -32,8 +32,10 @@ const Sidebar: React.FC = () => {
         { name: "Request Showing", path: "/Admin/scheduleShowingRequests" },
         { name: "Valuation Requests", path: "/Admin/valuation-requests" },
         { name: "More Info Requests", path: "/Admin/more-info-requests"},
+        { name: "Market Sign up Request", path: "/Admin/market-report-signup-requests"},
+        { name: "Open Home Report Signup Requests", path:"/Admin/open-home-report-signup-requests"},
         { name: "Schedule Showing Requests", path: "/Admin/scheduleShowingRequests" },
-        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"}
+        {name: "Email Update Sign-up Requests", path: "/Admin/email-updates"},
       ],
     },
     {
@@ -56,7 +58,8 @@ const Sidebar: React.FC = () => {
       icon: <FaTasks />,
       items: [
         { name: "Testimonials", path: "/Admin/testimonials" },
-        { name: "Home Page Content Management", path: "/Admin/content-management" }
+        { name: "Bio & Contacts", path: "/Admin/information" },
+        { name: "Images", path: "/Admin/Images"}
       ],
     },
     {

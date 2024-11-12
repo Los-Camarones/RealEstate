@@ -3,9 +3,9 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background-color: #f3f4f6; /* Equivalent to bg-gray-100 */
+  background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
   border-radius: 0.5rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-lg */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Shadow */
   width: 100%;
 }
 
@@ -15,8 +15,8 @@
 }
 
 .heading h2 {
-  font-size: 1.875rem; /* Equivalent to text-3xl */
-  font-weight: 800; /* Equivalent to font-extrabold */
+  font-size: 1.875rem; /* Text size */
+  font-weight: 800;    /* Bold text */
   margin-bottom: 0.5rem;
 }
 
@@ -29,9 +29,9 @@
 
 .widget {
   width: 100%;
-  max-width: 96rem; /* Equivalent to max-w-6xl */
+  max-width: 96rem; /* Width limit */
   padding: 1.5rem;
-  background-color: hsl(213, 70%, 63%); /* Equivalent to bg-blue-200 */
+  background-color: rgba(255, 255, 255, 0.6); /* Transparent white */
   border-radius: 0.5rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Shadow */
 }
