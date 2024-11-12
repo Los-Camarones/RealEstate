@@ -76,9 +76,9 @@ export default function Contact() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-2 text-left">Address</h2>
+            <h2 className="text-xl font-semibold mb-2 text-left">Big Block Reality North</h2>
             <p className="mb-2 text-blue-600 hover:underline">
-              <a href={`https://maps.google.com/?q=${encodeURIComponent(contactInfo?.address || '')}`} target="_blank" rel="noopener noreferrer">
+             <a href={`https://maps.google.com/?q=${encodeURIComponent(contactInfo?.address || '')}`} target="_blank" rel="noopener noreferrer">
                 {contactInfo?.address.split(',').map((line, index) => (
                   <span key={index}>
                     {line.trim()}
@@ -86,9 +86,11 @@ export default function Contact() {
                   </span>
                 ))}
               </a>
+              CA DRE# 01527343
             </p>
           </div>
         </div>
+
 
         <div className="flex-shrink-0 ml-4 hidden sm:block">
           <a href={`tel:${contactInfo?.phone}`} className="block">
