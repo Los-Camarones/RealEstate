@@ -150,6 +150,9 @@ const NavBar: React.FC = () => {
 
               {isDropdownOpen && (
                 <div className="absolute bg-white shadow-lg mt-0 rounded-md z-10">
+                  <Link href="/GetPreQualified" className={dropdownItemStyle}>
+                    Get Pre-Qualified
+                  </Link>
                   <Link href="/property-search" className={dropdownItemStyle}>
                     Search Property
                   </Link>
@@ -168,10 +171,6 @@ const NavBar: React.FC = () => {
 
             <Link href="/Sellers">
               <button className={buttonStyle}>Sellers</button>
-            </Link>
-
-            <Link href="/GetPreQualified">
-              <button className={buttonStyle}>Get PreQualified</button>
             </Link>
 
             <Link href="/markets">
