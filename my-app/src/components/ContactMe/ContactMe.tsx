@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styles from './ContactMe.module.css';
 import { createClient } from "@supabase/supabase-js";
+import IHomeFinderContactWidget from "../../components/iHomeFinderContactWidget/iHomeFinderContactWidget";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
@@ -19,6 +20,7 @@ interface ContactInfo {
 export default function Contact() {
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
 
   useEffect(() => {
     const fetchContactInfo = async () => {
@@ -38,6 +40,10 @@ export default function Contact() {
 
     fetchContactInfo();
   }, []);
+
+  const toggleWidget = () => {
+    setIsWidgetOpen(!isWidgetOpen);
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -73,7 +79,6 @@ export default function Contact() {
             <center>
             <a href={`mailto:${contactInfo?.email}`}>{contactInfo?.email}</a>
             </center>
-            
           </p>
         </div>
 
@@ -89,20 +94,20 @@ export default function Contact() {
               {contactInfo?.address}
             </a>
             </center>
-            
             <br />
-            <center>
-            CA DRE# 01527343
-            </center>
-            
+            <center>CA DRE# 01527343</center>
           </p>
         </div>
 
-        <a href={`tel:${contactInfo?.phone}`}>
-          <button className={styles.contactButton}>
-            Contact Me
-          </button>
-        </a>
+        <button onClick={toggleWidget} className={styles.contactButton}>
+          {isWidgetOpen ? "Hide Contact Form" : "Contact Me"}
+        </button>
+
+        {isWidgetOpen && (
+          <div className={styles.dropdownWidget}>
+            <IHomeFinderContactWidget />
+          </div>
+        )}
       </div>
 
       <Link href="/">
