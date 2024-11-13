@@ -20,18 +20,18 @@ const Buyers = () => {
 
       <div className="relative min-h-screen flex flex-col items-center justify-start text-black p-6 bg-gray-50">
         {/* Background Image with Overlay */}
-        <div className="absolute inset-0 bg-cover bg-center bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-opacity-60 backdrop-filter backdrop-blur-lg shadow-lg py-4 mb-6 opacity-70"></div>
-        <div className="absolute inset-0 bg-black opacity-15"></div>
+        <div className="absolute  bg-cover bg-center bg-white bg-opacity-60  py-4 mb-6 opacity-70"></div>
+        <div className="absolute inset-0 opacity-15"></div>
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl font-bold mb-8">Welcome to the Buyers Page</h1>
-          <p className="text-lg mb-4">Your guide to navigating the home buying process confidently ! </p>
+          <h1 className="text-5xl font-bold text-center mb-8">Welcome to the Buyers Page</h1>
+          <p className="text-lg text-center mb-4">Your guide to navigating the home buying process confidently ! </p>
 
            {/* Button to Get Pre-Qualified */}
           <div className="flex justify-center mt-6 mb-6"> {/* Added mb-8 for bottom margin */}
             <a href="https://www.lourdesmendoza.com/GetPreQualified" target="_blank" rel="noopener noreferrer">
               <button className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition duration-300">
-               Talk to a Loner to Get Pre-Qualified ! ! !
+               Talk to a Loan Officer to Get Pre-Qualified Now 
               </button>
             </a>
           </div>
@@ -40,12 +40,12 @@ const Buyers = () => {
           {/* Steps to Buy a Home */}
           <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8">
             <h2 className="text-3xl font-semibold mb-4">Steps to Buy a Home</h2>
-            <ol className="list-decimal list-inside">
-              <li className="mb-2">Get pre-approved for a mortgage: This helps you understand your budget and shows sellers that you are a serious buyer.</li>
-              <li className="mb-2">Find the right home: Consider your needs, preferences, and location. Explore different neighborhoods.</li>
-              <li className="mb-2">Make an offer: Work with your agent to present a compelling offer based on market conditions.</li>
-              <li className="mb-2">Conduct inspections: Ensure the home is in good condition and identify any potential issues.</li>
-              <li className="mb-2">Close the deal: Review all documents, finalize the financing, and prepare for the big day.</li>
+            <ol className="list-decimal list-inside  text-left">
+              <li className="mb-5">Get pre-approved for a mortgage: This helps you understand your budget and shows sellers that you are a serious buyer.</li>
+              <li className="mb-5">Find the right home: Consider your needs, preferences, and location. Explore different neighborhoods.</li>
+              <li className="mb-5">Make an offer: Work with your agent to present a compelling offer based on market conditions.</li>
+              <li className="mb-5">Conduct inspections: Ensure the home is in good condition and identify any potential issues.</li>
+              <li className="mb-5">Close the deal: Review all documents, finalize the financing, and prepare for the big day.</li>
             </ol>
           </div>
 
@@ -53,31 +53,31 @@ const Buyers = () => {
           <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8">
             <h2 className="text-4xl font-semibold mb-4">Tips for First-Time Homebuyers</h2>
             <ul className="list-disc list-inside">
-              <li className="mb-2">
+              <li className="mb-5 text-left" >
                 <strong>Start saving early:</strong> When calculating how much money you need to buy a house, consider one-time expenses as well as new, recurring bills. Key upfront costs include:
-                <ul className="list-disc list-inside mt-2">
+                <ul className="list-disc list-inside mt-2 text-left">
                   <li><strong>Down payment:</strong> Depending on your mortgage type, down payments can range from as low as 3% to 20% of the home's price.</li>
                   <li><strong>Closing costs:</strong> Typically range from 2% to 6% of the loan amount, which can add up to thousands of dollars.</li>
                   <li><strong>Move-in expenses:</strong> Don’t forget to budget for moving costs and any immediate repairs or furnishings you may need.</li>
                 </ul>
               </li>
-              <li className="mb-2">
+              <li className="mb-2 text-left">
                 <strong>Decide how much home you can afford:</strong> Use online calculators to assess your budget based on your income, debt, and credit score.
               </li>
-              <li className="mb-2">
+              <li className="mb-2 text-left">
                 <strong>Check and polish your credit:</strong> Your credit score significantly influences your mortgage eligibility and interest rates. Get free copies of your credit reports, pay bills on time, and keep credit card balances low.
               </li>
-              <li className="mb-2">
+              <li className="mb-2 text-left">
                 <strong>Explore mortgage options:</strong> Familiarize yourself with various types of mortgages, such as FHA loans with low down payment requirements or VA loans with no down payment for veterans.
               </li>
-              <li className="mb-2">
+              <li className="mb-2 text-left">
                 <strong>Research first-time home buyer assistance programs:</strong> Many states offer programs that combine low-interest loans with down payment assistance, making home ownership more accessible.
               </li>
             </ul>
           </div>
 
           {/* The Role of a Real Estate Agent */}
-          <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8">
+          <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8 text-left">
             <h2 className="text-3xl font-semibold mb-4">The Role of a Real Estate Agent</h2>
             <p className="text-black"> {/* Ensure the paragraph text is black */}
               A real estate agent can provide invaluable assistance throughout the buying process. They can help you:
@@ -92,7 +92,7 @@ const Buyers = () => {
 
 
           {/* Frequently Asked Questions */}
-          <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8">
+          <div className="bg-white bg-opacity-80 shadow-md rounded-lg p-6 mb-8 text-left">
             <h2 className="text-4xl font-semibold mb-4 text-black">Frequently Asked Questions</h2>
             
             <div className="mb-4">

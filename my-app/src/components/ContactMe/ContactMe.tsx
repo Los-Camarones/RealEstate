@@ -42,70 +42,72 @@ export default function Contact() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center justify-center lg:flex-row lg:p-4">
+    <div className={styles.container}>
       <Head>
-        <title className={styles.title}>Contact Me</title>
+        <title>Contact Me</title>
         <meta name="description" content="Contact information page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="max-w-2xl w-full p-6 bg-white rounded-lg shadow-lg flex">
-        <div className="flex-shrink-0 mr-4">
-          <img
-            src="/lourdes-removebg-preview.png"
-            alt="Profile Picture"
-            className="rounded-full h-20 w-20 object-cover"
-          />
+      <div className={styles.card}>
+        <img
+          src="/lourdes-removebg-preview.png"
+          alt="Profile Picture"
+          className={styles.profilePic}
+        />
+
+        <h1 className={styles.title}>Contact Me</h1>
+
+        <div className={styles.info}>
+          <h2>Phone Number</h2>
+          <p>
+            <center>
+            <a href={`tel:${contactInfo?.phone}`}>{contactInfo?.phone}</a>
+              </center>
+          </p>
         </div>
 
-        <div className="flex-grow">
-          <h1 className="text-3xl font-semibold mb-4">Contact Me</h1>
-
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold mb-2 text-left">Phone Number</h2>
-            <p className="text-blue-600 hover:underline">
-              <a href={`tel:${contactInfo?.phone}`}>{contactInfo?.phone}</a>
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold mb-2 text-left">Email</h2>
-            <p className="text-blue-600 hover:underline">
-              <a href={`mailto:${contactInfo?.email}`}>{contactInfo?.email}</a>
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold mb-2 text-left">Big Block Reality North</h2>
-            <p className="mb-2 text-blue-600 hover:underline">
-             <a href={`https://maps.google.com/?q=${encodeURIComponent(contactInfo?.address || '')}`} target="_blank" rel="noopener noreferrer">
-                {contactInfo?.address.split(',').map((line, index) => (
-                  <span key={index}>
-                    {line.trim()}
-                    <br />
-                  </span>
-                ))}
-              </a>
-              CA DRE# 01527343
-            </p>
-          </div>
+        <div className={styles.info}>
+          <h2>Email</h2>
+          <p>
+            <center>
+            <a href={`mailto:${contactInfo?.email}`}>{contactInfo?.email}</a>
+            </center>
+            
+          </p>
         </div>
 
-
-        <div className="flex-shrink-0 ml-4 hidden sm:block">
-          <a href={`tel:${contactInfo?.phone}`} className="block">
-            <button className={styles.contactButton}>
-              Contact Me
-            </button>
-          </a>
+        <div className={styles.info}>
+          <h2>Big Block Realty North</h2>
+          <p>
+            <center>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(contactInfo?.address || '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {contactInfo?.address}
+            </a>
+            </center>
+            
+            <br />
+            <center>
+            CA DRE# 01527343
+            </center>
+            
+          </p>
         </div>
+
+        <a href={`tel:${contactInfo?.phone}`}>
+          <button className={styles.contactButton}>
+            Contact Me
+          </button>
+        </a>
       </div>
 
-      <div className="pl-20">
-        <Link href="/">
-          <img className='w-3/4 h-auto' src="/logo_.png" alt="Lourdes logo" />
-        </Link>
-      </div>
+      <Link href="/">
+        <img className={styles.logo} src="/logo_.png" alt="Lourdes logo" />
+      </Link>
     </div>
   );
 }
