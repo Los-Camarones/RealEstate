@@ -3,6 +3,7 @@ import '../globals.css';
 import React from 'react';
 import NavBar from '../../components/Navbar/navbar';
 import LineChart from '@/components/Dashboard/LineChart/LineChart';
+import PieChart from '@/components/Dashboard/PieChart/PieChart';
 import useAuth from '../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
@@ -41,8 +42,18 @@ const AdminDashboard: React.FC = () => {
               <h3 className="text-xl font-semibold mb-2">System Health</h3>
               <p>Status: Healthy</p>
             </div>
-            <div>
+          </div>
+
+          {/* Flexbox container for the charts */}
+          <div className="flex gap-6 mt-6">
+            <div className="flex-1 bg-white shadow-md rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-2"></h3>
               <LineChart />
+            </div>
+
+            <div className="flex-1 bg-white shadow-md rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-2"></h3>
+              <PieChart />
             </div>
           </div>
         </div>

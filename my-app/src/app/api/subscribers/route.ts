@@ -1,12 +1,10 @@
-/**
- * API fetch call that will be called once a week. Scheduled by a CRON job on vercel.
- */
+import { NextResponse } from 'next/server';
 import { getSubscriberCount } from "@/actions/HomeFinderActions";
 import { createSupabaseServerClient } from "@/utils/supabase/supabaseServer";
 import { insertSubscriberCount } from "@/actions/StatisticActions";
 
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
- 
+
 export async function GET(request: Request) {
   try {
     // Call the function to get the subscriber count
@@ -19,20 +17,20 @@ export async function GET(request: Request) {
       // Try inserting the subscriber count into the database
       const insertResponse = await insertSubscriberCount(subscriberCount);
 
-      // If the insert is successful, return a success message
+      // If the insert is successful, return a success message as JSON
       if (insertResponse.success) {
-        return new Response('Inserted Subscriber Successfully', { status: 200 });
+        return NextResponse.json({ message: 'Inserted Subscriber Successfully' }, { status: 200 });
       } else {
         console.error("Insert failed:", insertResponse.error);
-        return new Response(`Failed to insert subscriber: ${insertResponse.error}`, { status: 500 });
+        return NextResponse.json({ error: `Failed to insert subscriber: ${insertResponse.error}` }, { status: 500 });
       }
 
     } else {
       console.error("Subscriber count fetch failed:", subscriberRes.error);
-      return new Response(`Failed to fetch subscriber count: ${subscriberRes.error}`, { status: 400 });
+      return NextResponse.json({ error: `Failed to fetch subscriber count: ${subscriberRes.error}` }, { status: 400 });
     }
   } catch (error) {
     console.error("Unexpected error:", error);
-    return new Response('An unexpected error occurred', { status: 500 });
+    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 });
   }
 }
