@@ -1,3 +1,11 @@
+/* Reviews.module.css */
+
+/* Container for the reviews */
+.reviewsContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
 /* Header styling */
 .headerContainer {
   display: flex;
@@ -9,40 +17,42 @@
   font-size: 32px;
   font-weight: bold;
   color: black;
-  font-family: 'Times New Roman', Times, serif
+  font-family: 'Times New Roman', Times, serif;
 }
 
-/* Review List styling */
-.reviewList {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 20px;
-  padding: 0 16px;
+/* Slider styling */
+.slider {
+  width: 100%;
 }
 
-@media (min-width: 768px) {
-  .reviewList {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.slick-slide {
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-@media (min-width: 1024px) {
-  .reviewList {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.slick-slide div {
+  display: flex;
+  justify-content: center;
+  outline: none;
+}
+
+/* Card container to center the card */
+.cardContainer {
+  display: flex !important;
+  justify-content: center;
 }
 
 /* Card styling */
 .card {
+  width: 300px;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
@@ -81,6 +91,12 @@
   line-height: 1.6;
 }
 
+.review {
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Footer styling with date and Google icon */
 .cardFooter {
   display: flex;
@@ -110,7 +126,7 @@
 .addReviewButton {
   background-color: transparent;
   color: black;
-  font-family:'Times New Roman', Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   padding: 10px 20px;
   border: 2px solid black;
   border-radius: 5px;
