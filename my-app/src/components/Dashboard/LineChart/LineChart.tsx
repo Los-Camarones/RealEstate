@@ -64,6 +64,11 @@ const LineChart = () => {
       }
     };
 
+    ////
+
+    console.log('wwwww Chart Data:',  chartData);
+    ///
+
     fetchData();
   }, []);
 
