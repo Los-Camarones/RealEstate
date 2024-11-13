@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .navbar-container {
   position: sticky;
   top: 0;
