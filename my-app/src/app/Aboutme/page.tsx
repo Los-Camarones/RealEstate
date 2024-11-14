@@ -9,6 +9,7 @@ import styles from "./about.module.css";
 import Footer from "../../components/Footer/footer";
 import RecentlySoldHouses from "../../components/RecentlySoldHouses/RecentlySoldHouses";
 import { motion } from "framer-motion";
+import { FaInstagram, FaFacebookSquare, FaYoutubeSquare, FaTwitterSquare } from "react-icons/fa";
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -37,7 +38,7 @@ const Aboutme: React.FC = () => {
     const fetchAboutSections = async () => {
       const { data, error } = await supabase
         .from("text_content")
-        .select("section_text, heading_text, paragraph_text")
+        .select("id, section_text, heading_text, paragraph_text")
         .order("id");
 
       if (error) {
@@ -75,133 +76,174 @@ const Aboutme: React.FC = () => {
       <header>
         <NavBar />
       </header>
-      
-      <section className="about-header flex flex-col items-center md:flex-row md:items-center md:justify-center">
-        <div className="about-title md:mr-20 md:mt-40">
-          <Link href="/">
-            <img
-              className="about-image object-contain"
-              src="/logo_.png"
-              alt="Lourdes Mendoza logo"
-            />
-          </Link>
-          {/* Social Media Icons */}
-          <div className="social-icons flex space-x-4 mt-4">
-            <a
-              href="https://www.instagram.com/lourdesmendoza1/"
-              target="_blank"
-              rel="noopener noreferrer"
+
+      {/* Hero Section */}
+      <section className={styles["hero-section"]}>
+        <div className={styles["hero-content"]}>
+        <div className={styles["hero-text"]}>
+      <Link href="/">
+        <motion.img
+          className={styles["hero-logo"]}
+          src="/logo_.png"
+          alt="Lourdes Mendoza logo"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        />
+      </Link>
+
+
+            <motion.h1
+              className={styles["hero-title"]}
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
             >
-              <i className="fab fa-instagram text-xl"></i>
-            </a>
-            <a
-              href="https://www.facebook.com/Lolucasellsrealestate/?checkpoint_src=any"
-              target="_blank"
-              rel="noopener noreferrer"
+              Welcome to Lourdes Mendoza Real Estate
+            </motion.h1>
+
+            <motion.p
+              className={styles["hero-subtitle"]}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
             >
-              <i className="fab fa-facebook-square text-xl"></i>
-            </a>
-            <a
-              href="https://www.youtube.com/@LourdesMendozaTV"
-              target="_blank"
-              rel="noopener noreferrer"
+              Your trusted partner in finding the perfect home.
+            </motion.p>
+
+            {/* Merchandise Button */}
+            <motion.div
+              className={styles["hero-button"]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
             >
-              <i className="fab fa-youtube-square text-xl"></i>
-            </a>
-            <a
-              href="https://x.com/i/flow/login?redirect_after_login=%2Flourdesmendoza"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-twitter-square text-xl"></i>
-            </a>
-          </div>
-          <div className="mt-4">
-            <a href="/Merchandise">
-              <button className={styles.merchandiseButton}>
-                Check out my Merchandise
-              </button>
-            </a>
-          </div>
-          {/* Contact Info with Icons */}
-          <div className={styles.h2}>
-            <div className="flex items-center mb-2 pb-2 hover:border-b hover:border-gray-300 hover:w-full transition-all duration-300">
-              <a href={`tel:${contactInfo?.phone}`} className="flex items-center">
-                <img src="telephone-icon.webp" alt="Phone" className="w-4 h-4 mr-2" />
-                <span>{contactInfo?.phone}</span>
+              <a href="/Merchandise">
+                <button className={styles.merchandiseButton}>
+                  Check out my Merchandise
+                </button>
               </a>
-            </div>
-            <div className="flex items-center mb-2 pb-2 hover:border-b hover:border-gray-300 hover:w-full transition-all duration-300">
-              <a href={`mailto:${contactInfo?.email}`} className="flex items-center">
-                <img src="email-icon.webp" alt="Email" className="w-4 h-4 mr-2" />
-                <span>{contactInfo?.email}</span>
-              </a>
-            </div>
-            <div className="flex items-center mb-2 pb-2 hover:border-b hover:border-gray-300 hover:w-full transition-all duration-300">
+            </motion.div>
+
+            {/* Social Media Icons */}
+            <motion.div
+              className={styles["social-icons"]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.5 }}
+            >
               <a
-                href={`https://www.google.com/maps/place/550+Howe+Ave+%23200,+Sacramento,+CA+95825`}
+                href="https://www.instagram.com/lourdesmendoza1/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center"
               >
-                <img src="address-icon.png" alt="Location" className="w-4 h-4 mr-2" />
-                <span>{contactInfo?.address}</span>
+                <FaInstagram />
               </a>
-            </div>
+              <a
+                href="https://www.facebook.com/Lolucasellsrealestate/?checkpoint_src=any"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebookSquare />
+              </a>
+              <a
+                href="https://www.youtube.com/@LourdesMendozaTV"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaYoutubeSquare />
+              </a>
+              <a
+                href="https://twitter.com/lourdesmendoza"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTwitterSquare />
+              </a>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              className={styles["contact-info"]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 2 }}
+            >
+              <div>
+                <a href={`tel:${contactInfo?.phone}`} className={styles["contact-link"]}>
+                  <img src="telephone-icon.webp" alt="Phone" />
+                  <span>{contactInfo?.phone}</span>
+                </a>
+              </div>
+              <div>
+                <a href={`mailto:${contactInfo?.email}`} className={styles["contact-link"]}>
+                  <img src="email-icon.webp" alt="Email" />
+                  <span>{contactInfo?.email}</span>
+                </a>
+              </div>
+              <div>
+                <a
+                  href={`https://www.google.com/maps/place/${encodeURIComponent(contactInfo?.address || '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles["contact-link"]}
+                >
+                  <img src="address-icon.png" alt="Location" />
+                  <span>{contactInfo?.address}</span>
+                </a>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className={styles["hero-image-container"]}>
+            <motion.img
+              className={styles["hero-image"]}
+              src="/lourdes.jpg"
+              alt="Lourdes Mendoza"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+            />
           </div>
         </div>
-
-        <img
-          className="about-image object-contain w-full md:max-w-xs md:m-5"
-          src="/lourdes-removebg-preview.png"
-          alt="Lourdes Mendoza"
-        />
       </section>
-      
-      <hr />
-      
+
       {/* Render Supabase Content Dynamically with Local Images */}
       {sections.map((section, index) => (
         <section
           key={section.id}
-          className={`${styles["about-section"]}`}
+          className={`${styles["about-section"]} ${index % 2 === 0 ? styles["section-even"] : styles["section-odd"]}`}
         >
-          <div>
-            <motion.h2
-              className={styles.h1}
+          <div className={styles["section-content"]}>
+            <motion.div
+              className={styles["section-text"]}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              {section.heading_text}
-            </motion.h2>
-            <motion.p
-              className={styles.body}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {section.paragraph_text}
-            </motion.p>
-          </div>
-          <div>
-            <motion.img
-              src={
-                index === 0
-                  ? "/sacTrees.jpg"
-                  : index === 1
-                  ? "/sacBridge.jpg"
-                  : "/midtownSac.jpg"
-              }
-              alt={section.heading_text}
-              className="about-image"
+              <h2 className={styles["section-heading"]}>{section.heading_text}</h2>
+              <p className={styles["section-paragraph"]}>{section.paragraph_text}</p>
+            </motion.div>
+            <motion.div
+              className={styles["section-image-container"]}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            />
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <img
+                src={
+                  index === 0
+                    ? "/sacTrees.jpg"
+                    : index === 1
+                    ? "/sacBridge.jpg"
+                    : "/midtownSac.jpg"
+                }
+                alt={section.heading_text}
+                className={styles["section-image"]}
+              />
+            </motion.div>
           </div>
         </section>
       ))}
