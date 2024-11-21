@@ -44,7 +44,10 @@ const Aboutme: React.FC = () => {
       if (error) {
         console.error("Error fetching sections:", error.message);
       } else if (data) {
-        setSections(data as AboutSection[]);
+        const filteredSections = data.filter(
+          (section) => section.heading_text !== "About Lourdes Mendoza"
+        );
+        setSections(filteredSections as AboutSection[]);
       }
     };
 
@@ -104,7 +107,7 @@ const Aboutme: React.FC = () => {
 
             <motion.p
               className={styles["hero-subtitle"]}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
             >
@@ -192,18 +195,22 @@ const Aboutme: React.FC = () => {
                   <span>{contactInfo?.address}</span>
                 </a>
               </div>
+              <hr className={styles["contact-divider"]} />
             </motion.div>
           </div>
+          
 
           <div className={styles["hero-image-container"]}>
-            <motion.img
+          <motion.img
               className={styles["hero-image"]}
               src="/lourdes.jpg"
               alt="Lourdes Mendoza"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 1 }}
-            />
+              whileHover={{ scale: 1.05 }} // Scale up by 5% on hover
+        />
+
           </div>
         </div>
       </section>
