@@ -1,8 +1,9 @@
 /* about.module.css */
 
 .about-page {
-  background-color: #f8f9fa;
-  font-family: 'Inter', sans-serif;
+  background-color: #f1f1f1;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   margin: 0;
   padding: 0;
   color: #333;
@@ -10,8 +11,9 @@
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(to right, #1a237e, #0f0f8a);
-  color: #fff;
+
+  background: #f1f1f1;
+  color: black;
   padding: 50px 20px;
 }
 
@@ -50,6 +52,7 @@
 .hero-subtitle {
   font-size: 1.2rem;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .hero-button {
@@ -57,8 +60,8 @@
 }
 
 .merchandiseButton {
-  background-color: #fff;
-  color: #1a237e;
+  background-color: black;
+  color: white;
   padding: 10px 20px;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
@@ -87,12 +90,12 @@
 }
 
 .social-icons a {
-  color: #fff;
+  color: black;
   transition: color 0.3s, transform 0.3s;
 }
 
 .social-icons a:hover {
-  color: #f1f1f1;
+  color: #1a237e;
   transform: translateY(-3px);
 }
 
@@ -110,7 +113,7 @@
 .contact-link {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: black;
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -126,7 +129,7 @@
 }
 
 .contact-link:hover {
-  color: #f1f1f1;
+  color: #1a237e;
 }
 
 /* Hero Image */
@@ -143,13 +146,21 @@
   }
 }
 
+/* about.module.css */
+
 .hero-image {
   width: 300px;
   height: 300px;
   object-fit: cover;
   border-radius: 50%;
-  border: 5px solid #fff;
+  border: 5px solid black;
+  transition: transform 0.3s ease; /* Add transition for smooth effect */
 }
+
+.hero-image:hover {
+  transform: scale(0.5); /* Scale up by 5% on hover */
+}
+
 
 /* About Sections */
 .about-section {
@@ -220,4 +231,11 @@
   color: #fff;
   padding: 20px;
   text-align: center;
+}
+.contact-divider {
+  border: none; /* Remove default border */
+  height: 1px; /* Thickness of the line */
+  background-color: #ccc; /* Color of the line */
+  margin: 20px auto; /* Vertical margin and center horizontally */
+  width: 80%; /* Width of the line relative to its container */
 }
