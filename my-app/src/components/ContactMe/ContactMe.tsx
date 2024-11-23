@@ -79,6 +79,7 @@ export default function Contact() {
             <center>
             <a href={`mailto:${contactInfo?.email}`}>{contactInfo?.email}</a>
             </center>
+            <center>CA DRE# 0177831</center>
           </p>
         </div>
 
