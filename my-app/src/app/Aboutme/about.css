@@ -1,0 +1,149 @@
+/* about.css */
+
+.body {
+  background-color: hsl(0, 60%, 99%);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 3;
+  font-size: 1.3rem;
+}
+
+.h1 {
+  color: #1b36bb;
+  font-size: 2.2rem;
+  text-align: left; 
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.h2 {
+  color: #333;
+  font-size: 1.2rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+.h3, .about-title p {
+  color: #333;
+  font-size: 1.3rem;
+  text-align: left; /* Aligns subtitle and tagline to the left */
+  margin: 1;
+}
+
+.about-title {
+  display: flex;
+  flex-direction: column;
+  align-items: left; /* Centers the whole .about-title section */
+}
+
+.about-title, .h3,
+.about-title p {
+  width: 100%; /* Takes full width to align left */
+  text-align: left;
+  margin-left: 1rem; /* Adds slight left padding */
+}
+
+/* Other CSS remains the same */
+
+main {
+  padding: 20px;
+}
+
+img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.social-media-icons img {
+  transition: transform 0.3s ease;
+}
+
+.social-media-icons img:hover {
+  transform: scale(1.1);
+}
+
+.contact-info div {
+  margin-bottom: 8px;
+}
+
+.contact-info img {
+  margin-right: 8px;
+}
+
+/* Adjustments for about-section */
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.5rem 0;
+  align-items: center;
+  max-width: 1800px;
+  margin: auto;
+}
+
+.about-section div {
+  max-width: 800px;
+  margin: auto;
+}
+
+.about-section img {
+  max-width: 100%;
+  width: 800px;
+  height: auto;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.about-section h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .about-section {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .about-section div,
+  .about-section img {
+    width: 100%;
+  }
+
+  .about-section img {
+    max-width: 1000px;
+  }
+}
+
+
+hr {
+  border: 0;
+  height: 2px; /* Thickness of the line */
+  width: 80%; /* Length of the line, adjust as needed */
+  background-color: #333; /* Color of the line */
+  margin: 1rem auto; /* Centers the line horizontally */
+}
+
+.merchandiseButton {
+  background-color: transparent;
+  color: black;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 2px solid black;
+  border-radius: 4px;
+  width: 100%;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.merchandiseButton:hover {
+  background-color: black;
+  color: white;
+}
