@@ -255,10 +255,11 @@ const NavBar: React.FC = () => {
               </button>
             </Link>
             <Link
-              href="/Buyers/Residential"
+            // this one is not working fixed
+              href="/GetPreQualified"
               className={buttonStyle + " block w-full text-left py-2"}
             >
-              Residential Buyers
+              Get Pre-Qualified
             </Link>
             <Link
               href="/property-search"
@@ -267,22 +268,25 @@ const NavBar: React.FC = () => {
               Search Property
             </Link>
             <Link
-              href="/Buyers/Commercial"
+            // this one is not working//fixed
+              href="/property-organizer"
               className={buttonStyle + " block w-full text-left py-2"}
             >
-              Commercial Buyers
+              Property Search
             </Link>
             <Link
-              href="/Sign-up"
+            // this one is not working it should direct to property organizer
+              href="/property-organizer"
               className={buttonStyle + " block w-full text-left py-2"}
             >
               Get Listing Updates
             </Link>
             <Link
-              href="/Buyers/FirstTime"
+            // this one is not working
+              href="/markets"
               className={buttonStyle + " block w-full text-left py-2"}
             >
-              First-Time Buyers
+              Communities
             </Link>
             <Link
               href="/contact"
